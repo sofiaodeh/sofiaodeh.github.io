@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aramaki Lab Research - Sofia Odeh</title>
+    
+    <!-- ============================================ -->
+    <!-- Use the same styles as main page            -->
+    <!-- ============================================ -->
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #b08d7a;
+            --secondary: #8b6f63;
+            --accent: #4a90e2;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-button {
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: var(--accent);
+        }
+
+        /* ===== PROJECT HERO ===== */
+        .project-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .project-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* ===== CONTENT SECTIONS ===== */
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .content-section h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content-section h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        /* ===== HIGHLIGHT BOXES ===== */
+        .highlight-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        /* ===== IMAGE PLACEHOLDER ===== */
+        .image-placeholder {
+            background: var(--bg-light);
+            border: 2px dashed var(--primary);
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 10px;
+            color: var(--secondary);
+        }
+
+        /* ===== SKILLS TAGS ===== */
+        .skills-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+
+        .skill-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(26, 26, 46, 1);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ============================================ -->
+    <!-- NAVIGATION WITH BACK BUTTON                  -->
+    <!-- ============================================ -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <a href="index.html#projects" class="back-button">
+                ← Back to Projects
+            </a>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- PROJECT HERO HEADER                          -->
+    <!-- ============================================ -->
+    <div class="project-hero">
+        <h1>Aramaki Lab Research</h1>
+        <p class="project-meta">2024 - Present | Northeastern University</p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PROJECT CONTENT                              -->
+    <!-- ============================================ -->
+    
+    <!-- Context Section -->
+    <section class="content-section">
+        <h2>Context</h2>
+        <p>
+            During my junior year, I took Multi-Messenger Astrophysics taught by Professor Tsuogo Aramaki. 
+            Beyond being deeply interested in the class material, I found his research work at the Aramaki 
+            Lab cutting-edge and asked for the opportunity to learn more and potentially get involved.
+        </p>
+        <p>
+            I was thrilled to learn that they needed a mechanical engineer, and I could promptly join the 
+            team. For the remainder of that semester, I worked 7+ hours a week under the guidance of PhD 
+            student Jiancheng Zeng.
+        </p>
+    </section>
+
+    <!-- Background Section -->
+    <section class="content-section">
+        <h2>Background</h2>
+        <p>
+            Our team at the Aramaki Lab is developing two CCD-based detectors in parallel:
+        </p>
+        <ul>
+            <li><strong>GRAMS</strong> - Gamma-Ray and AntiMatter Survey</li>
+            <li><strong>MicroGRAMS</strong> - Smaller-scale prototype detector</li>
+        </ul>
+        <p>
+            The goal is to track the trajectory and energy deposition of cosmic particles to identify their 
+            characteristics and origins. These experiments target the MeV energy range, a region with a 
+            significant research gap, and aim to enable indirect observations of antimatter.
+        </p>
+        
+        <div class="highlight-box">
+            <h3>Technical Details</h3>
+            <p>
+                The detector is a Liquid Argon Time Projection Chamber (LArTPC) that employs SiPM 
+                (Silicon Photomultiplier) technology. When a particle enters the chamber, the SiPMs 
+                detect scintillation light produced in the plastic scintillator, while also capturing 
+                the ionized electrons.
+            </p>
+        </div>
+    </section>
+
+    <!-- My Role Section -->
+    <section class="content-section">
+        <h2>My Role & Contributions</h2>
+        
+        <h3>The Challenge</h3>
+        <p>
+            Before our flight in May 2025, our team needs to conduct routine tests to ensure reliable 
+            data acquisition, control of environmental factors, and proper heat transfer of components. 
+            To perform these tests, we need to immerse the TPC in a liquid argon chamber at the lab—but 
+            no mounting solution existed to do so safely.
+        </p>
+
+        <h3>My Solution</h3>
+        <p>
+            As the team's mechanical engineer, I designed and 3D printed a component that could:
+        </p>
+        <ol>
+            <li>Interface securely with the flange of the liquid argon chamber</li>
+            <li>Avoid interference with surrounding obstacles (tubes, pipes, and other sensitive components)</li>
+            <li>Hold the extremely delicate detector with high stability, preventing even the smallest 
+                positional shifts that could compromise data quality</li>
+        </ol>
+
+        <div class="image-placeholder">
+            <p>[ CAD Model of TPC Holder - Image to be added ]</p>
+        </div>
+
+        <h3>Process & Iteration</h3>
+        <p>
+            The design process required many iterations, as there was little existing CAD to reference 
+            and significant trial and error was needed to achieve the correct fits and tolerances. 
+            I took ownership of weekly prototyping, which also gave me hands-on experience with rigorous 
+            3D printer maintenance and troubleshooting.
+        </p>
+        <p>
+            This project was highly interdisciplinary: I collaborated closely with physics majors and 
+            electrical engineers to account for experimental constraints and ensure my design integrated 
+            with surrounding components.
+        </p>
+
+        <div class="image-placeholder">
+            <p>[ Implemented 3D-Printed Holder in Lab - Image to be added ]</p>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="content-section">
+        <h2>Results</h2>
+        <p>
+            By the end of the semester, I had fully implemented and tested my design, and it is still 
+            being used in the lab today! The mounting solution has enabled consistent and reliable 
+            testing procedures, contributing to the project's progress toward the May 2025 flight.
+        </p>
+        
+        <div class="highlight-box">
+            <h3>Key Achievements</h3>
+            <ul>
+                <li>Successfully designed and implemented critical lab infrastructure</li>
+                <li>Enabled routine testing procedures that were previously impossible</li>
+                <li>Gained experience in aerospace-grade component design</li>
+                <li>Strengthened interdisciplinary collaboration skills</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="content-section">
+        <h2>Skills & Technologies Used</h2>
+        <div class="skills-used">
+            <span class="skill-tag">SolidWorks</span>
+            <span class="skill-tag">3D Printing (FDM)</span>
+            <span class="skill-tag">Rapid Prototyping</span>
+            <span class="skill-tag">Tolerance Analysis</span>
+            <span class="skill-tag">Lab Equipment Design</span>
+            <span class="skill-tag">Interdisciplinary Collaboration</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Want to learn more about this project?</p>
+        <p><a href="mailto:odeh.s@northeastern.edu">Contact me</a> | <a href="index.html">Back to main page</a></p>
+    </footer>
+</body>
+</html>
