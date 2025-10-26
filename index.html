@@ -3,41 +3,639 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofia's Portfolio</title>
+    <title>Sofia Odeh - Mechanical Engineer & Astrophysics</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 800px;
+
+        :root {
+            --primary: #b08d7a;
+            --secondary: #8b6f63;
+            --accent: #4a90e2;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-gradient-1: #1a1a2e;
+            --bg-gradient-2: #16213e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 50px 20px;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        h1 {
-            color: white;
+
+        .nav-brand {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            padding: 8rem 2rem 4rem;
             text-align: center;
-            font-size: 3em;
         }
-        .card {
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+        }
+
+        .hero .graduation {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        /* About Section */
+        .about {
+            background: #f8f9fa;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-highlights {
             background: white;
-            padding: 30px;
+            padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .about-highlights h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .about-highlights ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .about-highlights li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .about-highlights li:last-child {
+            border-bottom: none;
+        }
+
+        /* Experience Section */
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .experience-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .experience-card h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .experience-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .experience-card p {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .experience-card ul {
+            list-style-position: inside;
+            color: var(--text-dark);
+        }
+
+        .experience-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            background: #f8f9fa;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .project-card h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .skill-category h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-gradient-1);
+            color: var(--text-light);
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .experience-grid, .project-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Sofia's Portfolio</h1>
-        <div class="card">
-            <h2>About Me</h2>
-            <p>Welcome to my personal website! I'm currently building this site to showcase my projects and skills.</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-brand">Sofia Odeh</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
-    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Sofia Odeh</h1>
+            <p class="subtitle">Mechanical Engineer | Astrophysics Minor</p>
+            <p class="graduation">Northeastern University | Graduating December 2026</p>
+            <div class="contact-buttons">
+                <a href="mailto:odeh.s@northeastern.edu" class="btn">Email Me</a>
+                <a href="https://www.linkedin.com/in/sofia-odeh" class="btn" target="_blank">LinkedIn</a>
+                <a href="tel:914-527-5222" class="btn">Call Me</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I'm a senior at Northeastern University pursuing a Bachelor's degree in Mechanical Engineering 
+                        with a minor in Astrophysics. My academic journey is driven by a fascination with how engineering 
+                        can push the boundaries of exploration and innovation.
+                    </p>
+                    <p>
+                        I am passionate about exploring the universe through the lens of a mechanical engineer, combining 
+                        technical expertise with curiosity-driven inquiry. Through co-ops at Lutron Electronics and LineSpect, 
+                        I developed strong skills in engineering design, rapid prototyping, tolerancing, and 3D printing—tools 
+                        I have applied directly to my research in astrophysics at Northeastern's Aramaki Lab.
+                    </p>
+                    <p>
+                        Beyond engineering, I founded Boston Clothing Outreach and host the Art of Inquiry podcast, where 
+                        I share insights at the intersection of science, engineering, and art. Whether developing innovative 
+                        solutions or connecting with the community, I'm driven by a commitment to making a tangible impact 
+                        through engineering.
+                    </p>
+                </div>
+                <div class="about-highlights">
+                    <h3>Quick Facts</h3>
+                    <ul>
+                        <li>🎓 Mechanical Engineering Major, Astrophysics Minor</li>
+                        <li>🔬 Research at Aramaki Lab (GRAMS & MicroGRAMS projects)</li>
+                        <li>🎙️ Host of "Art of Inquiry" Podcast</li>
+                        <li>💡 Founder of Boston Clothing Outreach</li>
+                        <li>🛠️ Expert in CAD, 3D printing, and rapid prototyping</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <h2>Experience</h2>
+        <div class="experience-grid">
+            <div class="experience-card">
+                <h3>Lutron Electronics</h3>
+                <p class="experience-date">Co-op | 6 months</p>
+                <p>
+                    Worked on the tool design team, contributing to the development of tools for assembling 
+                    components of the Ketra D2 Downlight product.
+                </p>
+                <ul>
+                    <li>Mastered Creo Parametric and rapid prototyping (SLA/FDM)</li>
+                    <li>Developed 5 different assembly tools</li>
+                    <li>2 tools certified and implemented on assembly line</li>
+                    <li>Gained expertise in advanced tolerancing</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>Aramaki Lab Research</h3>
+                <p class="experience-date">2024 - Present</p>
+                <p>
+                    Developing CCD-based detectors for the Gamma-Ray and AntiMatter Survey (GRAMS) and 
+                    MicroGRAMS projects.
+                </p>
+                <ul>
+                    <li>Designed & 3D printed TPC mounting solution</li>
+                    <li>Working with Liquid Argon Time Projection Chamber</li>
+                    <li>Collaborating with physics and EE teams</li>
+                    <li>Preparing for May 2025 flight test</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <h3>LineSpect</h3>
+                <p class="experience-date">Co-op | Coming Soon</p>
+                <p>
+                    Details about this co-op position will be added once completed. Looking forward to 
+                    applying my engineering skills in this new environment.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <h2>Projects</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>TPC Holder Design</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Designed and 3D printed a critical mounting component for liquid argon chamber testing 
+                        at Aramaki Lab. Required precise tolerancing and multiple iterations.
+                    </p>
+                    <span class="project-status">Implemented & In Use</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Boston Clothing Outreach</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Founded and manage a community outreach program focused on providing clothing to 
+                        those in need in the Boston area.
+                    </p>
+                    <span class="project-status">Ongoing</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Art of Inquiry Podcast</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Host and produce a podcast exploring the intersection of science, engineering, 
+                        and art through engaging conversations.
+                    </p>
+                    <span class="project-status">Active</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>COBRA Research</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Advanced research project details to be added. Working on cutting-edge developments 
+                        in the field.
+                    </p>
+                    <span class="project-status">In Progress</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Cornerstone Projects</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Engineering design projects completed as part of Northeastern's cornerstone 
+                        curriculum. Details coming soon.
+                    </p>
+                    <span class="project-status">To Be Added</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>NuSci</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Science-focused project combining theoretical knowledge with practical 
+                        applications. More details coming soon.
+                    </p>
+                    <span class="project-status">To Be Added</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>CAD & Design</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Creo Parametric</span>
+                    <span class="skill-tag">SolidWorks</span>
+                    <span class="skill-tag">AutoCAD</span>
+                    <span class="skill-tag">3D Modeling</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>Prototyping</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">3D Printing (SLA/FDM)</span>
+                    <span class="skill-tag">Rapid Prototyping</span>
+                    <span class="skill-tag">Tolerancing</span>
+                    <span class="skill-tag">Testing</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>Research & Analysis</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Data Analysis</span>
+                    <span class="skill-tag">Technical Writing</span>
+                    <span class="skill-tag">Lab Equipment</span>
+                    <span class="skill-tag">Problem Solving</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>Soft Skills</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Project Management</span>
+                    <span class="skill-tag">Team Collaboration</span>
+                    <span class="skill-tag">Communication</span>
+                    <span class="skill-tag">Leadership</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer/Contact -->
+    <footer id="contact">
+        <h2 style="color: white; margin-bottom: 2rem;">Let's Connect!</h2>
+        <div class="footer-links">
+            <a href="mailto:odeh.s@northeastern.edu">odeh.s@northeastern.edu</a>
+            <a href="tel:914-527-5222">(914) 527-5222</a>
+            <a href="https://www.linkedin.com/in/sofia-odeh" target="_blank">LinkedIn</a>
+        </div>
+        <p style="margin-top: 2rem; opacity: 0.8;">© 2024 Sofia Odeh. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 26, 46, 0.98)';
+            } else {
+                nav.style.background = 'rgba(26, 26, 46, 0.95)';
+            }
+        });
+    </script>
 </body>
 </html>
