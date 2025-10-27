@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sofia Odeh - Mechanical Engineer & Astrophysics</title>
     
-    <!-- ============================================ -->
-    <!-- STYLES SECTION - All CSS styling goes here  -->
-    <!-- ============================================ -->
     <style>
         /* ===== RESET & VARIABLES ===== */
         * {
@@ -25,7 +22,6 @@
             --bg-light: #f8f9fa;
         }
 
-        /* ===== BASE STYLES ===== */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -75,7 +71,7 @@
             color: var(--accent);
         }
 
-        /* ===== HERO/HEADER SECTION ===== */
+        /* ===== HERO SECTION ===== */
         .hero {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: var(--text-light);
@@ -124,7 +120,7 @@
             transform: translateY(-2px);
         }
 
-        /* ===== MAIN SECTIONS ===== */
+        /* ===== SECTIONS ===== */
         section {
             padding: 4rem 2rem;
             max-width: 1200px;
@@ -143,9 +139,27 @@
             background: var(--bg-light);
         }
 
-        .about-content {
-            max-width: 900px;
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1000px;
             margin: 0 auto;
+        }
+
+        .profile-image {
+            text-align: center;
+        }
+
+        .profile-image img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .about-content {
             font-size: 1.1rem;
             line-height: 1.8;
         }
@@ -246,10 +260,14 @@
             color: var(--accent);
         }
 
-        /* ===== RESPONSIVE DESIGN ===== */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
+            }
+            
+            .about-container {
+                grid-template-columns: 1fr;
             }
             
             .nav-links {
@@ -265,9 +283,7 @@
 </head>
 
 <body>
-    <!-- ============================================ -->
-    <!-- NAVIGATION                                   -->
-    <!-- ============================================ -->
+    <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">Sofia Odeh</a>
@@ -279,9 +295,7 @@
         </div>
     </nav>
 
-    <!-- ============================================ -->
-    <!-- HERO/HEADER SECTION                          -->
-    <!-- ============================================ -->
+    <!-- HERO SECTION -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Sofia Odeh</h1>
@@ -296,41 +310,43 @@
         </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- ABOUT ME SECTION                             -->
-    <!-- ============================================ -->
+    <!-- ABOUT SECTION -->
     <section id="about" class="about">
         <div class="container">
             <h2>About Me</h2>
-            <div class="about-content">
-                <p>
-                    I'm a senior at Northeastern University pursuing a Bachelor's degree in Mechanical Engineering 
-                    with a minor in Astrophysics. My academic journey is driven by a fascination with how engineering 
-                    can push the boundaries of exploration and innovation.
-                </p>
-                <p>
-                    Through co-ops at Lutron Electronics and LineSpect, I developed strong skills in engineering design, 
-                    rapid prototyping, tolerancing, and 3D printing—tools I have applied directly to my research in 
-                    astrophysics at Northeastern's Aramaki Lab. This combination of practical engineering experience 
-                    and a deep curiosity for fundamental physics allows me to tackle complex problems with both 
-                    precision and imagination.
-                </p>
-                <p>
-                    Beyond engineering, I founded Boston Clothing Outreach and host the Art of Inquiry podcast, where 
-                    I share insights at the intersection of science, engineering, and art.
-                </p>
+            <div class="about-container">
+                <div class="profile-image">
+                    <img src="images/sofia-headshot.jpg" alt="Sofia Odeh">
+                </div>
+                <div class="about-content">
+                    <p>
+                        I'm a senior at Northeastern University pursuing a Bachelor's degree in Mechanical Engineering 
+                        with a minor in Astrophysics. My academic journey is driven by a fascination with how engineering 
+                        can push the boundaries of exploration and innovation.
+                    </p>
+                    <p>
+                        Through co-ops at Lutron Electronics and LineSpect, I developed strong skills in engineering design, 
+                        rapid prototyping, tolerancing, and 3D printing—tools I have applied directly to my research in 
+                        astrophysics at Northeastern's Aramaki Lab. This combination of practical engineering experience 
+                        and a deep curiosity for fundamental physics allows me to tackle complex problems with both 
+                        precision and imagination.
+                    </p>
+                    <p>
+                        Beyond engineering, I'm actively involved in community outreach through Boston Clothing Outreach 
+                        and host the Art of Inquiry podcast, where I share insights at the intersection of science, 
+                        engineering, and art. In my free time, I love swing dancing, which brings together my appreciation 
+                        for rhythm, movement, and community.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- PROJECTS SECTION - CLICKABLE CARDS           -->
-    <!-- ============================================ -->
+    <!-- PROJECTS SECTION -->
     <section id="projects" class="projects">
         <h2>Projects & Experience</h2>
         <div class="project-grid">
             
-            <!-- Lutron Project Card -->
             <a href="lutron.html" class="project-card">
                 <div class="project-header">
                     <h3>Lutron Electronics Co-Op</h3>
@@ -345,7 +361,6 @@
                 </div>
             </a>
 
-            <!-- Aramaki Lab Card -->
             <a href="aramaki-lab.html" class="project-card">
                 <div class="project-header">
                     <h3>Aramaki Lab Research</h3>
@@ -360,7 +375,62 @@
                 </div>
             </a>
 
-            <!-- LineSpect Card -->
+            <a href="nest.html" class="project-card">
+                <div class="project-header">
+                    <h3>NEST - Lunar Exploration</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Leading mechanical design for networked mini-COBRA robots 
+                        for advanced lunar surface exploration.
+                    </p>
+                    <span class="project-status">In Development</span>
+                    <p class="click-hint">Click to view details →</p>
+                </div>
+            </a>
+
+            <a href="podcast.html" class="project-card">
+                <div class="project-header">
+                    <h3>Art of Inquiry Podcast</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Co-hosting a podcast exploring the intersection of 
+                        science, engineering, and art through engaging interviews.
+                    </p>
+                    <span class="project-status">Active</span>
+                    <p class="click-hint">Click to view details →</p>
+                </div>
+            </a>
+
+            <a href="cornerstone.html" class="project-card">
+                <div class="project-header">
+                    <h3>Resilience Engineering</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Created an interactive museum exhibit on campus safety 
+                        using Arduino, C++, and laser-cutting techniques.
+                    </p>
+                    <span class="project-status">Completed</span>
+                    <p class="click-hint">Click to view details →</p>
+                </div>
+            </a>
+
+            <a href="nusci.html" class="project-card">
+                <div class="project-header">
+                    <h3>NU SCI Magazine</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Writing and curating scientific content for weekly newsletter, 
+                        making science accessible to diverse audiences.
+                    </p>
+                    <span class="project-status">Active</span>
+                    <p class="click-hint">Click to view details →</p>
+                </div>
+            </a>
+
             <a href="linespect.html" class="project-card">
                 <div class="project-header">
                     <h3>LineSpect Co-Op</h3>
@@ -375,56 +445,10 @@
                 </div>
             </a>
 
-            <!-- Boston Clothing Outreach Card -->
-            <a href="boston-outreach.html" class="project-card">
-                <div class="project-header">
-                    <h3>Boston Clothing Outreach</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Founded and manage a community outreach program providing 
-                        clothing to those in need in Boston.
-                    </p>
-                    <span class="project-status">Active</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-
-            <!-- Podcast Card -->
-            <a href="podcast.html" class="project-card">
-                <div class="project-header">
-                    <h3>Art of Inquiry Podcast</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Host and produce a podcast exploring the intersection of 
-                        science, engineering, and art.
-                    </p>
-                    <span class="project-status">Active</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-
-            <!-- COBRA Research Card -->
-            <a href="cobra.html" class="project-card">
-                <div class="project-header">
-                    <h3>COBRA Research</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Advanced research project in development. Details coming soon.
-                    </p>
-                    <span class="project-status">In Progress</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-
         </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- FOOTER / CONTACT SECTION                     -->
-    <!-- ============================================ -->
+    <!-- FOOTER -->
     <footer id="contact">
         <h2 style="color: white; margin-bottom: 2rem;">Let's Connect!</h2>
         <div class="footer-links">
@@ -435,11 +459,8 @@
         <p style="margin-top: 2rem; opacity: 0.8;">© 2024 Sofia Odeh</p>
     </footer>
 
-    <!-- ============================================ -->
-    <!-- JAVASCRIPT SECTION                           -->
-    <!-- ============================================ -->
     <script>
-        // Smooth scrolling for navigation links
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -450,16 +471,6 @@
                     });
                 }
             });
-        });
-
-        // Add scroll effect to navigation bar
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(26, 26, 46, 0.98)';
-            } else {
-                nav.style.background = 'rgba(26, 26, 46, 0.95)';
-            }
         });
     </script>
 </body>
