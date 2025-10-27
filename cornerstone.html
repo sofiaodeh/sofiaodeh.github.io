@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resilience Engineering Project - Sofia Odeh</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #b08d7a;
+            --secondary: #8b6f63;
+            --accent: #4a90e2;
+            --danger: #dc3545;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        nav {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-button {
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: var(--accent);
+        }
+
+        .project-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .project-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-info {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .content-section h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content-section h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .phase-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--accent);
+        }
+
+        .phase-card h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        .highlight-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--danger);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box h3 {
+            color: var(--danger);
+            margin-top: 0;
+        }
+
+        .image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .image-caption {
+            font-style: italic;
+            color: var(--secondary);
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .github-button {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .github-button:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        .team-info {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .constraints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .constraint-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .skills-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+
+        .skill-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: rgba(26, 26, 46, 1);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <a href="index.html#projects" class="back-button">
+                ← Back to Projects
+            </a>
+        </div>
+    </nav>
+
+    <div class="project-hero">
+        <h1>Cornerstone of Engineering: Resilience Engineering</h1>
+        <p class="course-info">GE.1501/GE.1502 | Northeastern University</p>
+        <p class="course-info">"Cultivating a Culture of Caution"</p>
+    </div>
+
+    <section class="content-section">
+        <h2>Project Overview</h2>
+        <p>
+            GE.1501/GE.1502, a required course for mechanical engineering students at Northeastern University, 
+            compresses a year-long curriculum into one semester, teaching deadline management and time organization. 
+            Our team of four tackled the challenge of creating an educational museum exhibit for first-year 
+            non-engineering students.
+        </p>
+        
+        <div class="highlight-box">
+            <h3>Project Inspiration</h3>
+            <p>
+                Inspired by recent security alerts on campus, we aimed to leverage this relatable topic to 
+                brainstorm ways to enhance the Northeastern community's resilience to campus dangers. Our 
+                exhibit, "Cultivating a Culture of Caution," educates visitors about emergency preparedness 
+                and campus safety systems.
+            </p>
+        </div>
+
+        <div class="team-info">
+            <h3>Team Composition</h3>
+            <p>4 mechanical engineering students working collaboratively across all phases</p>
+            <p><strong>My Role:</strong> Project Manager for Milestone 1, Lead Programmer, CAD Designer</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Design Constraints & Requirements</h2>
+        <p>
+            Our interactive exhibit had to meet specific Museum of Science requirements while remaining 
+            engaging and educational:
+        </p>
+        
+        <div class="constraints-grid">
+            <div class="constraint-item">
+                <strong>Budget</strong>
+                <p>$100 maximum</p>
+            </div>
+            <div class="constraint-item">
+                <strong>Autonomy</strong>
+                <p>Self-contained operation</p>
+            </div>
+            <div class="constraint-item">
+                <strong>Safety</strong>
+                <p>No water usage</p>
+            </div>
+            <div class="constraint-item">
+                <strong>Technology</strong>
+                <p>Arduino integration</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Development Process</h2>
+
+        <div class="phase-card">
+            <h3>PHASE 1: Conceptualization and Visual Design</h3>
+            <p>
+                The team developed comprehensive sketches and designs for different aspects of the exhibit. 
+                I was responsible for creating a 3D model of the Northeastern tunnel system, allowing users 
+                to understand emergency evacuation routes and different escape paths in case of dangerous situations.
+            </p>
+            
+            <div class="image-grid">
+                <div class="image-container">
+                    <img src="images/cornerstone-tunnel.jpg" alt="3D Tunnel System Design">
+                    <p class="image-caption">3D model of Northeastern's tunnel system for emergency evacuation</p>
+                </div>
+                <div class="image-container">
+                    <img src="images/cornerstone-flowchart.jpg" alt="User Interaction Flowchart">
+                    <p class="image-caption">User interaction flowchart for the museum exhibit</p>
+                </div>
+            </div>
+
+            <h4>Highlights & Skills:</h4>
+            <ul>
+                <li><strong>Project Management:</strong> Led team as Project Manager for Milestone 1</li>
+                <li>Created Gantt charts and Dunker diagrams for project planning</li>
+                <li>Delivered confident presentation to peers and mentors</li>
+                <li>Received and incorporated valuable feedback for design iteration</li>
+            </ul>
+        </div>
+
+        <div class="phase-card">
+            <h3>PHASE 2: Prototyping and Technical Development</h3>
+            <p>
+                This phase focused on bringing our concept to life through programming and fabrication. 
+                I developed the interactive C++ program simulating a 911 operator experience, integrating 
+                Arduino sensors for user input.
+            </p>
+
+            <div class="image-container">
+                <img src="images/cornerstone-exhibit.jpg" alt="Museum Exhibit Layout">
+                <p class="image-caption">Technical drawings showing exhibit dimensions and component placement</p>
+            </div>
+
+            <h4>Technical Implementation:</h4>
+            <ul>
+                <li>Programmed 911 operator simulation in C++</li>
+                <li>Integrated Arduino with MATLAB for data processing</li>
+                <li>Created AutoCAD model of tunnel system</li>
+                <li>Assisted in laser cutting wooden exhibit title</li>
+            </ul>
+
+            <div style="margin: 2rem 0;">
+                <a href="https://github.com/sofiaodeh/Cultivating.a.Culture.of.Caution.git" 
+                   target="_blank" 
+                   class="github-button">
+                    View Code on GitHub →
+                </a>
+            </div>
+
+            <div class="image-container">
+                <img src="images/cornerstone-display.jpg" alt="Cultivating a Culture of Caution Display">
+                <p class="image-caption">"Cultivating a Culture of Caution" - Final exhibit title display</p>
+            </div>
+        </div>
+
+        <div class="phase-card">
+            <h3>PHASE 3: Exhibit Fabrication and Presentation</h3>
+            <p>
+                The final phase involved assembling all components into a cohesive, interactive exhibit. 
+                We presented to both non-engineering students and engineering peers, successfully achieving 
+                our goal of educating the community about campus safety and resilience.
+            </p>
+
+            <div class="image-grid">
+                <div class="image-container">
+                    <img src="images/cornerstone-team.jpg" alt="Team Working">
+                    <p class="image-caption">Team collaboration during final assembly</p>
+                </div>
+                <div class="image-container">
+                    <img src="images/cornerstone-group.jpg" alt="Team Photo">
+                    <p class="image-caption">Project team after successful presentation</p>
+                </div>
+            </div>
+
+            <h4>Presentation Highlights:</h4>
+            <ul>
+                <li>Successfully assembled final exhibit under tight deadline</li>
+                <li>Presented to diverse audience of students and faculty</li>
+                <li>Demonstrated interactive features and educational value</li>
+                <li>Received positive feedback on innovation and practicality</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Interactive Features</h2>
+        <p>
+            Our exhibit incorporated multiple interactive elements to engage visitors and reinforce 
+            safety concepts:
+        </p>
+        <ul>
+            <li><strong>911 Operator Simulation:</strong> Users experience emergency response protocols</li>
+            <li><strong>Tunnel System Navigation:</strong> Interactive 3D model showing escape routes</li>
+            <li><strong>Arduino Sensors:</strong> Physical interaction triggering informational displays</li>
+            <li><strong>Emergency Scenario Testing:</strong> Quiz-based learning about safety procedures</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>Project Impact</h2>
+        <p>
+            "Cultivating a Culture of Caution" successfully educated visitors about campus safety while 
+            demonstrating the power of engineering to address real-world challenges. The project strengthened 
+            the Northeastern community's awareness of emergency resources and procedures.
+        </p>
+        
+        <div class="highlight-box">
+            <h3>Key Achievements</h3>
+            <ul>
+                <li>Educated 50+ students about campus safety systems</li>
+                <li>Created reusable educational tool for future safety training</li>
+                <li>Demonstrated successful integration of technology and education</li>
+                <li>Received high marks for innovation and practical application</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Skills Developed & Applied</h2>
+        <div class="skills-used">
+            <span class="skill-tag">Project Management</span>
+            <span class="skill-tag">C++ Programming</span>
+            <span class="skill-tag">MATLAB</span>
+            <span class="skill-tag">Arduino</span>
+            <span class="skill-tag">AutoCAD</span>
+            <span class="skill-tag">Laser Cutting</span>
+            <span class="skill-tag">Public Speaking</span>
+            <span class="skill-tag">Team Leadership</span>
+            <span class="skill-tag">Gantt Charts</span>
+            <span class="skill-tag">Technical Documentation</span>
+            <span class="skill-tag">Rapid Prototyping</span>
+            <span class="skill-tag">User Experience Design</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>Want to learn more about this project?</p>
+        <p>
+            <a href="https://github.com/sofiaodeh/Cultivating.a.Culture.of.Caution.git" target="_blank">View Code</a> | 
+            <a href="mailto:odeh.s@northeastern.edu">Contact me</a> | 
+            <a href="index.html">Back to main page</a>
+        </p>
+    </footer>
+</body>
+</html>
