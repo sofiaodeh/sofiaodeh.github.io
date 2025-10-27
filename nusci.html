@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NU SCI Magazine - Sofia Odeh</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #b08d7a;
+            --secondary: #8b6f63;
+            --accent: #4a90e2;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: white;
+        }
+
+        nav {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-button {
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: var(--accent);
+        }
+
+        .project-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('images/milky-way.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .project-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .logo-container {
+            margin: 2rem auto;
+            width: 150px;
+            height: 150px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .logo-container img {
+            width: 80%;
+            height: auto;
+        }
+
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .content-section h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content-section h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .objective-box {
+            background: linear-gradient(135deg, var(--bg-light), white);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--accent);
+        }
+
+        .sample-newsletter {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .sample-newsletter h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .newsletter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .contributions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .contribution-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .contribution-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contribution-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contribution-card h4 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        .skills-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+
+        .skill-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .space-image-bg {
+            background-image: url('images/milky-way.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 4rem 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .space-image-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+        }
+
+        .space-image-content {
+            position: relative;
+            color: white;
+            text-align: center;
+        }
+
+        footer {
+            background: rgba(26, 26, 46, 1);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <a href="index.html#projects" class="back-button">
+                ← Back to Projects
+            </a>
+        </div>
+    </nav>
+
+    <div class="project-hero">
+        <div class="project-hero-content">
+            <div class="logo-container">
+                <img src="images/nusci-logo.png" alt="NU SCI Logo">
+            </div>
+            <h1>NU SCI Magazine</h1>
+            <p>Newsletter Writer | Science Communication</p>
+        </div>
+    </div>
+
+    <section class="content-section">
+        <h2>About NU SCI Magazine</h2>
+        <p>
+            In September 2023, I joined NU SCI Magazine as a Newsletter Writer, initiating a weekly email 
+            newsletter focused on promoting industry engagement through concise updates on scientific developments. 
+            Our publication stands out through our innovative approach of presenting science in an engaging and 
+            non-traditional manner, fostering curiosity among readers from all backgrounds.
+        </p>
+
+        <div class="objective-box">
+            <h3>Mission</h3>
+            <p>
+                <strong>Establish a reputable newsletter that is accessible and engaging to all Northeastern 
+                audiences ranging from non-STEM majors to aspiring scientists.</strong>
+            </p>
+            <p>
+                We believe science should be exciting and accessible to everyone, regardless of their background. 
+                Through creative storytelling and visual design, we transform complex scientific concepts into 
+                compelling narratives that inspire wonder and understanding.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>My Role & Contributions</h2>
+        <p>
+            As a Newsletter Writer, I work closely with our editorial team to ensure the precision and quality 
+            of scientific content while maintaining accessibility for our diverse readership.
+        </p>
+
+        <div class="contributions-grid">
+            <div class="contribution-card">
+                <div class="contribution-icon">🔬</div>
+                <h4>Content Curation</h4>
+                <p>Meticulously select articles showcasing the latest developments in physics, space, and technology</p>
+            </div>
+            <div class="contribution-card">
+                <div class="contribution-icon">✍️</div>
+                <h4>Feature Writing</h4>
+                <p>Craft compelling feature articles that bridge complex science with engaging storytelling</p>
+            </div>
+            <div class="contribution-card">
+                <div class="contribution-icon">🎨</div>
+                <h4>Visual Design</h4>
+                <p>Create captivating visuals using Canva to enhance reader engagement and comprehension</p>
+            </div>
+            <div class="contribution-card">
+                <div class="contribution-icon">🔧</div>
+                <h4>Technical Enhancement</h4>
+                <p>Contribute to formatting improvements and technical refinements of the newsletter platform</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Featured Work</h2>
+        <div class="space-image-bg">
+            <div class="space-image-content">
+                <h3>Space & Technology Coverage</h3>
+                <p>
+                    Specializing in astronomy and space technology, I bring the wonders of the universe 
+                    to our readers through carefully researched articles and stunning visual presentations.
+                </p>
+            </div>
+        </div>
+
+        <div class="sample-newsletter">
+            <h3>Sample Newsletter: October 1, 2023</h3>
+            <p>
+                Featuring cutting-edge developments in space exploration, quantum computing breakthroughs, 
+                and innovative biotechnology research.
+            </p>
+            <a href="https://nuscimagazine.com/sunday-sci-10-01-23/" 
+               target="_blank" 
+               class="newsletter-button">
+                Read Sample Newsletter →
+            </a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Impact & Approach</h2>
+        <p>
+            What sets our newsletter apart is our commitment to making science accessible without 
+            dumbing it down. We respect our readers' intelligence while acknowledging that not everyone 
+            has a scientific background.
+        </p>
+
+        <div class="highlight-box">
+            <h3>Our Approach</h3>
+            <ul>
+                <li><strong>Clarity First:</strong> Complex concepts explained in clear, jargon-free language</li>
+                <li><strong>Visual Storytelling:</strong> Infographics and images that enhance understanding</li>
+                <li><strong>Relevance:</strong> Connecting scientific discoveries to everyday life</li>
+                <li><strong>Engagement:</strong> Interactive elements and thought-provoking questions</li>
+                <li><strong>Diversity:</strong> Covering a wide range of scientific disciplines</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Weekly Process</h2>
+        <p>
+            Creating each newsletter is a collaborative effort that requires careful planning and execution:
+        </p>
+        <ol>
+            <li><strong>Research Phase:</strong> Scan recent scientific publications and news for compelling stories</li>
+            <li><strong>Editorial Meeting:</strong> Collaborate with team to select topics and assign sections</li>
+            <li><strong>Content Creation:</strong> Write articles, design graphics, and format layout</li>
+            <li><strong>Review Process:</strong> Fact-checking and editorial review for accuracy</li>
+            <li><strong>Design Finalization:</strong> Polish visual elements and ensure mobile responsiveness</li>
+            <li><strong>Distribution:</strong> Send to subscriber base and promote on social media</li>
+        </ol>
+    </section>
+
+    <section class="content-section">
+        <h2>Skills Developed</h2>
+        <div class="skills-used">
+            <span class="skill-tag">Technical Writing</span>
+            <span class="skill-tag">Science Communication</span>
+            <span class="skill-tag">CANVA</span>
+            <span class="skill-tag">Research</span>
+            <span class="skill-tag">Editorial Collaboration</span>
+            <span class="skill-tag">Time Management</span>
+            <span class="skill-tag">Digital Literacy</span>
+            <span class="skill-tag">Attention to Detail</span>
+            <span class="skill-tag">Content Curation</span>
+            <span class="skill-tag">Visual Design</span>
+            <span class="skill-tag">Audience Engagement</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>Want to read our newsletter or learn more?</p>
+        <p>
+            <a href="https://nuscimagazine.com/sunday-sci-10-01-23/" target="_blank">Read Sample</a> | 
+            <a href="mailto:odeh.s@northeastern.edu">Contact me</a> | 
+            <a href="index.html">Back to main page</a>
+        </p>
+    </footer>
+</body>
+</html>

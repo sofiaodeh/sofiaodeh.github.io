@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art of Inquiry Podcast - Sofia Odeh</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #b08d7a;
+            --secondary: #8b6f63;
+            --accent: #4a90e2;
+            --spotify-green: #1DB954;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        nav {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-button {
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: var(--accent);
+        }
+
+        .project-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .project-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .podcast-tagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .spotify-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--spotify-green);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 2rem;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .spotify-button:hover {
+            transform: scale(1.05);
+        }
+
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .content-section h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content-section h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .podcast-intro {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .podcast-cover {
+            width: 250px;
+            height: 250px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .hosts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .host-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .host-card h4 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .episode-list {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .episode {
+            border-bottom: 1px solid #eee;
+            padding: 1.5rem 0;
+        }
+
+        .episode:last-child {
+            border-bottom: none;
+        }
+
+        .episode h4 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .episode-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        .skills-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+
+        .skill-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            color: var(--text-dark);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: rgba(26, 26, 46, 1);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .podcast-intro {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .podcast-cover {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <a href="index.html#projects" class="back-button">
+                ← Back to Projects
+            </a>
+        </div>
+    </nav>
+
+    <div class="project-hero">
+        <h1>Art of Inquiry Podcast</h1>
+        <p class="podcast-tagline">
+            "Shining a light on the beauty of STEM through the lens of art and creativity"
+        </p>
+        <a href="https://open.spotify.com/show/7vNbyoHH3YWxI9D1fchToJ" target="_blank" class="spotify-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            Listen on Spotify
+        </a>
+    </div>
+
+    <section class="content-section">
+        <h2>About the Podcast</h2>
+        
+        <div class="podcast-intro">
+            <img src="images/podcast-cover.jpg" alt="Art of Inquiry Podcast Cover" class="podcast-cover">
+            <div>
+                <p>
+                    The Art of Inquiry shines a light on the beauty of STEM by interviewing successful academics 
+                    and researchers in science. We explore their work not just technically but from a holistic and 
+                    artistic perspective, highlighting the interdisciplinary efforts that often go unseen.
+                </p>
+                <p>
+                    Our goal is to inspire curiosity and show how creativity and science effortlessly intersect. 
+                    Our thesis focuses on the hidden face of art in our everyday life and specifically in hard 
+                    scientific research.
+                </p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Listeners</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">2+</div>
+                <div class="stat-label">Episodes Released</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">Growing</div>
+                <div class="stat-label">Community</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Meet the Hosts</h2>
+        <div class="hosts-container">
+            <div class="host-card">
+                <h4>Sofia Odeh</h4>
+                <p><strong>Mechanical Engineer</strong></p>
+                <p>Brings engineering perspective and curiosity about the intersection of technical precision and creative problem-solving</p>
+            </div>
+            <div class="host-card">
+                <h4>May Einhorn</h4>
+                <p><strong>Bioengineer & Art Lover</strong></p>
+                <p>Combines biological sciences with artistic appreciation to explore the beauty in scientific discovery</p>
+            </div>
+        </div>
+        <p>
+            We met during our co-op in San Francisco and bonded over our shared belief that science 
+            and art are not separate disciplines but interconnected ways of understanding our world.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>Featured Episodes</h2>
+        <div class="episode-list">
+            <div class="episode">
+                <h4>Episode 2: Data Design & Public Memory with Paolo Ciuccarelli</h4>
+                <p class="episode-date">September 26, 2024 | 33 minutes</p>
+                <p>
+                    In this episode, we sit down with Paolo Ciuccarelli, a designer and researcher at the 
+                    forefront of data design. Together, we explore what it means to collaborate across disciplines 
+                    in this growing field, and how to approach the responsibility of storytelling in shaping public memory.
+                </p>
+            </div>
+            <div class="episode">
+                <h4>Episode 1: Welcome to the Art of Inquiry</h4>
+                <p class="episode-date">September 9, 2024 | 4 minutes</p>
+                <p>
+                    Tune in for an introduction to the Art of Inquiry, get to know your hosts, and explore the 
+                    roles of art and science in your everyday life!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Production Process</h2>
+        <p>
+            Creating the Art of Inquiry has been a journey of learning and growth. From designing our logo 
+            ourselves to mastering the technical aspects of podcast production, every step has been an adventure:
+        </p>
+        
+        <div class="highlight-box">
+            <h3>Behind the Scenes</h3>
+            <ul>
+                <li><strong>Recording:</strong> Using professional equipment at Northeastern's Snell Library Recording Studio</li>
+                <li><strong>Audio Editing:</strong> Mastering Audacity for post-production</li>
+                <li><strong>Platform Management:</strong> Navigating Spotify's creator interface</li>
+                <li><strong>Visual Design:</strong> Creating our own branding and logo</li>
+                <li><strong>Future Plans:</strong> Expanding to video content using Premiere Pro</li>
+                <li><strong>Marketing:</strong> Developing strategies to reach wider audiences</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Vision & Impact</h2>
+        <p>
+            We're filling a gap in science communication by showing that researchers are not just scientists 
+            but also artists in their approach to discovery. Through thoughtful conversations, we reveal the 
+            creative processes behind groundbreaking research and inspire the next generation to see STEM 
+            fields as creative endeavors.
+        </p>
+        
+        <div class="highlight-box">
+            <h3>Our Mission</h3>
+            <p>
+                To demonstrate that the boundary between art and science is not a wall but a bridge, 
+                and that the most innovative breakthroughs happen when we cross it.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Skills Developed</h2>
+        <div class="skills-used">
+            <span class="skill-tag">Audio Production</span>
+            <span class="skill-tag">Audacity</span>
+            <span class="skill-tag">Interview Techniques</span>
+            <span class="skill-tag">Content Creation</span>
+            <span class="skill-tag">Logo Design</span>
+            <span class="skill-tag">Spotify Creator Tools</span>
+            <span class="skill-tag">Marketing Strategy</span>
+            <span class="skill-tag">Public Speaking</span>
+            <span class="skill-tag">Research</span>
+            <span class="skill-tag">Project Management</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>Want to listen or learn more?</p>
+        <p>
+            <a href="https://open.spotify.com/show/7vNbyoHH3YWxI9D1fchToJ" target="_blank">Listen on Spotify</a> | 
+            <a href="mailto:odeh.s@northeastern.edu">Contact me</a> | 
+            <a href="index.html">Back to main page</a>
+        </p>
+    </footer>
+</body>
+</html>
