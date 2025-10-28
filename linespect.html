@@ -16,6 +16,8 @@
             --primary: #b08d7a;
             --secondary: #8b6f63;
             --accent: #4a90e2;
+            --ocean-blue: #006994;
+            --algae-green: #4CAF50;
             --text-dark: #2c3e50;
             --text-light: #ffffff;
             --bg-light: #f8f9fa;
@@ -120,6 +122,66 @@
             line-height: 1.6;
         }
 
+        .product-overview {
+            background: linear-gradient(135deg, rgba(0, 105, 148, 0.1), rgba(76, 175, 80, 0.1));
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--ocean-blue);
+        }
+
+        .product-overview h3 {
+            color: var(--ocean-blue);
+            margin-top: 0;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 3px solid var(--algae-green);
+        }
+
+        .stat-card h4 {
+            color: var(--ocean-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .image-caption {
+            font-style: italic;
+            color: var(--secondary);
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
         .achievement-card {
             background: white;
             border-radius: 10px;
@@ -200,13 +262,6 @@
             font-weight: bold;
         }
 
-        .advice-section {
-            background: linear-gradient(135deg, var(--bg-light), white);
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-        }
-
         footer {
             background: rgba(26, 26, 46, 1);
             color: var(--text-light);
@@ -235,30 +290,72 @@
     <div class="project-hero">
         <h1>LineSpect Co-op</h1>
         <p class="project-meta">Optical Engineering & System Design</p>
-        <p class="project-meta">HAB Camera Development</p>
+        <p class="project-meta">HABForecastr Development</p>
     </div>
 
     <section class="content-section">
-        <h2>Overview</h2>
-        <p>
-            During my co-op at LineSpect, I worked on developing advanced optical imaging systems, 
-            with a primary focus on the HAB (High Altitude Balloon) Camera project. This role combined 
-            mechanical engineering, optical design, and hands-on prototyping to create innovative 
-            microscopy solutions for environmental monitoring and research applications.
-        </p>
+        <h2>Product Overview: HABForecastr</h2>
+        
+        <div class="product-overview">
+            <h3>Predicting Harmful Algal Blooms</h3>
+            <p>
+                HABForecastr is a revolutionary submersible microscope that predicts harmful algal blooms (HABs) 
+                7 days in advance — providing critical time to act, not react. Think of it as a weather forecast 
+                for marine ecosystems, enabling proactive management of water resources.
+            </p>
+            <ul>
+                <li><strong>7-Day Advanced Warning:</strong> More time to implement preventive measures</li>
+                <li><strong>Cost Savings:</strong> Prevents millions in damages and cleanup costs</li>
+                <li><strong>Environmental Protection:</strong> Enables early intervention to minimize ecological impact</li>
+                <li><strong>1/6th the Cost:</strong> More affordable than current detection systems</li>
+            </ul>
+        </div>
+
+        <div class="image-container">
+            <img src="images/linespect-diagram.jpg" alt="HABForecastr Optical System Diagram">
+            <p class="image-caption">Figure 1: HABForecastr optical system showing lightsheet microscopy setup for algae detection</p>
+        </div>
+
+        <div class="impact-stats">
+            <div class="stat-card">
+                <h4>Economic Impact</h4>
+                <p>$10-100 million annual cost of HABs in the U.S.</p>
+            </div>
+            <div class="stat-card">
+                <h4>Tourism Loss</h4>
+                <p>$40 million per single HAB event</p>
+            </div>
+            <div class="stat-card">
+                <h4>Healthcare Costs</h4>
+                <p>$4.4 million in emergency visits per event</p>
+            </div>
+        </div>
 
         <div class="company-reference">
             <p><strong>Company:</strong> LineSpect - Advanced Submicroscope Technology</p>
             <p>
                 <a href="https://linespect.com/" target="_blank">Visit LineSpect →</a> | 
-                <a href="https://submicroscope.com/" target="_blank">Learn About Submicroscope →</a>
+                <a href="https://submicroscope.com/" target="_blank">Learn About HABForecastr →</a>
             </p>
         </div>
     </section>
 
     <section class="content-section">
-        <h2>Most Notable Achievements</h2>
+        <h2>My Contributions to HABForecastr</h2>
         
+        <h3>Optical System Development</h3>
+        
+        <div class="image-grid">
+            <div class="image-container">
+                <img src="images/linespect-microscope.jpg" alt="Microscope assembly showing algae sample">
+                <p class="image-caption">Microscope assembly with algae sample under UV illumination</p>
+            </div>
+            <div class="image-container">
+                <img src="images/linespect-algae.jpg" alt="Captured algae cells">
+                <p class="image-caption">Algae cells captured using optimized imaging system</p>
+            </div>
+        </div>
+
         <div class="achievement-card">
             <h3>Complete Redesign of Optical Backplate</h3>
             <ul>
@@ -270,22 +367,16 @@
             </ul>
         </div>
 
-        <div class="achievement-card">
-            <h3>Electronics & Manufacturing Excellence</h3>
-            <ul>
-                <li>Reflow soldered LED boards from scratch and repaired faulty components</li>
-                <li>Conducted rigorous testing of LED drivers to identify issues and prevent overcurrent damage</li>
-                <li>Recovered two critical NVIDIA Orin Nano boards after system shutdown</li>
-                <li>Learned precision glass and mirror cutting techniques for prototype assembly</li>
-                <li>Independently mastered Zemax software for toroidal lens modeling</li>
-            </ul>
+        <div class="image-container">
+            <img src="images/linespect-growth.jpg" alt="Algae growth prediction graph">
+            <p class="image-caption">Figure 4: Limiting algae growth graph showing HABForecastr's predictive capabilities</p>
         </div>
     </section>
 
     <section class="content-section">
-        <h2>HAB Camera Development</h2>
+        <h2>Technical Development</h2>
         
-        <h3>Optical System Optimization</h3>
+        <h3>HAB Camera System</h3>
         <ul>
             <li><strong>Housing Design:</strong> Optimized to fit within 4" copper pipe while maintaining optical performance</li>
             <li><strong>Optical Path Modeling:</strong> Reduced tube size while preserving full field of view</li>
@@ -310,12 +401,13 @@
             </div>
         </div>
 
-        <h3>Rapid Prototyping & Tooling</h3>
+        <h3>Electronics & Manufacturing Excellence</h3>
         <ul>
-            <li>Designed mirror-cutting jig for compact assemblies</li>
-            <li>Created diagnostic jig for LED board testing</li>
-            <li>Developed custom tools to identify and isolate faulty LED modules</li>
-            <li>Maintained and calibrated FDM 3D printer for consistent prototyping</li>
+            <li>Reflow soldered LED boards from scratch and repaired faulty components</li>
+            <li>Conducted rigorous testing of LED drivers to identify issues and prevent overcurrent damage</li>
+            <li>Recovered two critical NVIDIA Orin Nano boards after system shutdown</li>
+            <li>Learned precision glass and mirror cutting techniques for prototype assembly</li>
+            <li>Independently mastered Zemax software for toroidal lens modeling</li>
         </ul>
     </section>
 
@@ -324,7 +416,7 @@
         
         <div class="highlight-box">
             <h3>Microplastics Detection System</h3>
-            <p>Created comprehensive CAD mockup of the product to support proposal development</p>
+            <p>Created comprehensive CAD mockup of the product to support proposal development for environmental monitoring applications</p>
         </div>
 
         <div class="highlight-box">
@@ -337,31 +429,22 @@
     </section>
 
     <section class="content-section">
-        <h2>Technical Challenges Overcome</h2>
+        <h2>Impact & Future Applications</h2>
         <p>
-            The primary challenge involved unreliable electrical components that delayed imaging capabilities 
-            and postponed light sheet thickness measurements. Despite these setbacks, I:
+            The HABForecastr technology I helped develop has the potential to save millions of dollars 
+            annually by providing early warning of harmful algal blooms. Key benefits include:
         </p>
         <ul>
-            <li>Developed diagnostic procedures to quickly identify component failures</li>
-            <li>Created workaround solutions to continue testing while awaiting replacements</li>
-            <li>Established preventive maintenance protocols for critical components</li>
-            <li>Documented failure modes to prevent future occurrences</li>
+            <li>Preventing beach closures that cost $50 million in lost wages and tourism</li>
+            <li>Protecting shellfish industries from $5.58 million in contamination losses</li>
+            <li>Reducing healthcare costs by enabling preventive measures</li>
+            <li>Maintaining property values for coastal real estate</li>
         </ul>
-    </section>
-
-    <section class="content-section">
-        <h2>Advice for Future Interns</h2>
-        <div class="advice-section">
-            <h3>Key Recommendations:</h3>
-            <ul>
-                <li><strong>Study Design History:</strong> Understand past design changes to better comprehend current configurations</li>
-                <li><strong>Hands-on Assembly:</strong> Physically disassemble and reassemble the backplane early to understand the system</li>
-                <li><strong>CAD Best Practices:</strong> Maintain consistent reference points for dimensions to allow rapid design changes</li>
-                <li><strong>Printer Maintenance:</strong> Routinely perform calibration prints and manually calibrate the FDM base plate every 4 large prints</li>
-                <li><strong>Documentation:</strong> Keep detailed records of all modifications and test results</li>
-            </ul>
-        </div>
+        
+        <p>
+            This technology represents a significant advancement in marine environmental monitoring, 
+            providing communities with the tools they need to protect both public health and economic interests.
+        </p>
     </section>
 
     <section class="content-section">
@@ -369,6 +452,7 @@
         <div class="skills-used">
             <span class="skill-tag">Optical Design</span>
             <span class="skill-tag">Zemax</span>
+            <span class="skill-tag">Lightsheet Microscopy</span>
             <span class="skill-tag">CAD Design</span>
             <span class="skill-tag">3D Printing</span>
             <span class="skill-tag">Reflow Soldering</span>
@@ -378,7 +462,7 @@
             <span class="skill-tag">System Integration</span>
             <span class="skill-tag">Rapid Prototyping</span>
             <span class="skill-tag">Electronics Debugging</span>
-            <span class="skill-tag">Microscopy</span>
+            <span class="skill-tag">Environmental Monitoring</span>
         </div>
     </section>
 
