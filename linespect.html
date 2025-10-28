@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LineSpect Co-op - Sofia Odeh</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #b08d7a;
+            --secondary: #8b6f63;
+            --accent: #4a90e2;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        nav {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-button {
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: var(--accent);
+        }
+
+        .project-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .project-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .content-section h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .content-section h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .achievement-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--accent);
+        }
+
+        .achievement-card h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        .highlight-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        .technical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .technical-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .technical-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .technical-card h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .skills-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+
+        .skill-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .company-reference {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .company-reference a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .advice-section {
+            background: linear-gradient(135deg, var(--bg-light), white);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        footer {
+            background: rgba(26, 26, 46, 1);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <a href="index.html#projects" class="back-button">
+                ← Back to Projects
+            </a>
+        </div>
+    </nav>
+
+    <div class="project-hero">
+        <h1>LineSpect Co-op</h1>
+        <p class="project-meta">Optical Engineering & System Design</p>
+        <p class="project-meta">HAB Camera Development</p>
+    </div>
+
+    <section class="content-section">
+        <h2>Overview</h2>
+        <p>
+            During my co-op at LineSpect, I worked on developing advanced optical imaging systems, 
+            with a primary focus on the HAB (High Altitude Balloon) Camera project. This role combined 
+            mechanical engineering, optical design, and hands-on prototyping to create innovative 
+            microscopy solutions for environmental monitoring and research applications.
+        </p>
+
+        <div class="company-reference">
+            <p><strong>Company:</strong> LineSpect - Advanced Submicroscope Technology</p>
+            <p>
+                <a href="https://linespect.com/" target="_blank">Visit LineSpect →</a> | 
+                <a href="https://submicroscope.com/" target="_blank">Learn About Submicroscope →</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Most Notable Achievements</h2>
+        
+        <div class="achievement-card">
+            <h3>Complete Redesign of Optical Backplate</h3>
+            <ul>
+                <li><strong>Stray Light Reduction:</strong> Implemented shielding solutions to dramatically improve imaging quality</li>
+                <li><strong>Mirror Mount Simplification:</strong> Redesigned mounts for faster and more repeatable optical alignment</li>
+                <li><strong>System Size Optimization:</strong> Minimized tube diameter while maintaining full field of view (FOV)</li>
+                <li><strong>Component Integration:</strong> Combined NVIDIA mount and backplane into a single 3D-printed component</li>
+                <li><strong>Assembly Refinement:</strong> Reduced screw count and part complexity for streamlined manufacturing</li>
+            </ul>
+        </div>
+
+        <div class="achievement-card">
+            <h3>Electronics & Manufacturing Excellence</h3>
+            <ul>
+                <li>Reflow soldered LED boards from scratch and repaired faulty components</li>
+                <li>Conducted rigorous testing of LED drivers to identify issues and prevent overcurrent damage</li>
+                <li>Recovered two critical NVIDIA Orin Nano boards after system shutdown</li>
+                <li>Learned precision glass and mirror cutting techniques for prototype assembly</li>
+                <li>Independently mastered Zemax software for toroidal lens modeling</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>HAB Camera Development</h2>
+        
+        <h3>Optical System Optimization</h3>
+        <ul>
+            <li><strong>Housing Design:</strong> Optimized to fit within 4" copper pipe while maintaining optical performance</li>
+            <li><strong>Optical Path Modeling:</strong> Reduced tube size while preserving full field of view</li>
+            <li><strong>Mounting Flexibility:</strong> Added compatibility for both NVIDIA and Odroid boards</li>
+            <li><strong>Beam Splitter Enhancement:</strong> Enabled interchangeability with dichroic mirrors for improved adjustability</li>
+            <li><strong>Laser Diode Mount:</strong> Designed with fine horizontal/vertical adjustment and integrated cooling</li>
+        </ul>
+
+        <h3>Testing & Validation</h3>
+        <div class="technical-grid">
+            <div class="technical-card">
+                <h4>LED Configuration Testing</h4>
+                <p>Tested multiple setups (700, 1000, 1200 mA) to define optimal current levels for brightness without component damage</p>
+            </div>
+            <div class="technical-card">
+                <h4>Optical Measurements</h4>
+                <p>Used ImageJ and custom 3D-printed jigs to measure FOV, depth of field, and light sheet thickness</p>
+            </div>
+            <div class="technical-card">
+                <h4>Algae Imaging Research</h4>
+                <p>Demonstrated UV lighting was unnecessary by comparing results with laser illumination</p>
+            </div>
+        </div>
+
+        <h3>Rapid Prototyping & Tooling</h3>
+        <ul>
+            <li>Designed mirror-cutting jig for compact assemblies</li>
+            <li>Created diagnostic jig for LED board testing</li>
+            <li>Developed custom tools to identify and isolate faulty LED modules</li>
+            <li>Maintained and calibrated FDM 3D printer for consistent prototyping</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>Additional Projects</h2>
+        
+        <div class="highlight-box">
+            <h3>Microplastics Detection System</h3>
+            <p>Created comprehensive CAD mockup of the product to support proposal development</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>3D Printer Maintenance & Recovery</h3>
+            <p>
+                Diagnosed and recovered the FDM printer, resolving both hardware and firmware issues 
+                to restore full functionality. Left the printer perfectly calibrated for future use.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Technical Challenges Overcome</h2>
+        <p>
+            The primary challenge involved unreliable electrical components that delayed imaging capabilities 
+            and postponed light sheet thickness measurements. Despite these setbacks, I:
+        </p>
+        <ul>
+            <li>Developed diagnostic procedures to quickly identify component failures</li>
+            <li>Created workaround solutions to continue testing while awaiting replacements</li>
+            <li>Established preventive maintenance protocols for critical components</li>
+            <li>Documented failure modes to prevent future occurrences</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>Advice for Future Interns</h2>
+        <div class="advice-section">
+            <h3>Key Recommendations:</h3>
+            <ul>
+                <li><strong>Study Design History:</strong> Understand past design changes to better comprehend current configurations</li>
+                <li><strong>Hands-on Assembly:</strong> Physically disassemble and reassemble the backplane early to understand the system</li>
+                <li><strong>CAD Best Practices:</strong> Maintain consistent reference points for dimensions to allow rapid design changes</li>
+                <li><strong>Printer Maintenance:</strong> Routinely perform calibration prints and manually calibrate the FDM base plate every 4 large prints</li>
+                <li><strong>Documentation:</strong> Keep detailed records of all modifications and test results</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Skills & Technologies</h2>
+        <div class="skills-used">
+            <span class="skill-tag">Optical Design</span>
+            <span class="skill-tag">Zemax</span>
+            <span class="skill-tag">CAD Design</span>
+            <span class="skill-tag">3D Printing</span>
+            <span class="skill-tag">Reflow Soldering</span>
+            <span class="skill-tag">LED Driver Testing</span>
+            <span class="skill-tag">ImageJ Analysis</span>
+            <span class="skill-tag">Glass/Mirror Cutting</span>
+            <span class="skill-tag">System Integration</span>
+            <span class="skill-tag">Rapid Prototyping</span>
+            <span class="skill-tag">Electronics Debugging</span>
+            <span class="skill-tag">Microscopy</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>Want to learn more about my work at LineSpect?</p>
+        <p>
+            <a href="mailto:odeh.s@northeastern.edu">Contact me</a> | 
+            <a href="index.html">Back to main page</a>
+        </p>
+    </footer>
+</body>
+</html>
