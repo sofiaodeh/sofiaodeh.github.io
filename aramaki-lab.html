@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,14 +12,22 @@
             box-sizing: border-box;
         }
 
-       :root {
-            --primary: #3E2723;      /* Deep Chocolate */
-            --accent: #C65D00;       /* Terracotta */
-            --secondary: #F5E6D3;    /* Sand */
-            --highlight: #87A96B;    /* Sage Green */
-            --text: #1C1412;         /* Espresso */
-            --white: #FEFEFE;
-            --light-sand: #FAF4EC;
+        :root {
+            /* High Impact Professional Palette */
+            --navy: #0A1628;         /* Rich Navy - almost black */
+            --navy-light: #1E3A5F;   /* Medium Navy */
+            --gold: #F4C430;         /* Bright Gold - high contrast */
+            --gold-muted: #C9A961;   /* Softer gold for subtle uses */
+            --maroon: #7C2E41;       /* Deep Maroon */
+            --white: #FFFFFF;
+            --off-white: #FAFAFA;
+            --gray: #6B7280;
+            --text-dark: #1A1A1A;
+            --text-light: #FFFFFF;
+            --bg-light: #FAFAFA;
+            --primary: #0A1628;
+            --secondary: #7C2E41;
+            --accent: #F4C430;
         }
 
         body {
@@ -29,8 +37,7 @@
         }
 
         nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--navy);
             position: fixed;
             width: 100%;
             top: 0;
@@ -68,8 +75,8 @@
         }
 
         .project-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
+            background: var(--off-white);
+            color: var(--navy);
             padding: 8rem 2rem 4rem;
             text-align: center;
         }
@@ -79,6 +86,11 @@
             margin-bottom: 1rem;
         }
 
+        .project-hero p {
+            color: var(--maroon);
+            font-size: 1.1rem;
+        }
+
         .content-section {
             max-width: 900px;
             margin: 0 auto;
@@ -86,15 +98,15 @@
         }
 
         .content-section h2 {
-            color: var(--secondary);
+            color: var(--navy);
             font-size: 2rem;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 3px solid var(--gold);
         }
 
         .content-section h3 {
-            color: var(--text-dark);
+            color: var(--maroon);
             font-size: 1.5rem;
             margin-top: 2rem;
             margin-bottom: 1rem;
@@ -118,14 +130,14 @@
 
         .highlight-box {
             background: var(--bg-light);
-            border-left: 4px solid var(--accent);
+            border-left: 4px solid var(--gold);
             padding: 1.5rem;
             margin: 2rem 0;
             border-radius: 5px;
         }
 
         .highlight-box h3 {
-            color: var(--accent);
+            color: var(--navy);
             margin-top: 0;
         }
 
@@ -143,7 +155,7 @@
 
         .image-caption {
             font-style: italic;
-            color: var(--secondary);
+            color: var(--gray);
             margin-top: 1rem;
             font-size: 0.95rem;
         }
@@ -156,7 +168,7 @@
         }
 
         .skill-tag {
-            background: var(--primary);
+            background: var(--navy);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 20px;
@@ -164,7 +176,7 @@
         }
 
         footer {
-            background: rgba(26, 26, 46, 1);
+            background: var(--navy);
             color: var(--text-light);
             text-align: center;
             padding: 2rem;
@@ -172,8 +184,17 @@
         }
 
         footer a {
-            color: var(--accent);
+            color: var(--gold);
             text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        strong {
+            color: var(--navy);
+            font-weight: 600;
         }
     </style>
 </head>
