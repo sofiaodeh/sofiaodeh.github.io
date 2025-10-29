@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,29 +13,35 @@
         }
 
         :root {
-            --primary: #3E2723;      /* Deep Chocolate */
-            --accent: #C65D00;       /* Terracotta */
-            --secondary: #F5E6D3;    /* Sand */
-            --highlight: #87A96B;    /* Sage Green */
-            --text: #1C1412;         /* Espresso */
-            --white: #FEFEFE;
-            --light-sand: #FAF4EC;
+            /* Matching main site color palette */
+            --navy: #0A1628;
+            --navy-light: #1E3A5F;
+            --gold: #F4C430;
+            --gold-muted: #C9A961;
+            --maroon: #7C2E41;
+            --white: #FFFFFF;
+            --off-white: #FAFAFA;
+            --gray: #6B7280;
+            --text-dark: #1A1A1A;
+            --spotify-green: #1DB954;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
+            background-color: var(--white);
         }
 
+        /* Navigation matching main site */
         nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--navy);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 1.2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .nav-container {
@@ -48,135 +54,223 @@
         }
 
         .nav-brand {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: bold;
+            color: var(--white);
+            font-size: 1.4rem;
+            font-weight: 600;
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
         .back-button {
-            color: var(--text-light);
+            color: var(--white);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             transition: color 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
         }
 
         .back-button:hover {
-            color: var(--accent);
+            color: var(--gold);
         }
 
+        /* Hero section matching main site style */
         .project-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
-            padding: 8rem 2rem 4rem;
+            background: linear-gradient(180deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: var(--white);
+            padding: 10rem 2rem 5rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle geometric pattern overlay */
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(244, 196, 48, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(124, 46, 65, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .project-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
         }
 
         .podcast-tagline {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-style: italic;
+            color: var(--gold);
             opacity: 0.95;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
         }
 
         .spotify-button {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--spotify-green);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            background: transparent;
+            color: var(--gold);
+            padding: 0.9rem 2rem;
+            border: 2px solid var(--gold);
+            border-radius: 30px;
             text-decoration: none;
-            margin-top: 2rem;
-            font-weight: bold;
-            transition: transform 0.3s;
+            margin-top: 2.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+            font-size: 0.95rem;
         }
 
         .spotify-button:hover {
-            transform: scale(1.05);
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(244, 196, 48, 0.3);
         }
 
+        /* Content sections */
         .content-section {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 5rem 2rem;
         }
 
         .content-section h2 {
-            color: var(--secondary);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--navy);
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gold);
         }
 
         .content-section h3 {
-            color: var(--text-dark);
-            font-size: 1.5rem;
+            color: var(--maroon);
+            font-size: 1.6rem;
             margin-top: 2rem;
             margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         .content-section p {
             margin-bottom: 1.5rem;
             line-height: 1.8;
             font-size: 1.1rem;
+            color: var(--text-dark);
         }
 
+        /* Podcast intro grid */
         .podcast-intro {
             display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 2rem;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .podcast-cover {
-            width: 250px;
-            height: 250px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 280px;
+            height: 280px;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(10, 22, 40, 0.15);
+            border: 4px solid var(--maroon);
+            transition: transform 0.3s;
         }
 
+        .podcast-cover:hover {
+            transform: scale(1.02);
+        }
+
+        /* Hosts section */
         .hosts-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            margin: 2rem 0;
+            margin: 3rem 0;
         }
 
         .host-card {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: 10px;
+            background: var(--off-white);
+            padding: 2rem;
+            border-radius: 12px;
             text-align: center;
+            border: 1px solid rgba(10, 22, 40, 0.08);
+            transition: all 0.3s;
+        }
+
+        .host-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(10, 22, 40, 0.1);
+            border-color: var(--gold);
         }
 
         .host-card h4 {
-            color: var(--secondary);
+            color: var(--navy);
             margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
+        .host-card p strong {
+            color: var(--maroon);
+        }
+
+        /* Episodes list */
         .episode-list {
-            background: white;
-            border-radius: 10px;
+            background: var(--white);
+            border-radius: 12px;
             padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(10, 22, 40, 0.08);
         }
 
         .episode {
-            border-bottom: 1px solid #eee;
-            padding: 1.5rem 0;
+            border-bottom: 2px solid var(--off-white);
+            padding: 2rem 0;
+            transition: padding-left 0.3s;
+        }
+
+        .episode:hover {
+            padding-left: 1rem;
         }
 
         .episode:last-child {
@@ -184,85 +278,182 @@
         }
 
         .episode h4 {
-            color: var(--text-dark);
+            color: var(--navy);
             margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .episode-date {
-            color: var(--accent);
+            color: var(--gold-muted);
             font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
+        /* Highlight boxes */
         .highlight-box {
-            background: var(--bg-light);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 5px;
+            background: linear-gradient(135deg, var(--off-white) 0%, rgba(244, 196, 48, 0.05) 100%);
+            border-left: 5px solid var(--maroon);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 8px;
         }
 
         .highlight-box h3 {
-            color: var(--accent);
+            color: var(--maroon);
             margin-top: 0;
+            font-size: 1.4rem;
         }
 
+        .highlight-box ul {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .highlight-box li {
+            margin-bottom: 0.8rem;
+        }
+
+        .highlight-box li strong {
+            color: var(--navy);
+        }
+
+        /* Skills tags */
         .skills-used {
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
-            margin: 2rem 0;
+            margin: 3rem 0;
         }
 
         .skill-tag {
-            background: var(--primary);
+            background: var(--maroon);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
             font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            letter-spacing: 0.3px;
         }
 
+        .skill-tag:hover {
+            background: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(10, 22, 40, 0.2);
+        }
+
+        /* Stats grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
         }
 
         .stat-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid var(--gold);
+            transition: all 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(244, 196, 48, 0.2);
         }
 
         .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--accent);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -1px;
         }
 
         .stat-label {
-            color: var(--text-dark);
+            color: var(--gray);
             margin-top: 0.5rem;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
+        /* Footer matching main site */
         footer {
-            background: rgba(26, 26, 46, 1);
-            color: var(--text-light);
+            background: var(--navy);
+            color: var(--white);
             text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
+            padding: 4rem 2rem;
+            position: relative;
+            margin-top: 5rem;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        footer p {
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
 
         footer a {
-            color: var(--accent);
+            color: var(--gold);
             text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
         }
 
+        footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        footer a:hover::after {
+            width: 100%;
+        }
+
+        /* Sections with alternating backgrounds */
+        .content-section:nth-child(even) {
+            background: var(--off-white);
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: calc((100vw - 1000px) / 2);
+            padding-right: calc((100vw - 1000px) / 2);
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        /* Responsive design */
         @media (max-width: 768px) {
+            .project-hero h1 {
+                font-size: 2.5rem;
+            }
+            
             .podcast-intro {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -271,6 +462,44 @@
             .podcast-cover {
                 margin: 0 auto;
             }
+            
+            .hosts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-hero h1,
+        .podcast-tagline,
+        .spotify-button {
+            animation: fadeIn 0.8s ease-out backwards;
+        }
+
+        .podcast-tagline {
+            animation-delay: 0.2s;
+        }
+
+        .spotify-button {
+            animation-delay: 0.4s;
         }
     </style>
 </head>
@@ -278,9 +507,9 @@
 <body>
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <a href="index.html" class="nav-brand">SOFIA ODEH</a>
             <a href="index.html#projects" class="back-button">
-                ← Back to Projects
+                ← BACK TO PROJECTS
             </a>
         </div>
     </nav>
@@ -434,9 +663,32 @@
         <p>Want to listen or learn more?</p>
         <p>
             <a href="https://open.spotify.com/show/7vNbyoHH3YWxI9D1fchToJ" target="_blank">Listen on Spotify</a> | 
-            <a href="mailto:odeh.s@northeastern.edu">Contact me</a> | 
-            <a href="index.html">Back to main page</a>
+            <a href="mailto:odeh.s@northeastern.edu">Contact Me</a> | 
+            <a href="index.html">Back to Main</a>
         </p>
     </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add subtle parallax effect to hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.project-hero');
+            hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
+    </script>
 </body>
 </html>

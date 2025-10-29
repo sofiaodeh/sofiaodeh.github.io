@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEST - Lunar Exploration - Sofia Odeh</title>
+    <title>NEST Lunar Exploration - Sofia Odeh</title>
     
     <style>
         * {
@@ -13,13 +13,21 @@
         }
 
         :root {
-            --primary: #3E2723;      /* Deep Chocolate */
-            --accent: #C65D00;       /* Terracotta */
-            --secondary: #F5E6D3;    /* Sand */
-            --highlight: #87A96B;    /* Sage Green */
-            --text: #1C1412;         /* Espresso */
-            --white: #FEFEFE;
-            --light-sand: #FAF4EC;
+            /* High Impact Professional Palette */
+            --navy: #0A1628;         /* Rich Navy - almost black */
+            --navy-light: #1E3A5F;   /* Medium Navy */
+            --gold: #F4C430;         /* Bright Gold - high contrast */
+            --gold-muted: #C9A961;   /* Softer gold for subtle uses */
+            --maroon: #7C2E41;       /* Deep Maroon */
+            --white: #FFFFFF;
+            --off-white: #FAFAFA;
+            --gray: #6B7280;
+            --text-dark: #1A1A1A;
+            --text-light: #FFFFFF;
+            --bg-light: #FAFAFA;
+            --primary: #0A1628;
+            --secondary: #7C2E41;
+            --accent: #F4C430;
         }
 
         body {
@@ -29,8 +37,7 @@
         }
 
         nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--navy);
             position: fixed;
             width: 100%;
             top: 0;
@@ -68,8 +75,8 @@
         }
 
         .project-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
+            background: var(--off-white);
+            color: var(--navy);
             padding: 8rem 2rem 4rem;
             text-align: center;
         }
@@ -79,9 +86,9 @@
             margin-bottom: 1rem;
         }
 
-        .project-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.95;
+        .project-meta {
+            font-size: 1.1rem;
+            color: var(--maroon);
         }
 
         .content-section {
@@ -91,15 +98,15 @@
         }
 
         .content-section h2 {
-            color: var(--secondary);
+            color: var(--navy);
             font-size: 2rem;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 3px solid var(--gold);
         }
 
         .content-section h3 {
-            color: var(--text-dark);
+            color: var(--maroon);
             font-size: 1.5rem;
             margin-top: 2rem;
             margin-bottom: 1rem;
@@ -121,19 +128,6 @@
             line-height: 1.6;
         }
 
-        .highlight-box {
-            background: var(--bg-light);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 5px;
-        }
-
-        .highlight-box h3 {
-            color: var(--accent);
-            margin-top: 0;
-        }
-
         .image-container {
             margin: 2rem 0;
             text-align: center;
@@ -148,44 +142,22 @@
 
         .image-caption {
             font-style: italic;
-            color: var(--secondary);
+            color: var(--gray);
             margin-top: 1rem;
             font-size: 0.95rem;
         }
 
-        .proposal-button {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 2rem 0;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .proposal-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .objectives-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .objective-card {
-            background: white;
+        .highlight-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--gold);
             padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+            border-radius: 5px;
         }
 
-        .objective-card h4 {
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
+        .highlight-box h3 {
+            color: var(--navy);
+            margin-top: 0;
         }
 
         .skills-used {
@@ -196,7 +168,7 @@
         }
 
         .skill-tag {
-            background: var(--primary);
+            background: var(--navy);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 20px;
@@ -204,7 +176,7 @@
         }
 
         footer {
-            background: rgba(26, 26, 46, 1);
+            background: var(--navy);
             color: var(--text-light);
             text-align: center;
             padding: 2rem;
@@ -212,14 +184,17 @@
         }
 
         footer a {
-            color: var(--accent);
+            color: var(--gold);
             text-decoration: none;
         }
 
-        @media (max-width: 768px) {
-            .objectives-grid {
-                grid-template-columns: 1fr;
-            }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        strong {
+            color: var(--navy);
+            font-weight: 600;
         }
     </style>
 </head>
@@ -235,195 +210,13 @@
     </nav>
 
     <div class="project-hero">
-        <h1>NEST</h1>
-        <p class="project-subtitle">Networked Exploration Swarmed Toolkit</p>
-        <p class="project-subtitle">Evolving from COBRA for Advanced Lunar Exploration</p>
+        <h1>NEST - Lunar Exploration</h1>
+        <p class="project-meta">Networked Mini-COBRA Robots for Lunar Surface Exploration</p>
+        <p class="project-meta">Completed | 2024</p>
     </div>
 
     <section class="content-section">
         <h2>Project Overview</h2>
         <p>
-            NEST represents the next evolution of lunar exploration technology, building upon the foundation 
-            of the COBRA (Crater Observing Bio-inspired Rolling Articulator) project. As Mechanical Lead, 
-            I'm driving the development of a networked swarm of mini-COBRA robots designed to work 
-            collaboratively in exploring the lunar surface.
-        </p>
-
-        <div class="highlight-box">
-            <h3>2024 SEDS Space For All Challenge</h3>
-            <p>
-                Our team submitted a comprehensive proposal for the SEDS Space For All Challenge, outlining 
-                our vision for scalable, collaborative lunar exploration using bio-inspired robotics.
-            </p>
-            <a href="https://static1.squarespace.com/static/650f46791a6932094d7f2026/t/66e856389cbe34654e4514c4/1726502459252/Northeastern-GrantProposal.pdf" 
-               target="_blank" 
-               class="proposal-button">
-                View Full Proposal →
-            </a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Background: From COBRA to NEST</h2>
-        <p>
-            My journey with this project began with the COBRA (Crater Observing Bio-inspired Rolling 
-            Articulator) at the Silicon Synapse Lab, where I focused on integrating Raspberry Pi sensors 
-            and enhancing obstacle detection capabilities. The COBRA robot's unique bio-inspired design 
-            allows it to navigate challenging lunar terrain through tumbling and sidewinding movements.
-        </p>
-        <p>
-            Building on this experience, I initiated NEST as a student-led project to advance the COBRA 
-            concept. While COBRA demonstrated the viability of bio-inspired locomotion for lunar exploration, 
-            NEST takes this further by implementing swarm intelligence and networked communication.
-        </p>
-
-        <div class="image-container">
-            <img src="images/cobra-robot.jpg" alt="COBRA Robot Design and Testing">
-            <p class="image-caption">
-                (A) COBRA robot articulated design | (B) Actuator assembly with XC-330 motors | 
-                (C) Testing crater navigation capabilities
-            </p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Objectives</h2>
-        <div class="objectives-grid">
-            <div class="objective-card">
-                <h4>Long-term Vision</h4>
-                <p>
-                    Develop 5-6 mini-COBRA modules with advanced communication capabilities for 
-                    enhanced lunar exploration through coordinated swarm behavior.
-                </p>
-            </div>
-            <div class="objective-card">
-                <h4>Current Goal</h4>
-                <p>
-                    Build an additional mini-COBRA module to augment the existing one, enabling 
-                    the software team to develop and test networking protocols.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>My Role as Mechanical Lead</h2>
-        <p>
-            As Mechanical Lead for NEST, I oversee the physical realization of our robotic swarm while 
-            coordinating closely with electrical and software teams to ensure seamless integration.
-        </p>
-        
-        <h3>Key Responsibilities:</h3>
-        <ul>
-            <li><strong>3D Printing Management:</strong> Overseeing the fabrication of all essential 
-                structural components using FDM technology</li>
-            <li><strong>CAD Design Refinement:</strong> Collaborating with team leads to optimize 
-                mechanical designs for manufacturability and performance</li>
-            <li><strong>System Integration:</strong> Focusing on improved battery tethering solutions 
-                and ensuring mechanical compatibility with electrical systems</li>
-            <li><strong>Design Innovation:</strong> Adapting the bracket design to allow for untethered 
-                battery installation, improving robot autonomy</li>
-        </ul>
-
-        <div class="image-container">
-            <img src="images/cobra-cad.jpg" alt="Mini-COBRA CAD Designs">
-            <p class="image-caption">
-                Mini-COBRA mechanical design iterations showing bracket improvements and component integration
-            </p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Current State of Design</h2>
-        <p>
-            The team has successfully built one functional mini-COBRA robot, which serves as our prototype 
-            for testing locomotion algorithms and sensor integration. The mechanical design features:
-        </p>
-        <ul>
-            <li>Modular segment construction allowing for easy assembly and maintenance</li>
-            <li>Lightweight 3D-printed components optimized for strength-to-weight ratio</li>
-            <li>Flexible joint mechanisms enabling tumbling and sidewinding locomotion</li>
-            <li>Integrated mounting points for sensors and communication hardware</li>
-        </ul>
-
-        <div class="highlight-box">
-            <h3>Design Improvements in Progress</h3>
-            <p>
-                Before scaling up production, we're refining the mechanical design to address key challenges:
-            </p>
-            <ul>
-                <li>Developing untethered battery mounting system for improved autonomy</li>
-                <li>Optimizing bracket geometry for easier assembly</li>
-                <li>Enhancing structural rigidity while maintaining flexibility</li>
-                <li>Improving wire routing to protect electrical connections during movement</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Technical Innovation</h2>
-        <p>
-            NEST pushes the boundaries of lunar exploration technology through several key innovations:
-        </p>
-        
-        <h3>Swarm Intelligence</h3>
-        <p>
-            Unlike traditional single-robot missions, NEST employs multiple coordinated units that can:
-        </p>
-        <ul>
-            <li>Share sensor data to create comprehensive environmental maps</li>
-            <li>Distribute tasks based on individual robot capabilities and position</li>
-            <li>Provide redundancy - if one unit fails, others continue the mission</li>
-            <li>Cover larger areas more efficiently than single robots</li>
-        </ul>
-
-        <h3>Bio-Inspired Locomotion</h3>
-        <p>
-            The mini-COBRA design mimics biological movement patterns, enabling navigation through:
-        </p>
-        <ul>
-            <li>Tumbling motion for traversing rough terrain</li>
-            <li>Sidewinding for sandy or loose regolith</li>
-            <li>Articulated body segments for navigating tight spaces</li>
-        </ul>
-    </section>
-
-    <section class="content-section">
-        <h2>Future Development</h2>
-        <p>
-            As we continue developing NEST, our roadmap includes:
-        </p>
-        <ol>
-            <li><strong>Phase 1 (Current):</strong> Complete second mini-COBRA unit with improved mechanical design</li>
-            <li><strong>Phase 2:</strong> Implement and test networking protocols between two units</li>
-            <li><strong>Phase 3:</strong> Scale to 5-6 units with full swarm capabilities</li>
-            <li><strong>Phase 4:</strong> Conduct comprehensive field testing in lunar analog environments</li>
-        </ol>
-    </section>
-
-    <section class="content-section">
-        <h2>Skills & Technologies</h2>
-        <div class="skills-used">
-            <span class="skill-tag">CAD Design</span>
-            <span class="skill-tag">3D Printing (FDM)</span>
-            <span class="skill-tag">SolidWorks</span>
-            <span class="skill-tag">System Integration</span>
-            <span class="skill-tag">Project Leadership</span>
-            <span class="skill-tag">Cross-functional Collaboration</span>
-            <span class="skill-tag">Rapid Prototyping</span>
-            <span class="skill-tag">Mechanical Design</span>
-            <span class="skill-tag">Robotics</span>
-            <span class="skill-tag">Space Technology</span>
-        </div>
-    </section>
-
-    <footer>
-        <p>Interested in learning more about NEST or collaboration opportunities?</p>
-        <p>
-            <a href="https://static1.squarespace.com/static/650f46791a6932094d7f2026/t/66e856389cbe34654e4514c4/1726502459252/Northeastern-GrantProposal.pdf" target="_blank">Read Our Proposal</a> | 
-            <a href="mailto:odeh.s@northeastern.edu">Contact me</a> | 
-            <a href="index.html">Back to main page</a>
-        </p>
-    </footer>
-</body>
-</html>
+            Led the mechanical design for networked mini-COBRA robots designed for advanced lunar surface 
+            exploration missions. This project focused on developing robust, autonomous robotic systems capa
