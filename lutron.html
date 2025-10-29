@@ -6,6 +6,7 @@
     <title>Lutron Electronics Co-op - Sofia Odeh</title>
     
     <style>
+        /* ===== RESET & VARIABLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -13,28 +14,34 @@
         }
 
         :root {
-            --primary: #b08d7a;
-            --secondary: #8b6f63;
-            --accent: #4a90e2;
-            --text-dark: #2c3e50;
-            --text-light: #ffffff;
-            --bg-light: #f8f9fa;
+            /* High Impact Professional Palette */
+            --navy: #0A1628;         /* Rich Navy - almost black */
+            --navy-light: #1E3A5F;   /* Medium Navy */
+            --gold: #F4C430;         /* Bright Gold - high contrast */
+            --gold-muted: #C9A961;   /* Softer gold for subtle uses */
+            --maroon: #7C2E41;       /* Deep Maroon */
+            --white: #FFFFFF;
+            --off-white: #FAFAFA;
+            --gray: #6B7280;
+            --text-dark: #1A1A1A;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
+            background-color: var(--white);
         }
 
+        /* ===== NAVIGATION BAR ===== */
         nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--navy);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 1.2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .nav-container {
@@ -47,326 +54,426 @@
         }
 
         .nav-brand {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: bold;
+            color: var(--white);
+            font-size: 1.4rem;
+            font-weight: 600;
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
-        .back-button {
-            color: var(--text-light);
-            text-decoration: none;
+        .nav-links {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
             transition: color 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
         }
 
-        .back-button:hover {
-            color: var(--accent);
+        .nav-links a:hover {
+            color: var(--gold);
         }
 
+        /* ===== PROJECT HERO ===== */
         .project-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
-            padding: 8rem 2rem 4rem;
+            background: var(--off-white);
+            padding: 8rem 2rem 3rem;
             text-align: center;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .project-hero h1 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            color: var(--navy);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: var(--maroon);
+            font-weight: 400;
+            margin-bottom: 2rem;
         }
 
         .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            padding-top: 2rem;
+            border-top: 2px solid var(--gold);
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-label {
+            display: block;
+            color: var(--gray);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            color: var(--navy);
             font-size: 1.1rem;
-            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .content-section {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 4rem 0;
         }
 
-        .content-section h2 {
-            color: var(--secondary);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary);
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--navy);
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
         }
 
-        .content-section h3 {
-            color: var(--text-dark);
-            font-size: 1.5rem;
-            margin-top: 2rem;
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--gold);
+        }
+
+        h3 {
+            font-size: 1.4rem;
             margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--maroon);
+            font-weight: 600;
         }
 
-        .content-section p {
+        p {
             margin-bottom: 1.5rem;
             line-height: 1.8;
-            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-size: 1.05rem;
         }
 
-        .content-section ul, .content-section ol {
-            margin-left: 2rem;
+        /* ===== IMAGE CONTAINER ===== */
+        .image-container {
+            margin: 3rem 0;
+            text-align: center;
+            padding: 2rem;
+            background: var(--off-white);
+            border-radius: 12px;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(10, 22, 40, 0.15);
+        }
+
+        .image-caption {
+            color: var(--gray);
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-top: 1rem;
+        }
+
+        /* ===== LISTS ===== */
+        ul {
+            list-style: none;
+            padding: 0;
             margin-bottom: 1.5rem;
         }
 
-        .content-section li {
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
-        }
-
-        .highlight-box {
-            background: var(--bg-light);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 5px;
-        }
-
-        .highlight-box h3 {
-            color: var(--accent);
-            margin-top: 0;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        .stat-label {
+        li {
+            padding: 1rem 0;
+            padding-left: 2rem;
+            position: relative;
             color: var(--text-dark);
-            margin-top: 0.5rem;
+            font-size: 1.05rem;
         }
 
-        .skills-used {
+        li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 1.3rem;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        strong {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        /* ===== TOOLS SECTION ===== */
+        .tools-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 2rem 0;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
-        .skill-tag {
-            background: var(--primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
+        .tool-badge {
+            background: var(--off-white);
+            color: var(--navy);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            border: 2px solid transparent;
+            transition: all 0.3s;
         }
 
-        .product-reference {
-            background: white;
-            border: 2px solid var(--primary);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
+        .tool-badge:hover {
+            border-color: var(--gold);
+            background: var(--white);
         }
 
-        .product-reference a {
-            color: var(--accent);
+        /* ===== BACK BUTTON ===== */
+        .back-button {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 0.9rem 2rem;
+            background: transparent;
+            color: var(--navy);
             text-decoration: none;
-            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s;
+            border: 2px solid var(--navy);
+            font-weight: 600;
+            font-size: 0.95rem;
         }
 
+        .back-button:hover {
+            background: var(--navy);
+            color: var(--white);
+            transform: translateX(-5px);
+        }
+
+        /* ===== FOOTER ===== */
         footer {
-            background: rgba(26, 26, 46, 1);
-            color: var(--text-light);
+            background: var(--navy);
+            color: var(--white);
             text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
+            padding: 4rem 2rem;
+            margin-top: 6rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
         footer a {
-            color: var(--accent);
+            color: var(--gold);
             text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .project-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .project-meta {
+                gap: 1.5rem;
+            }
+            
+            .main-content {
+                padding: 0 1.5rem;
+            }
         }
     </style>
 </head>
 
 <body>
+    <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="nav-brand">Sofia Odeh</a>
-            <a href="index.html#projects" class="back-button">
-                ← Back to Projects
-            </a>
+            <a href="index.html" class="nav-brand">SOFIA ODEH</a>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="index.html#projects">PROJECTS</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
         </div>
     </nav>
 
-    <div class="project-hero">
-        <h1>Lutron Electronics Co-op</h1>
-        <p class="project-meta">6-Month Co-op | Tool Design Team</p>
+    <!-- PROJECT HERO -->
+    <section class="project-hero">
+        <div class="hero-content">
+            <h1>Lutron Electronics Co-Op</h1>
+            <p class="project-subtitle">Mechanical Design Engineering</p>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Location</span>
+                    <span class="meta-value">Coopersburg, PA</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Duration</span>
+                    <span class="meta-value">6 Months</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Year</span>
+                    <span class="meta-value">2024</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        
+        <!-- OVERVIEW -->
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>
+                During my co-op at Lutron Electronics, I worked with the Tool and Testing Team to develop 
+                comprehensive testing fixtures and tools for quality assurance of lighting control systems. 
+                My work directly impacted production efficiency and product reliability for the Ketra D2 Downlight assembly line.
+            </p>
+            <p>
+                I designed and developed <strong>assembly tools for the Ketra D2 Downlight</strong>, mastering 
+                Creo Parametric and rapid prototyping techniques throughout the process.
+            </p>
+        </section>
+
+        <!-- CAD IMAGE -->
+        <div class="image-container">
+            <img src="images/lutron-exploded-view.jpg" alt="Exploded View CAD Model">
+            <p class="image-caption">Exploded view of testing fixture designed in Autodesk Inventor</p>
+        </div>
+
+        <!-- ENGINEERING CONTRIBUTIONS -->
+        <section class="content-section">
+            <h2>Engineering Contributions</h2>
+            
+            <ul>
+                <li>Designed <strong>5+ custom testing fixtures</strong> with precise dimensional requirements for automated assembly</li>
+                <li>Applied <strong>mechanics of materials principles</strong> to ensure fixture durability under cyclic loading</li>
+                <li>Mastered <strong>tolerance stack analysis</strong> through iterative design and peer review processes</li>
+                <li>Advanced <strong>CAD proficiency</strong> through complex assembly design in Autodesk Inventor</li>
+            </ul>
+
+            <h3>Skills Developed</h3>
+            <ul>
+                <li>Advanced <strong>3D printing</strong> and machining techniques for rapid prototyping</li>
+                <li>Gained hands-on experience with production-level quality requirements</li>
+                <li>Strengthened understanding of organizational dynamics and cross-team collaboration</li>
+            </ul>
+        </section>
+
+        <!-- COLLABORATION -->
+        <section class="content-section">
+            <h2>Collaboration & Professional Development</h2>
+            
+            <p>
+                I partnered with <strong>manufacturing engineers</strong> to translate designs into producible solutions. 
+                This required communicating my ideas clearly and understanding when to seek input from others and 
+                learn from their experience. I always made an effort to make everyone feel heard and ensure their 
+                opinion was impactful to my work.
+            </p>
+            
+            <p>
+                I developed <strong>comprehensive documentation systems</strong> for all my tools, ensuring someone 
+                would be able to continue my work once my co-op ended. This included detailed assembly procedures, 
+                maintenance schedules, and design rationale documents.
+            </p>
+
+            <h3>Learning Experience</h3>
+            <p>
+                My intentions going into the opportunity were to develop as an engineer and apply the theories 
+                I had learned in class to real engineering work. On the tool and testing team, I really had to 
+                think back to mechanics of materials and develop a way of thinking based on the intuition from 
+                those classes.
+            </p>
+            
+            <p>
+                Learning to do <strong>tolerance stacks</strong> was an initial challenge since it was a new skill 
+                I was developing. As I did multiple iterations, my understanding deepened, and I now feel confident 
+                in my ability to do them. Reading guides provided by Lutron and having peers review my work was 
+                extremely insightful.
+            </p>
+        </section>
+
+        <!-- TOOLS -->
+        <section class="content-section">
+            <h2>Tools & Technologies</h2>
+            
+            <div class="tools-grid">
+                <span class="tool-badge">Autodesk Inventor</span>
+                <span class="tool-badge">Creo Parametric</span>
+                <span class="tool-badge">3D Printing</span>
+                <span class="tool-badge">Rapid Prototyping</span>
+                <span class="tool-badge">Tolerance Stack Analysis</span>
+                <span class="tool-badge">CAD Design</span>
+                <span class="tool-badge">Machining</span>
+            </div>
+        </section>
+
+        <!-- IMPACT -->
+        <section class="content-section">
+            <h2>Impact</h2>
+            <p>
+                My supervisor helped me grow in multiple ways, ranging from technical to interpersonal. 
+                I always felt able to ask questions and was guided in the right direction. The balance 
+                between receiving directions and having the freedom to work at my pace made this experience 
+                truly enjoyable.
+            </p>
+            
+            <p>
+                Learn more about Lutron's innovative lighting solutions at 
+                <a href="https://www.lutron.com" target="_blank" style="color: var(--maroon); font-weight: 600;">lutron.com</a>
+            </p>
+
+            <a href="index.html#projects" class="back-button">← Back to Projects</a>
+        </section>
     </div>
 
-    <section class="content-section">
-        <h2>Overview</h2>
-        <p>
-            During my six-month co-op at Lutron Electronics, I joined the tool design team responsible for 
-            developing manufacturing and assembly tools for the Ketra D2 Downlight product line. This experience 
-            transformed my approach to engineering design, teaching me that successful tools must balance 
-            technical precision with human factors and manufacturing realities.
-        </p>
-        
-        <div class="stats-grid">
-            <div class="stat-box">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Tools Developed</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">2</div>
-                <div class="stat-label">Tools Certified & Deployed</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">10+</div>
-                <div class="stat-label">Tolerance Stack Components</div>
-            </div>
-        </div>
-
-        <div class="product-reference">
-            <p><strong>Product Focus:</strong> Ketra D2 Downlight</p>
-            <p><a href="https://luxury.lutron.com/us/en/ketra-d2-downlight" target="_blank">Learn more about the Ketra D2 Downlight →</a></p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Featured Project: Housing Assembly Tool</h2>
-        
-        <h3>The Challenge</h3>
-        <p>
-            The Ketra D2 Downlight housing assembly represented one of the final and most critical steps in the 
-            production line. Operators needed to precisely locate and place multiple components within a rectangular 
-            enclosure while protecting sensitive electronics and maintaining strict tolerances across a stack of 
-            more than 10 interfacing parts.
-        </p>
-
-        <h3>Design Approach & Process</h3>
-        <p>
-            My design process involved extensive collaboration across multiple departments:
-        </p>
-        <ul>
-            <li><strong>Product Team Collaboration:</strong> Regular meetings to understand all assembly scenarios 
-                and edge cases</li>
-            <li><strong>Manufacturing Engineering Partnership:</strong> Worked closely with manufacturing engineers 
-                to understand operator workflows and ergonomic requirements</li>
-            <li><strong>Operator Engagement:</strong> Conducted observational studies and gathered direct feedback 
-                from assembly line operators</li>
-            <li><strong>Interactive 3D Modeling:</strong> Developed dynamic models in Creo Parametric to simulate 
-                tool motion and interaction</li>
-        </ul>
-
-        <h3>Design Constraints & Solutions</h3>
-        
-        <div class="highlight-box">
-            <h3>Technical Constraints</h3>
-            <ul>
-                <li><strong>Tolerance Management:</strong> Designed to accommodate cumulative tolerances across 
-                    10+ stacked components while maintaining ±0.005" positioning accuracy</li>
-                <li><strong>Component Protection:</strong> Incorporated soft-touch surfaces and controlled contact 
-                    points to prevent damage</li>
-                <li><strong>Material Selection:</strong> Balanced durability requirements with weight considerations 
-                    for operator comfort</li>
-            </ul>
-        </div>
-
-        <div class="highlight-box">
-            <h3>Human Factors</h3>
-            <ul>
-                <li><strong>Ergonomic Design:</strong> Optimized handle placement and tool weight distribution</li>
-                <li><strong>Universal Usability:</strong> Developed visual indicators that transcended language barriers</li>
-                <li><strong>Poka-Yoke Implementation:</strong> Integrated mistake-proofing features that made incorrect 
-                    usage physically impossible</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Additional Tool Development</h2>
-        <p>
-            Beyond the housing assembly tool, I developed four additional fixtures for smaller component assemblies. 
-            These projects provided valuable experience in:
-        </p>
-        <ul>
-            <li>Rapid iteration through 3D printing (SLA and FDM technologies)</li>
-            <li>Design for manufacturability with various production methods</li>
-            <li>Cost optimization while maintaining quality standards</li>
-            <li>Documentation and design review presentation</li>
-        </ul>
-    </section>
-
-    <section class="content-section">
-        <h2>Impact & Results</h2>
-        <ul>
-            <li><strong>Certification Achievement:</strong> Two tools achieved full certification and were implemented 
-                on the production line</li>
-            <li><strong>Quality Improvement:</strong> Successfully protected sensitive components while maintaining 
-                required tolerances</li>
-            <li><strong>Operator Acceptance:</strong> Received positive feedback on tool usability and ergonomics</li>
-            <li><strong>Process Enhancement:</strong> Contributed to streamlining the assembly process</li>
-        </ul>
-    </section>
-
-    <section class="content-section">
-        <h2>Technical & Professional Growth</h2>
-        
-        <h3>Technical Skills Developed</h3>
-        <ul>
-            <li><strong>Advanced CAD Techniques:</strong> Mastered Creo Parametric's advanced features</li>
-            <li><strong>Tolerance Analysis:</strong> Developed expertise in statistical tolerance stack-up analysis</li>
-            <li><strong>Rapid Prototyping:</strong> Gained hands-on experience with SLA and FDM 3D printing</li>
-            <li><strong>Manufacturing Processes:</strong> Deepened understanding of injection molding and CNC machining</li>
-        </ul>
-
-        <h3>Professional Lessons</h3>
-        <div class="highlight-box">
-            <h3>Key Takeaway</h3>
-            <p>
-                Engineering design is as much about understanding people – their capabilities, limitations, and needs – 
-                as it is about technical problem-solving. The most elegant solution is one that seamlessly integrates 
-                technical requirements with human factors and manufacturing realities.
-            </p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Skills & Technologies Used</h2>
-        <div class="skills-used">
-            <span class="skill-tag">Creo Parametric</span>
-            <span class="skill-tag">3D Printing (SLA/FDM)</span>
-            <span class="skill-tag">GD&T</span>
-            <span class="skill-tag">Tolerance Analysis</span>
-            <span class="skill-tag">Motion Simulation</span>
-            <span class="skill-tag">Design for Manufacturing</span>
-            <span class="skill-tag">Ergonomic Design</span>
-            <span class="skill-tag">Poka-Yoke</span>
-            <span class="skill-tag">Rapid Prototyping</span>
-            <span class="skill-tag">Project Management</span>
-        </div>
-    </section>
-
+    <!-- FOOTER -->
     <footer>
-        <p>Want to learn more about this project?</p>
-        <p><a href="mailto:odeh.s@northeastern.edu">Contact me</a> | <a href="index.html">Back to main page</a></p>
+        <p style="margin-bottom: 1rem;">© 2024 Sofia Odeh</p>
+        <p><a href="mailto:odeh.s@northeastern.edu">odeh.s@northeastern.edu</a> • <a href="https://www.linkedin.com/in/sofiaodeh">LinkedIn</a></p>
     </footer>
 </body>
 </html>

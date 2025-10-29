@@ -13,31 +13,35 @@
             box-sizing: border-box;
         }
 
-         :root {
-            --primary: #3E2723;      /* Deep Chocolate */
-            --accent: #C65D00;       /* Terracotta */
-            --secondary: #F5E6D3;    /* Sand */
-            --highlight: #87A96B;    /* Sage Green */
-            --text: #1C1412;         /* Espresso */
-            --white: #FEFEFE;
-            --light-sand: #FAF4EC;
+        :root {
+            /* High Impact Professional Palette */
+            --navy: #0A1628;         /* Rich Navy - almost black */
+            --navy-light: #1E3A5F;   /* Medium Navy */
+            --gold: #F4C430;         /* Bright Gold - high contrast */
+            --gold-muted: #C9A961;   /* Softer gold for subtle uses */
+            --maroon: #7C2E41;       /* Deep Maroon */
+            --white: #FFFFFF;
+            --off-white: #FAFAFA;
+            --gray: #6B7280;
+            --text-dark: #1A1A1A;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
+            background-color: var(--white);
         }
 
         /* ===== NAVIGATION BAR ===== */
         nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--navy);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 1.2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .nav-container {
@@ -50,100 +54,156 @@
         }
 
         .nav-brand {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: bold;
+            color: var(--white);
+            font-size: 1.4rem;
+            font-weight: 600;
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .nav-links a {
-            color: var(--text-light);
+            color: var(--white);
             text-decoration: none;
             transition: color 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
         }
 
         .nav-links a:hover {
-            color: var(--accent);
+            color: var(--gold);
         }
 
         /* ===== HERO SECTION ===== */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
-            padding: 8rem 2rem 4rem;
+            background: linear-gradient(180deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: var(--white);
+            padding: 10rem 2rem 5rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle geometric pattern overlay */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(244, 196, 48, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(124, 46, 65, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .hero-content {
             max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            opacity: 0.95;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .hero .subtitle:last-of-type {
+            color: var(--white);
+            opacity: 0.9;
+            font-size: 1.1rem;
         }
 
         .contact-buttons {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
         .btn {
             display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+            padding: 0.9rem 2rem;
+            background: transparent;
+            color: var(--gold);
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 30px;
             transition: all 0.3s;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--gold);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: var(--gold);
+            color: var(--navy);
             transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(244, 196, 48, 0.3);
         }
 
         /* ===== SECTIONS ===== */
         section {
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: var(--text-dark);
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--navy);
             text-align: center;
+            font-weight: 700;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gold);
         }
 
         /* ===== ABOUT SECTION ===== */
         .about {
-            background: var(--bg-light);
+            background: var(--off-white);
         }
 
         .about-container {
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
             max-width: 1000px;
             margin: 0 auto;
@@ -157,118 +217,218 @@
             width: 100%;
             max-width: 300px;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(10, 22, 40, 0.15);
+            border: 4px solid var(--maroon);
+            transition: transform 0.3s;
+        }
+
+        .profile-image img:hover {
+            transform: scale(1.02);
         }
 
         .about-content {
             font-size: 1.1rem;
             line-height: 1.8;
+            color: var(--text-dark);
         }
 
         .about-content p {
             margin-bottom: 1.5rem;
         }
 
+        .about-content strong {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
         /* ===== PROJECTS SECTION ===== */
         .projects {
-            background: white;
+            background: var(--white);
         }
 
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
         .project-card {
-            background: white;
-            border-radius: 10px;
+            background: var(--white);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-decoration: none;
             color: inherit;
             display: block;
+            border: 1px solid rgba(10, 22, 40, 0.08);
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(10, 22, 40, 0.15);
+            border-color: var(--gold);
         }
 
         .project-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--navy);
             color: white;
-            padding: 1.5rem;
+            padding: 1.8rem;
+            position: relative;
+        }
+
+        .project-card:hover .project-header {
+            background: var(--navy-light);
         }
 
         .project-card h3 {
             margin: 0;
             font-size: 1.3rem;
             color: white;
+            font-weight: 600;
+            letter-spacing: -0.3px;
         }
 
         .project-content {
-            padding: 1.5rem;
+            padding: 1.8rem;
+            background: var(--white);
+        }
+
+        .project-content p {
+            color: var(--gray);
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
         .project-status {
             display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: var(--accent);
+            padding: 0.35rem 1rem;
+            background: var(--maroon);
             color: white;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             margin-top: 1rem;
         }
 
         .click-hint {
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            color: var(--gold);
+            font-size: 0.85rem;
+            margin-top: 1rem;
             opacity: 0;
             transition: opacity 0.3s;
+            font-weight: 600;
         }
 
         .project-card:hover .click-hint {
             opacity: 1;
         }
 
+        /* Special styling for first four featured projects */
+        .project-card:nth-child(1) .project-header,
+        .project-card:nth-child(2) .project-header,
+        .project-card:nth-child(3) .project-header,
+        .project-card:nth-child(4) .project-header {
+            background: var(--maroon);
+        }
+
+        .project-card:nth-child(1) .project-status,
+        .project-card:nth-child(2) .project-status,
+        .project-card:nth-child(3) .project-status,
+        .project-card:nth-child(4) .project-status {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
         /* ===== FOOTER ===== */
         footer {
-            background: rgba(26, 26, 46, 1);
-            color: var(--text-light);
+            background: var(--navy);
+            color: var(--white);
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        footer h2 {
+            color: var(--white) !important;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+        }
+
+        footer h2::after {
+            background: var(--gold);
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
+            gap: 3rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
-            color: var(--text-light);
+            color: var(--white);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            font-size: 1.05rem;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
         }
 
         .footer-links a:hover {
-            color: var(--accent);
+            color: var(--gold);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        footer p {
+            color: var(--white);
+            opacity: 0.6;
+            font-size: 0.9rem;
+            margin-top: 2rem;
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.1rem;
             }
             
             .about-container {
                 grid-template-columns: 1fr;
+                text-align: center;
             }
             
             .nav-links {
@@ -279,6 +439,36 @@
             .project-grid {
                 grid-template-columns: 1fr;
             }
+            
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== SMOOTH ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1,
+        .hero .subtitle,
+        .contact-buttons {
+            animation: fadeIn 0.8s ease-out backwards;
+        }
+
+        .hero .subtitle {
+            animation-delay: 0.2s;
+        }
+
+        .contact-buttons {
+            animation-delay: 0.4s;
         }
     </style>
 </head>
@@ -287,11 +477,11 @@
     <!-- NAVIGATION -->
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <a href="index.html" class="nav-brand">SOFIA ODEH</a>
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#contact">CONTACT</a></li>
             </ul>
         </div>
     </nav>
@@ -300,13 +490,13 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Sofia Odeh</h1>
-            <p class="subtitle">Mechanical Engineer | Astrophysics Minor</p>
-            <p class="subtitle">Northeastern University | Graduating December 2026</p>
+            <p class="subtitle">MECHANICAL ENGINEER • ASTROPHYSICS</p>
+            <p class="subtitle">Northeastern University | December 2026</p>
             
             <div class="contact-buttons">
-                <a href="mailto:odeh.s@northeastern.edu" class="btn">Email Me</a>
-                <a href="www.linkedin.com/in/sofiaodeh" class="btn" target="_blank">LinkedIn</a>
-                <a href="tel:914-527-5222" class="btn">(914) 527-5222</a>
+                <a href="mailto:odeh.s@northeastern.edu" class="btn">EMAIL ME</a>
+                <a href="https://www.linkedin.com/in/sofiaodeh" class="btn" target="_blank">LINKEDIN</a>
+                <a href="tel:914-527-5222" class="btn">CALL</a>
             </div>
         </div>
     </section>
@@ -321,21 +511,21 @@
                 </div>
                 <div class="about-content">
                     <p>
-                        I'm a senior at Northeastern University pursuing a Bachelor's degree in Mechanical Engineering 
-                        with a minor in Astrophysics. My academic journey is driven by a fascination with how engineering 
+                        I'm a senior at Northeastern University pursuing a Bachelor's degree in <strong>Mechanical Engineering</strong> 
+                        with a minor in <strong>Astrophysics</strong>. My academic journey is driven by a fascination with how engineering 
                         can push the boundaries of exploration and innovation.
                     </p>
                     <p>
-                        Through co-ops at Lutron Electronics and LineSpect, I developed strong skills in engineering design, 
-                        rapid prototyping, tolerancing, and 3D printing—tools I have applied directly to my research in 
-                        astrophysics at Northeastern's Aramaki Lab. This combination of practical engineering experience 
+                        Through co-ops at <strong>Lutron Electronics</strong> and <strong>LineSpect</strong>, I developed strong skills in <strong>engineering design</strong>, 
+                        <strong>rapid prototyping</strong>, <strong>tolerancing</strong>, and <strong>3D printing</strong>—tools I have applied directly to my research in 
+                        astrophysics at Northeastern's <strong>Aramaki Lab</strong>. This combination of practical engineering experience 
                         and a deep curiosity for fundamental physics allows me to tackle complex problems with both 
                         precision and imagination.
                     </p>
                     <p>
-                        Beyond engineering, I'm actively involved in community outreach through Boston Clothing Outreach 
-                        and host the Art of Inquiry podcast, where I share insights at the intersection of science, 
-                        engineering, and art. In my free time, I love swing dancing, which brings together my appreciation 
+                        Beyond engineering, I'm actively involved in community outreach through <strong>Boston Clothing Outreach</strong> 
+                        and host the <strong>Art of Inquiry podcast</strong>, where I share insights at the intersection of science, 
+                        engineering, and art. In my free time, I love <strong>swing dancing</strong>, which brings together my appreciation 
                         for rhythm, movement, and community.
                     </p>
                 </div>
@@ -348,17 +538,48 @@
         <h2>Projects & Experience</h2>
         <div class="project-grid">
             
+            <!-- Featured Project 1 -->
+            <a href="linespect.html" class="project-card">
+                <div class="project-header">
+                    <h3>LineSpect Optical Systems</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Designed precision mechanical housings for toroidal lens systems, 
+                        achieving 5-micron positional accuracy for biomedical imaging applications.
+                    </p>
+                    <span class="project-status">Featured</span>
+                    <p class="click-hint">View Project →</p>
+                </div>
+            </a>
+
+            <!-- Featured Project 2 -->
             <a href="lutron.html" class="project-card">
                 <div class="project-header">
                     <h3>Lutron Electronics Co-Op</h3>
                 </div>
                 <div class="project-content">
                     <p>
-                        Designed and developed assembly tools for Ketra D2 Downlight. 
-                        Mastered Creo Parametric and rapid prototyping techniques.
+                        Developed automated testing fixtures and assembly tools for Ketra D2 Downlight. 
+                        Mastered tolerance stack analysis and rapid prototyping techniques.
                     </p>
-                    <span class="project-status">Completed</span>
-                    <p class="click-hint">Click to view details →</p>
+                    <span class="project-status">Featured</span>
+                    <p class="click-hint">View Project →</p>
+                </div>
+            </a>
+
+            <!-- Featured Project 3 -->
+            <a href="podcast.html" class="project-card">
+                <div class="project-header">
+                    <h3>The Art of Inquiry Podcast</h3>
+                </div>
+                <div class="project-content">
+                    <p>
+                        Co-hosting conversations at the intersection of science, engineering, 
+                        and art with leading researchers and creative minds.
+                    </p>
+                    <span class="project-status">Featured</span>
+                    <p class="click-hint">View Project →</p>
                 </div>
             </a>
 
@@ -369,39 +590,24 @@
                 <div class="project-content">
                     <p>
                         Developing detectors for GRAMS and MicroGRAMS projects. 
-                        Designed critical TPC mounting solutions.
+                        Designed critical TPC mounting solutions for cosmic ray detection.
                     </p>
-                    <span class="project-status">Ongoing</span>
-                    <p class="click-hint">Click to view details →</p>
+                    <span class="project-status">Featured</span>
+                    <p class="click-hint">View Details →</p>
                 </div>
             </a>
 
-           
-            <a href="podcast.html" class="project-card">
-                <div class="project-header">
-                    <h3>Art of Inquiry Podcast</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Co-hosting a podcast exploring the intersection of 
-                        science, engineering, and art through engaging interviews.
-                    </p>
-                    <span class="project-status">Active</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-            
-             <a href="nest.html" class="project-card">
+            <a href="nest.html" class="project-card">
                 <div class="project-header">
                     <h3>NEST - Lunar Exploration</h3>
                 </div>
                 <div class="project-content">
                     <p>
                         Leading mechanical design for networked mini-COBRA robots 
-                        for advanced lunar surface exploration.
+                        for advanced lunar surface exploration missions.
                     </p>
-                    <span class="project-status">In Development</span>
-                    <p class="click-hint">Click to view details →</p>
+                    <span class="project-status">Completed</span>
+                    <p class="click-hint">View Details →</p>
                 </div>
             </a>
 
@@ -415,7 +621,7 @@
                         using Arduino, C++, and laser-cutting techniques.
                     </p>
                     <span class="project-status">Completed</span>
-                    <p class="click-hint">Click to view details →</p>
+                    <p class="click-hint">View Details →</p>
                 </div>
             </a>
 
@@ -426,24 +632,10 @@
                 <div class="project-content">
                     <p>
                         Writing and curating scientific content for weekly newsletter, 
-                        making science accessible to diverse audiences.
+                        making complex science accessible to diverse audiences.
                     </p>
                     <span class="project-status">Active</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-
-            <a href="linespect.html" class="project-card">
-                <div class="project-header">
-                    <h3>LineSpect Co-Op</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Upcoming co-op position. Details will be added once the 
-                        experience is completed.
-                    </p>
-                    <span class="project-status">Coming Soon</span>
-                    <p class="click-hint">Click to view details →</p>
+                    <p class="click-hint">View Details →</p>
                 </div>
             </a>
 
@@ -452,13 +644,13 @@
 
     <!-- FOOTER -->
     <footer id="contact">
-        <h2 style="color: white; margin-bottom: 2rem;">Let's Connect!</h2>
+        <h2>Let's Connect</h2>
         <div class="footer-links">
             <a href="mailto:odeh.s@northeastern.edu">odeh.s@northeastern.edu</a>
             <a href="tel:914-527-5222">(914) 527-5222</a>
-            <a href="www.linkedin.com/in/sofiaodeh" target="_blank">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/sofiaodeh" target="_blank">LinkedIn</a>
         </div>
-        <p style="margin-top: 2rem; opacity: 0.8;">© 2024 Sofia Odeh</p>
+        <p>© 2024 Sofia Odeh • Engineering with Artistic Precision</p>
     </footer>
 
     <script>
@@ -469,11 +661,19 @@
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({
-                        behavior: 'smooth'
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 }
             });
         });
+
+        // Add subtle parallax effect to hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
     </script>
 </body>
-</html> 
+</html>
