@@ -1,479 +1,485 @@
 <!DOCTYPE html>
-<html lang="en">   
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofia Odeh - Mechanical Engineer & Astrophysics</title>
-    
-    <style> 
-        /* ===== RESET & VARIABLES ===== */   
+    <title>Sofia Odeh - Engineering Portfolio</title>
+    <style>
+        /* Desert Rock Color Palette */
+        :root {
+            --primary: #3E2723;      /* Deep Chocolate */
+            --accent: #C65D00;       /* Terracotta */
+            --secondary: #F5E6D3;    /* Sand */
+            --highlight: #87A96B;    /* Sage Green */
+            --text: #1C1412;         /* Espresso */
+            --white: #FEFEFE;
+            --light-sand: #FAF4EC;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        :root {
-            --primary: #b08d7a;
-            --secondary: #8b6f63;
-            --accent: #4a90e2;
-            --text-dark: #2c3e50;
-            --text-light: #ffffff;
-            --bg-light: #f8f9fa;
-        }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: var(--text-dark);
+            color: var(--text);
+            background-color: var(--white);
         }
-
-        /* ===== NAVIGATION BAR ===== */
-        nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 1rem 0;
+        
+        /* Condensed Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--light-sand) 100%);
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--primary);
         }
-
-        .nav-container {
-            max-width: 1200px;
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: var(--text);
         }
-
-        .nav-brand {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 15px;
+            font-size: 1rem;
             color: var(--accent);
         }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
-            padding: 8rem 2rem 4rem;
-            text-align: center;
+        
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
-        .hero-content {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            opacity: 0.95;
-        }
-
-        .contact-buttons {
+        
+        nav ul {
+            list-style: none;
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 40px;
             flex-wrap: wrap;
-            margin-top: 2rem;
         }
-
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+        
+        nav a {
+            color: var(--secondary);
             text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
         }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+        
+        nav a:hover {
+            color: var(--accent);
         }
-
-        /* ===== SECTIONS ===== */
+        
+        /* Section Styles */
         section {
-            padding: 4rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 80px 20px;
         }
-
+        
         h2 {
+            color: var(--primary);
+            margin-bottom: 40px;
             font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: var(--text-dark);
             text-align: center;
+            position: relative;
+            padding-bottom: 15px;
         }
-
-        /* ===== ABOUT SECTION ===== */
-        .about {
-            background: var(--bg-light);
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
         }
-
-        .about-container {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 3rem;
-            align-items: center;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .profile-image {
-            text-align: center;
-        }
-
-        .profile-image img {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
+        
+        /* About Section */
         .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 40px;
+        }
+        
+        .about-text {
             font-size: 1.1rem;
             line-height: 1.8;
         }
-
-        .about-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        /* ===== PROJECTS SECTION ===== */
-        .projects {
-            background: white;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .project-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem;
-        }
-
-        .project-card h3 {
-            margin: 0;
-            font-size: 1.3rem;
-            color: white;
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-status {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: var(--accent);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-top: 1rem;
-        }
-
-        .click-hint {
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .project-card:hover .click-hint {
-            opacity: 1;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: rgba(26, 26, 46, 1);
-            color: var(--text-light);
+        
+        .about-image {
             text-align: center;
-            padding: 3rem 2rem;
         }
-
-        .footer-links {
+        
+        .about-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15);
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .skill-card {
+            background: var(--secondary);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(198, 93, 0, 0.2);
+        }
+        
+        .skill-card h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .skill-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .skill-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-sand);
+            color: var(--text);
+        }
+        
+        .skill-card li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Projects Section */
+        .project {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 5px 20px rgba(62, 39, 35, 0.1);
+            border: 1px solid var(--secondary);
+        }
+        
+        .project h3 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .project-meta {
+            color: var(--highlight);
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .project p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: var(--text);
+        }
+        
+        .project h4 {
+            color: var(--accent);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .project ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .project li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .project li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .project-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background-color: var(--accent);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+        
+        .project-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* Contact Section */
+        #contact {
+            background: var(--secondary);
+            text-align: center;
+            border-radius: 15px;
+        }
+        
+        .contact-info {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
         }
-
-        .footer-links a {
-            color: var(--text-light);
+        
+        .contact-info a {
+            color: var(--primary);
             text-decoration: none;
-            transition: color 0.3s;
+            font-size: 1.2rem;
+            padding: 12px 30px;
+            background: var(--white);
+            border-radius: 25px;
+            transition: all 0.3s;
         }
-
-        .footer-links a:hover {
-            color: var(--accent);
+        
+        .contact-info a:hover {
+            background: var(--accent);
+            color: var(--white);
+            transform: translateY(-5px);
         }
-
-        /* ===== RESPONSIVE ===== */
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--secondary);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+            
+            h2 {
                 font-size: 2rem;
             }
             
-            .about-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .project-grid {
-                grid-template-columns: 1fr;
+            .project h3 {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
-
 <body>
-    <!-- NAVIGATION -->
+    <header>
+        <h1>Sofia Odeh</h1>
+        <p>Mechanical Engineering & Astrophysics Student at Northeastern University</p>
+        <p class="tagline">Where precision engineering meets cosmic exploration</p>
+    </header>
+
     <nav>
-        <div class="nav-container">
-            <a href="index.html" class="nav-brand">Sofia Odeh</a>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="https://www.linkedin.com/in/sofiaodeh" target="_blank">LinkedIn</a></li>
+        </ul>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Sofia Odeh</h1>
-            <p class="subtitle">Mechanical Engineer | Astrophysics Minor</p>
-            <p class="subtitle">Northeastern University | Graduating December 2026</p>
-            
-            <div class="contact-buttons">
-                <a href="mailto:odeh.s@northeastern.edu" class="btn">Email Me</a>
-                <a href="https://www.linkedin.com/in/sofia-odeh" class="btn" target="_blank">LinkedIn</a>
-                <a href="tel:914-527-5222" class="btn">(914) 527-5222</a>
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a senior at Northeastern University pursuing a dual degree in Mechanical Engineering and Astrophysics. Currently, I work at the Aramaki Lab analyzing cosmic muon detection for the GRAMS (Gamma-Ray and AntiMatter Survey) experiment while exploring the intersection of art and STEM through my podcast, "The Art of Inquiry."</p>
+                <p>My engineering journey spans from designing precision optical systems at LineSpect to developing automated testing fixtures at Lutron Electronics. I believe great technical minds are fundamentally artists—a philosophy inspired by figures like Einstein that drives my approach to problem-solving and innovation.</p>
+                <p>Beyond the lab and classroom, I'm passionate about music (blues, rock, techno, and opera), philosophy, and fashion. These diverse interests inform my technical work, bringing creative perspectives to engineering challenges.</p>
+            </div>
+            <div class="about-image">
+                <img src="your-photo.jpg" alt="Sofia Odeh">
             </div>
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-container">
-                <div class="profile-image">
-                    <img src="images/sofia-headshot.jpg" alt="Sofia Odeh">
-                </div>
-                <div class="about-content">
-                    <p>
-                        I'm a senior at Northeastern University pursuing a Bachelor's degree in Mechanical Engineering 
-                        with a minor in Astrophysics. My academic journey is driven by a fascination with how engineering 
-                        can push the boundaries of exploration and innovation.
-                    </p>
-                    <p>
-                        Through co-ops at Lutron Electronics and LineSpect, I developed strong skills in engineering design, 
-                        rapid prototyping, tolerancing, and 3D printing—tools I have applied directly to my research in 
-                        astrophysics at Northeastern's Aramaki Lab. This combination of practical engineering experience 
-                        and a deep curiosity for fundamental physics allows me to tackle complex problems with both 
-                        precision and imagination.
-                    </p>
-                    <p>
-                        Beyond engineering, I'm actively involved in community outreach through Boston Clothing Outreach 
-                        and host the Art of Inquiry podcast, where I share insights at the intersection of science, 
-                        engineering, and art. In my free time, I love swing dancing, which brings together my appreciation 
-                        for rhythm, movement, and community.
-                    </p>
-                </div>
+    <section id="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>Engineering Software</h3>
+                <ul>
+                    <li>Autodesk Inventor</li>
+                    <li>ANSYS Fluent</li>
+                    <li>MATLAB/Simulink</li>
+                    <li>Zemax OpticStudio</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>Programming & Analysis</h3>
+                <ul>
+                    <li>Python (NumPy, Pandas, Matplotlib)</li>
+                    <li>ROOT Data Analysis</li>
+                    <li>LabVIEW</li>
+                    <li>Git/GitHub</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>Manufacturing</h3>
+                <ul>
+                    <li>3D Printing (FDM/SLA)</li>
+                    <li>CNC Machining</li>
+                    <li>Tolerance Stack Analysis</li>
+                    <li>GD&T</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>Research & Testing</h3>
+                <ul>
+                    <li>Detector Physics</li>
+                    <li>Data Acquisition Systems</li>
+                    <li>Statistical Analysis</li>
+                    <li>Technical Documentation</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- PROJECTS SECTION -->
-    <section id="projects" class="projects">
-        <h2>Projects & Experience</h2>
-        <div class="project-grid">
+    <section id="projects">
+        <h2>Featured Projects</h2>
+
+        <!-- LineSpect - First -->
+        <div class="project">
+            <h3>LineSpect - Precision Optical Housing System</h3>
+            <p class="project-meta">Mechanical & Optical Engineer | San Francisco, CA</p>
+            <p>Designed and optimized mechanical housings for toroidal lens systems in a cutting-edge imaging startup, achieving micron-level precision for biomedical applications.</p>
             
-            <a href="lutron.html" class="project-card">
-                <div class="project-header">
-                    <h3>Lutron Electronics Co-Op</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Designed and developed assembly tools for Ketra D2 Downlight. 
-                        Mastered Creo Parametric and rapid prototyping techniques.
-                    </p>
-                    <span class="project-status">Completed</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
+            <h4>Key Achievements</h4>
+            <ul>
+                <li>Engineered custom mechanical housings with 5-micron positional accuracy</li>
+                <li>Developed thermal compensation mechanisms for optical alignment</li>
+                <li>Created modular mounting system reducing assembly time by 40%</li>
+            </ul>
+            
+            <a href="linespect.html" class="project-link">View Full Project</a>
+        </div>
 
-            <a href="aramaki-lab.html" class="project-card">
-                <div class="project-header">
-                    <h3>Aramaki Lab Research</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Developing detectors for GRAMS and MicroGRAMS projects. 
-                        Designed critical TPC mounting solutions.
-                    </p>
-                    <span class="project-status">Ongoing</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
+        <!-- Lutron - Second -->
+        <div class="project">
+            <h3>Lutron Electronics - Automated Testing Platform</h3>
+            <p class="project-meta">Mechanical Design Engineering Co-op | Coopersburg, PA</p>
+            <p>Developed comprehensive testing fixtures and tools for quality assurance of lighting control systems, directly impacting production efficiency and product reliability.</p>
+            
+            <h4>Engineering Highlights</h4>
+            <ul>
+                <li>Designed 5+ custom testing fixtures meeting precise dimensional requirements</li>
+                <li>Applied mechanics of materials principles for cyclic loading durability</li>
+                <li>Mastered tolerance stack analysis through iterative design processes</li>
+            </ul>
+            
+            <a href="lutron.html" class="project-link">View Full Project</a>
+        </div>
 
-            <a href="nest.html" class="project-card">
-                <div class="project-header">
-                    <h3>NEST - Lunar Exploration</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Leading mechanical design for networked mini-COBRA robots 
-                        for advanced lunar surface exploration.
-                    </p>
-                    <span class="project-status">In Development</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
+        <!-- Podcast - Third -->
+        <div class="project">
+            <h3>The Art of Inquiry - Podcast</h3>
+            <p class="project-meta">Co-Host & Producer | 2024 - Present</p>
+            <p>Exploring the intersection of art and STEM by interviewing academics and researchers who exemplify how technical rigor manifests as artistic practice.</p>
+            
+            <h4>Core Philosophy</h4>
+            <ul>
+                <li>Great technical minds like Einstein were fundamentally artists in approach</li>
+                <li>Innovation emerges at the intersection of rigorous analysis and creativity</li>
+                <li>Features experts in adaptive design, robotics, and bioengineering</li>
+            </ul>
+            
+            <a href="podcast.html" class="project-link">Learn More</a>
+        </div>
 
-            <a href="podcast.html" class="project-card">
-                <div class="project-header">
-                    <h3>Art of Inquiry Podcast</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Co-hosting a podcast exploring the intersection of 
-                        science, engineering, and art through engaging interviews.
-                    </p>
-                    <span class="project-status">Active</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-
-            <a href="cornerstone.html" class="project-card">
-                <div class="project-header">
-                    <h3>Resilience Engineering</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Created an interactive museum exhibit on campus safety 
-                        using Arduino, C++, and laser-cutting techniques.
-                    </p>
-                    <span class="project-status">Completed</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-
-            <a href="nusci.html" class="project-card">
-                <div class="project-header">
-                    <h3>NU SCI Magazine</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Writing and curating scientific content for weekly newsletter, 
-                        making science accessible to diverse audiences.
-                    </p>
-                    <span class="project-status">Active</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-
-            <a href="linespect.html" class="project-card">
-                <div class="project-header">
-                    <h3>LineSpect Co-Op</h3>
-                </div>
-                <div class="project-content">
-                    <p>
-                        Upcoming co-op position. Details will be added once the 
-                        experience is completed.
-                    </p>
-                    <span class="project-status">Coming Soon</span>
-                    <p class="click-hint">Click to view details →</p>
-                </div>
-            </a>
-
+        <!-- GRAMS - Fourth -->
+        <div class="project">
+            <h3>GRAMS Cosmic Ray Research</h3>
+            <p class="project-meta">Research Assistant | Aramaki Lab, Northeastern University</p>
+            <p>Contributing to the Gamma-Ray and AntiMatter Survey experiment through analysis of cosmic muon detection systems and data processing pipeline development.</p>
+            
+            <h4>Research Contributions</h4>
+            <ul>
+                <li>Processing thousands of CAEN digitizer files for pulse height distribution analysis</li>
+                <li>Successfully achieved Landau distribution fits for scintillator paddle detectors</li>
+                <li>Developing Python-based data analysis workflows for large-scale datasets</li>
+            </ul>
+            
+            <a href="grams.html" class="project-link">View Research</a>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer id="contact">
-        <h2 style="color: white; margin-bottom: 2rem;">Let's Connect!</h2>
-        <div class="footer-links">
-            <a href="mailto:odeh.s@northeastern.edu">odeh.s@northeastern.edu</a>
-            <a href="tel:914-527-5222">(914) 527-5222</a>
-            <a href="https://www.linkedin.com/in/sofia-odeh" target="_blank">LinkedIn</a>
+    <section id="contact">
+        <h2>Let's Connect</h2>
+        <div class="contact-info">
+            <a href="mailto:your.email@example.com">Email</a>
+            <a href="https://www.linkedin.com/in/sofiaodeh" target="_blank">LinkedIn</a>
+            <a href="https://github.com/yourgithub" target="_blank">GitHub</a>
+            <a href="#podcast-link">Podcast</a>
         </div>
-        <p style="margin-top: 2rem; opacity: 0.8;">© 2024 Sofia Odeh</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Sofia Odeh. All rights reserved.</p>
     </footer>
-
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
-</html>  
- 
- 
+</html>
