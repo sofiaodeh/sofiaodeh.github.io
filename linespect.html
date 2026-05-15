@@ -4,148 +4,276 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LineSpect Co-op - Sofia Odeh</title>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --primary: #b08d7a;
-            --secondary: #8b6f63;
-            --accent: #4a90e2;
-            --ocean-blue: #006994;
-            --algae-green: #4CAF50;
-            --text-dark: #2c3e50;
-            --text-light: #ffffff;
-            --bg-light: #f8f9fa;
+            --navy:       #1a2340;
+            --navy-mid:   #22304f;
+            --gold:       #b8982a;
+            --gold-light: #d4af5a;
+            --gold-pale:  #e8d49a;
+            --maroon:     #6b2737;
+            --cream:      #f5f2eb;
+            --text-dark:  #1a2340;
+            --text-light: #f5f2eb;
+            --text-muted: #8a9ab8;
+            --text-body:  #3a4a5c;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
             line-height: 1.6;
             color: var(--text-dark);
+            background: var(--cream);
         }
 
+        /* ===== NAV ===== */
         nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--navy);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid rgba(184,152,42,0.25);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .nav-brand {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: bold;
+            color: var(--gold-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
             text-decoration: none;
         }
 
         .back-button {
-            color: var(--text-light);
+            color: var(--text-muted);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             transition: color 0.3s;
         }
 
-        .back-button:hover {
-            color: var(--accent);
+        .back-button:hover { color: var(--gold-light); }
+
+        /* ===== HERO ===== */
+        .project-hero {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 6rem 2rem 3.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .project-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text-light);
-            padding: 8rem 2rem 4rem;
-            text-align: center;
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 50% 120%, rgba(184,152,42,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 10% 20%, rgba(107,39,55,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-rule {
+            width: 48px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 auto 1.2rem;
+            opacity: 0.7;
         }
 
         .project-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.6rem;
+            position: relative;
         }
 
-        .project-meta {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .project-hero .meta {
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold-pale);
+            opacity: 0.8;
+            position: relative;
+            margin-bottom: 0.25rem;
         }
 
+        /* ===== CONTENT ===== */
         .content-section {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 1.8rem 2rem;
         }
 
         .content-section h2 {
-            color: var(--secondary);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--navy);
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1.4rem;
             padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 1px solid rgba(184,152,42,0.45);
+            letter-spacing: 0.03em;
         }
 
         .content-section h3 {
-            color: var(--text-dark);
-            font-size: 1.5rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            color: var(--maroon);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 1.8rem;
+            margin-bottom: 0.8rem;
         }
 
         .content-section p {
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            font-size: 1.1rem;
+            margin-bottom: 1.3rem;
+            line-height: 1.9;
+            font-size: 0.97rem;
+            color: var(--text-body);
         }
 
-        .content-section ul, .content-section ol {
-            margin-left: 2rem;
-            margin-bottom: 1.5rem;
+        .content-section ul {
+            margin-left: 1.8rem;
+            margin-bottom: 1.3rem;
+            color: var(--text-body);
         }
 
         .content-section li {
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
+            margin-bottom: 0.6rem;
+            line-height: 1.7;
+            font-size: 0.97rem;
         }
 
-        .product-overview {
-            background: linear-gradient(135deg, rgba(0, 105, 148, 0.1), rgba(76, 175, 80, 0.1));
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-            border-left: 5px solid var(--ocean-blue);
+        strong { color: var(--navy); font-weight: 500; }
+
+        /* nda note */
+        .nda-note {
+            background: white;
+            border-left: 3px solid var(--gold);
+            padding: 1rem 1.3rem;
+            border-radius: 0 2px 2px 0;
+            font-size: 0.9rem;
+            color: var(--text-body);
+            margin: 1.5rem 0;
+            font-style: italic;
         }
 
+        /* achievement card → now a clean outlined list block */
+        .achievement-card {
+            background: white;
+            border: 1px solid rgba(184,152,42,0.25);
+            border-left: 3px solid var(--gold);
+            border-radius: 0 2px 2px 0;
+            padding: 1.3rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* testing grid */
+        .technical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .technical-card {
+            background: white;
+            border: 1px solid rgba(184,152,42,0.2);
+            border-radius: 2px;
+            padding: 1.2rem 1.3rem;
+            transition: border-color 0.25s;
+        }
+
+        .technical-card:hover { border-color: rgba(184,152,42,0.5); }
+
+        .technical-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--navy);
+            font-size: 1.05rem;
+            font-weight: 400;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        .technical-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* highlight box */
+        .highlight-box {
+            background: white;
+            border-left: 3px solid var(--gold);
+            padding: 1.2rem 1.4rem;
+            margin: 1.2rem 0;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--navy);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 0.93rem;
+        }
+
+        /* images */
         .image-container {
-            margin: 2rem 0;
+            margin: 1.8rem 0;
             text-align: center;
         }
 
         .image-container img {
             max-width: 60%;
             height: auto;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            border: 1px solid #4a4a4a;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .image-caption {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            font-size: 0.87rem;
         }
 
         .image-pair {
             display: flex;
             gap: 1.5rem;
-            margin: 2rem 0;
+            margin: 1.8rem 0;
             align-items: flex-start;
         }
 
@@ -158,130 +286,74 @@
             max-width: 100%;
         }
 
-        @media (max-width: 600px) {
-            .image-pair { flex-direction: column; }
-            .image-container img { max-width: 90%; }
-        }
-
-        .image-caption {
-            font-style: italic;
-            color: var(--secondary);
-            margin-top: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .achievement-card {
-            background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--accent);
-        }
-
-        .achievement-card h3 {
-            color: var(--accent);
-            margin-top: 0;
-        }
-
-        .highlight-box {
-            background: var(--bg-light);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 5px;
-        }
-
-        .highlight-box h3 {
-            color: var(--accent);
-            margin-top: 0;
-        }
-
-        .technical-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .technical-card {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .technical-card:hover {
-            transform: translateY(-3px);
-        }
-
-        .technical-card h4 {
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
-
+        /* skills */
         .skills-used {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 2rem 0;
+            gap: 0.7rem;
+            margin: 1.5rem 0;
         }
 
         .skill-tag {
-            background: var(--primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            background: transparent;
+            border: 1px solid rgba(26,35,64,0.3);
+            color: var(--navy);
+            padding: 0.35rem 0.9rem;
+            border-radius: 2px;
+            font-size: 0.78rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
         }
 
-        .nda-note {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: 5px;
-            font-style: italic;
-            color: var(--secondary);
-            margin: 2rem 0;
-            border-left: 3px solid var(--accent);
-        }
-
+        /* footer */
         footer {
-            background: rgba(26, 26, 46, 1);
+            background: #111926;
             color: var(--text-light);
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid rgba(184,152,42,0.2);
             margin-top: 4rem;
         }
 
+        footer p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+
         footer a {
-            color: var(--accent);
+            color: var(--gold-light);
             text-decoration: none;
+            transition: color 0.25s;
+        }
+
+        footer a:hover { color: var(--gold-pale); }
+
+        @media (max-width: 640px) {
+            .image-container img { max-width: 92%; }
+            .image-pair { flex-direction: column; }
+            .project-hero h1 { font-size: 2rem; }
         }
     </style>
 </head>
 
 <body>
+
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">Sofia Odeh</a>
-            <a href="index.html#projects" class="back-button">
-                ← Back to Projects
-            </a>
+            <a href="index.html#projects" class="back-button">← Back to Projects</a>
         </div>
     </nav>
 
     <div class="project-hero">
+        <div class="hero-rule"></div>
         <h1>LineSpect Co-op</h1>
-        <p class="project-meta">Optical Engineering & System Design</p>
-        <p class="project-meta">HABForecastr Development</p>
+        <p class="meta">Optical Engineering &nbsp;·&nbsp; System Design</p>
+        <p class="meta">HABForecastr Development</p>
     </div>
 
     <section class="content-section">
         <p>
-            My work at LineSpect moved between CAD, the 3D printer, the soldering station, and the optics bench within the same day. 
+            My work at LineSpect moved between CAD, the 3D printer, the soldering station, and the optics bench within the same day.
             In a small startup, I touched every part of the system.
         </p>
-
         <div class="nda-note">
             <strong>Note:</strong> Detailed designs and product images are under NDA. The images shown here are of the broader optical system and imaging results. I am happy to walk through my specific contributions in conversation.
         </div>
@@ -289,12 +361,10 @@
 
     <section class="content-section">
         <h2>The Product: HABForecastr</h2>
-        
         <p>
-            HABForecastr is a submersible microscope that predicts harmful algal blooms 7 days in advance, at 1/6th the cost 
+            HABForecastr is a submersible microscope that predicts harmful algal blooms 7 days in advance, at 1/6th the cost
             of current detection systems. I worked on the optical and mechanical systems that make this possible.
         </p>
-
         <div class="image-container">
             <img src="images/linespect-diagram.jpg" alt="HABForecastr Optical System Diagram">
             <p class="image-caption">HABForecastr optical system: lightsheet microscopy setup for algae detection</p>
@@ -303,7 +373,6 @@
 
     <section class="content-section">
         <h2>Optical Backplate Redesign</h2>
-        
         <div class="achievement-card">
             <ul>
                 <li><strong>Stray Light Reduction:</strong> Implemented shielding solutions to dramatically improve imaging quality</li>
@@ -317,7 +386,6 @@
 
     <section class="content-section">
         <h2>HAB Camera System</h2>
-        
         <ul>
             <li><strong>Housing Design:</strong> Optimized to fit within 4" copper pipe while maintaining optical performance</li>
             <li><strong>Optical Path Modeling:</strong> Reduced tube size while preserving full field of view</li>
@@ -325,12 +393,10 @@
             <li><strong>Beam Splitter Enhancement:</strong> Enabled interchangeability with dichroic mirrors for improved adjustability</li>
             <li><strong>Laser Diode Mount:</strong> Designed with fine horizontal/vertical adjustment and integrated cooling</li>
         </ul>
-
     </section>
 
     <section class="content-section">
         <h2>Testing & Validation</h2>
-        
         <div class="technical-grid">
             <div class="technical-card">
                 <h4>LED Configuration Testing</h4>
@@ -360,7 +426,6 @@
 
     <section class="content-section">
         <h2>Electronics & Fabrication Support</h2>
-        
         <ul>
             <li>Reflow soldered LED boards from scratch and repaired faulty components</li>
             <li>Conducted rigorous testing of LED drivers to identify issues and prevent overcurrent damage</li>
@@ -372,31 +437,24 @@
 
     <section class="content-section">
         <h2>Additional Projects</h2>
-        
         <div class="highlight-box">
             <h3>Microplastics Detection System</h3>
             <p>Created comprehensive CAD mockup of the product to support proposal development for environmental monitoring applications</p>
         </div>
-
         <div class="highlight-box">
             <h3>3D Printer Maintenance & Recovery</h3>
-            <p>
-                Diagnosed and recovered SLA and FDM printers, resolving both hardware and firmware issues 
-                to restore full functionality.
-            </p>
+            <p>Diagnosed and recovered SLA and FDM printers, resolving both hardware and firmware issues to restore full functionality.</p>
         </div>
     </section>
 
     <section class="content-section">
         <h2>Impact</h2>
-
         <div class="image-container">
             <img src="images/linespect-growth.jpg" alt="HABForecastr algae growth prediction model">
-            <p class="image-caption">HABForecastr's algae growth prediction model.</p>
+            <p class="image-caption">HABForecastr's algae growth prediction model</p>
         </div>
-
         <p>
-            The HABForecastr technology has the potential to save millions annually by providing early warning of harmful algal blooms, 
+            The HABForecastr technology has the potential to save millions annually by providing early warning of harmful algal blooms,
             protecting coastal communities, industries, and public health.
         </p>
     </section>
@@ -421,10 +479,8 @@
 
     <footer>
         <p>Want to learn more about my work at LineSpect?</p>
-        <p>
-            <a href="mailto:odeh.s@northeastern.edu">Contact me</a> | 
-            <a href="index.html">Back to main page</a>
-        </p>
+        <p><a href="mailto:odeh.s@northeastern.edu">Contact me</a> &nbsp;|&nbsp; <a href="index.html">Back to main page</a></p>
     </footer>
+
 </body>
 </html>
