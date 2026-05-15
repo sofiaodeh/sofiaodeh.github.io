@@ -130,32 +130,6 @@
             border-left: 5px solid var(--ocean-blue);
         }
 
-        .product-overview h3 {
-            color: var(--ocean-blue);
-            margin-top: 0;
-        }
-
-        .impact-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            border-top: 3px solid var(--algae-green);
-        }
-
-        .stat-card h4 {
-            color: var(--ocean-blue);
-            margin-bottom: 0.5rem;
-        }
-
         .image-container {
             margin: 2rem 0;
             text-align: center;
@@ -173,13 +147,6 @@
             color: var(--secondary);
             margin-top: 1rem;
             font-size: 0.95rem;
-        }
-
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
         }
 
         .achievement-card {
@@ -247,19 +214,14 @@
             font-size: 0.9rem;
         }
 
-        .company-reference {
-            background: white;
-            border: 2px solid var(--primary);
-            border-radius: 10px;
+        .nda-note {
+            background: var(--bg-light);
             padding: 1.5rem;
+            border-radius: 5px;
+            font-style: italic;
+            color: var(--secondary);
             margin: 2rem 0;
-            text-align: center;
-        }
-
-        .company-reference a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: bold;
+            border-left: 3px solid var(--accent);
         }
 
         footer {
@@ -294,28 +256,34 @@
     </div>
 
     <section class="content-section">
-        <h2>My Contributions to HABForecastr</h2>
-        
         <p>
             My work at LineSpect moved between CAD, the 3D printer, the soldering station, and the optics bench within the same day. 
             In a small startup, I touched every part of the system.
         </p>
-        
-        <h3>Optical System Development</h3>
-        
-        <div class="image-grid">
-            <div class="image-container">
-                <img src="images/linespect-microscope.jpg" alt="Microscope assembly showing algae sample">
-                <p class="image-caption">Microscope assembly with algae sample under UV illumination</p>
-            </div>
-            <div class="image-container">
-                <img src="images/linespect-algae.jpg" alt="Captured algae cells">
-                <p class="image-caption">Algae cells captured using optimized imaging system</p>
-            </div>
-        </div>
 
+        <div class="nda-note">
+            <strong>Note:</strong> Detailed designs and product images are under NDA. The images shown here are of the broader optical system and imaging results. I am happy to walk through my specific contributions in conversation.
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>The Product: HABForecastr</h2>
+        
+        <p>
+            HABForecastr is a submersible microscope that predicts harmful algal blooms 7 days in advance, at 1/6th the cost 
+            of current detection systems. I worked on the optical and mechanical systems that make this possible.
+        </p>
+
+        <div class="image-container">
+            <img src="images/linespect-diagram.jpg" alt="HABForecastr Optical System Diagram">
+            <p class="image-caption">HABForecastr optical system: lightsheet microscopy setup for algae detection</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Optical Backplate Redesign</h2>
+        
         <div class="achievement-card">
-            <h3>Complete Redesign of Optical Backplate</h3>
             <ul>
                 <li><strong>Stray Light Reduction:</strong> Implemented shielding solutions to dramatically improve imaging quality</li>
                 <li><strong>Mirror Mount Simplification:</strong> Redesigned mounts for faster and more repeatable optical alignment</li>
@@ -324,13 +292,11 @@
                 <li><strong>Assembly Refinement:</strong> Reduced screw count and part complexity for streamlined manufacturing</li>
             </ul>
         </div>
+    </section>
 
-        <div class="image-container">
-            <img src="images/linespect-growth.jpg" alt="Algae growth prediction graph">
-            <p class="image-caption">Figure 4: Limiting algae growth graph showing HABForecastr's predictive capabilities</p>
-        </div>
-
-        <h3>HAB Camera System</h3>
+    <section class="content-section">
+        <h2>HAB Camera System</h2>
+        
         <ul>
             <li><strong>Housing Design:</strong> Optimized to fit within 4" copper pipe while maintaining optical performance</li>
             <li><strong>Optical Path Modeling:</strong> Reduced tube size while preserving full field of view</li>
@@ -339,7 +305,15 @@
             <li><strong>Laser Diode Mount:</strong> Designed with fine horizontal/vertical adjustment and integrated cooling</li>
         </ul>
 
-        <h3>Testing & Validation</h3>
+        <div class="image-container">
+            <img src="images/linespect-microscope.jpg" alt="Microscope assembly showing algae sample">
+            <p class="image-caption">Microscope assembly with algae sample under UV illumination</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Testing & Validation</h2>
+        
         <div class="technical-grid">
             <div class="technical-card">
                 <h4>LED Configuration Testing</h4>
@@ -355,7 +329,15 @@
             </div>
         </div>
 
-        <h3>Electronics & Fabrication Support</h3>
+        <div class="image-container">
+            <img src="images/linespect-algae.jpg" alt="Captured algae cells">
+            <p class="image-caption">Algae cells captured using the optimized imaging system</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Electronics & Fabrication Support</h2>
+        
         <ul>
             <li>Reflow soldered LED boards from scratch and repaired faulty components</li>
             <li>Conducted rigorous testing of LED drivers to identify issues and prevent overcurrent damage</li>
@@ -363,8 +345,10 @@
             <li>Learned precision glass and mirror cutting techniques for prototype assembly</li>
             <li>Gained exposure to Zemax software for toroidal lens modeling</li>
         </ul>
+    </section>
 
-        <h3>Additional Projects</h3>
+    <section class="content-section">
+        <h2>Additional Projects</h2>
         
         <div class="highlight-box">
             <h3>Microplastics Detection System</h3>
@@ -376,53 +360,6 @@
             <p>
                 Diagnosed and recovered SLA and FDM printers, resolving both hardware and firmware issues 
                 to restore full functionality.
-            </p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Product Overview: HABForecastr</h2>
-        
-        <div class="product-overview">
-            <h3>Predicting Harmful Algal Blooms</h3>
-            <p>
-                HABForecastr is a submersible microscope that predicts harmful algal blooms (HABs) 
-                7 days in advance — providing critical time to act, not react. Think of it as a weather forecast 
-                for marine ecosystems, enabling proactive management of water resources.
-            </p>
-            <ul>
-                <li><strong>7-Day Advanced Warning:</strong> More time to implement preventive measures</li>
-                <li><strong>Cost Savings:</strong> Prevents millions in damages and cleanup costs</li>
-                <li><strong>Environmental Protection:</strong> Enables early intervention to minimize ecological impact</li>
-                <li><strong>1/6th the Cost:</strong> More affordable than current detection systems</li>
-            </ul>
-        </div>
-
-        <div class="image-container">
-            <img src="images/linespect-diagram.jpg" alt="HABForecastr Optical System Diagram">
-            <p class="image-caption">Figure 1: HABForecastr optical system showing lightsheet microscopy setup for algae detection</p>
-        </div>
-
-        <div class="impact-stats">
-            <div class="stat-card">
-                <h4>Economic Impact</h4>
-                <p>$10-100 million annual cost of HABs in the U.S.</p>
-            </div>
-            <div class="stat-card">
-                <h4>Tourism Loss</h4>
-                <p>$40 million per single HAB event</p>
-            </div>
-            <div class="stat-card">
-                <h4>Healthcare Costs</h4>
-                <p>$4.4 million in emergency visits per event</p>
-            </div>
-        </div>
-
-        <div class="company-reference">
-            <p><strong>Company:</strong> LineSpect - Advanced Submicroscope Technology</p>
-            <p>
-                <a href="https://linespect.com/" target="_blank">Visit LineSpect →</a> | 
-                <a href="https://submicroscope.com/" target="_blank">Learn About HABForecastr →</a>
             </p>
         </div>
     </section>
@@ -450,7 +387,6 @@
             <span class="skill-tag">System Integration</span>
             <span class="skill-tag">Rapid Prototyping</span>
             <span class="skill-tag">Electronics Debugging</span>
-            <span class="skill-tag">Environmental Monitoring</span>
         </div>
     </section>
 
