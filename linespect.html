@@ -13,23 +13,14 @@
         }
 
         :root {
-            /* High Impact Professional Palette */
-            --navy: #0A1628;         /* Rich Navy - almost black */
-            --navy-light: #1E3A5F;   /* Medium Navy */
-            --gold: #F4C430;         /* Bright Gold - high contrast */
-            --gold-muted: #C9A961;   /* Softer gold for subtle uses */
-            --maroon: #7C2E41;       /* Deep Maroon */
-            --white: #FFFFFF;
-            --off-white: #FAFAFA;
-            --gray: #6B7280;
-            --text-dark: #1A1A1A;
-            --bg-light: #FAFAFA;
-            --text-light: #FFFFFF;
-            --accent: #F4C430;
-            --primary: #0A1628;
-            --secondary: #7C2E41;
-            --ocean-blue: #1E3A5F;
-            --algae-green: #87A96B;
+            --primary: #b08d7a;
+            --secondary: #8b6f63;
+            --accent: #4a90e2;
+            --ocean-blue: #006994;
+            --algae-green: #4CAF50;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --bg-light: #f8f9fa;
         }
 
         body {
@@ -39,7 +30,8 @@
         }
 
         nav {
-            background: var(--navy);
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
             top: 0;
@@ -77,8 +69,8 @@
         }
 
         .project-hero {
-            background: var(--off-white);
-            color: var(--navy);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-light);
             padding: 8rem 2rem 4rem;
             text-align: center;
         }
@@ -90,7 +82,7 @@
 
         .project-meta {
             font-size: 1.1rem;
-            color: var(--maroon);
+            opacity: 0.9;
         }
 
         .content-section {
@@ -100,15 +92,15 @@
         }
 
         .content-section h2 {
-            color: var(--navy);
+            color: var(--secondary);
             font-size: 2rem;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--gold);
+            border-bottom: 3px solid var(--primary);
         }
 
         .content-section h3 {
-            color: var(--maroon);
+            color: var(--text-dark);
             font-size: 1.5rem;
             margin-top: 2rem;
             margin-bottom: 1rem;
@@ -131,15 +123,15 @@
         }
 
         .product-overview {
-            background: var(--off-white);
+            background: linear-gradient(135deg, rgba(0, 105, 148, 0.1), rgba(76, 175, 80, 0.1));
             padding: 2rem;
             border-radius: 10px;
             margin: 2rem 0;
-            border-left: 5px solid var(--gold);
+            border-left: 5px solid var(--ocean-blue);
         }
 
         .product-overview h3 {
-            color: var(--navy);
+            color: var(--ocean-blue);
             margin-top: 0;
         }
 
@@ -156,11 +148,11 @@
             border-radius: 10px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             text-align: center;
-            border-top: 3px solid var(--gold);
+            border-top: 3px solid var(--algae-green);
         }
 
         .stat-card h4 {
-            color: var(--navy);
+            color: var(--ocean-blue);
             margin-bottom: 0.5rem;
         }
 
@@ -178,7 +170,7 @@
 
         .image-caption {
             font-style: italic;
-            color: var(--gray);
+            color: var(--secondary);
             margin-top: 1rem;
             font-size: 0.95rem;
         }
@@ -196,24 +188,24 @@
             padding: 2rem;
             margin: 2rem 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--maroon);
+            border-left: 5px solid var(--accent);
         }
 
         .achievement-card h3 {
-            color: var(--maroon);
+            color: var(--accent);
             margin-top: 0;
         }
 
         .highlight-box {
             background: var(--bg-light);
-            border-left: 4px solid var(--gold);
+            border-left: 4px solid var(--accent);
             padding: 1.5rem;
             margin: 2rem 0;
             border-radius: 5px;
         }
 
         .highlight-box h3 {
-            color: var(--navy);
+            color: var(--accent);
             margin-top: 0;
         }
 
@@ -236,7 +228,7 @@
         }
 
         .technical-card h4 {
-            color: var(--maroon);
+            color: var(--secondary);
             margin-bottom: 1rem;
         }
 
@@ -248,7 +240,7 @@
         }
 
         .skill-tag {
-            background: var(--navy);
+            background: var(--primary);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 20px;
@@ -257,7 +249,7 @@
 
         .company-reference {
             background: white;
-            border: 2px solid var(--navy);
+            border: 2px solid var(--primary);
             border-radius: 10px;
             padding: 1.5rem;
             margin: 2rem 0;
@@ -265,17 +257,13 @@
         }
 
         .company-reference a {
-            color: var(--maroon);
+            color: var(--accent);
             text-decoration: none;
             font-weight: bold;
         }
 
-        .company-reference a:hover {
-            text-decoration: underline;
-        }
-
         footer {
-            background: var(--navy);
+            background: rgba(26, 26, 46, 1);
             color: var(--text-light);
             text-align: center;
             padding: 2rem;
@@ -283,12 +271,8 @@
         }
 
         footer a {
-            color: var(--gold);
+            color: var(--accent);
             text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -310,12 +294,99 @@
     </div>
 
     <section class="content-section">
+        <h2>My Contributions to HABForecastr</h2>
+        
+        <p>
+            My work at LineSpect moved between CAD, the 3D printer, the soldering station, and the optics bench within the same day. 
+            In a small startup, I touched every part of the system.
+        </p>
+        
+        <h3>Optical System Development</h3>
+        
+        <div class="image-grid">
+            <div class="image-container">
+                <img src="images/linespect-microscope.jpg" alt="Microscope assembly showing algae sample">
+                <p class="image-caption">Microscope assembly with algae sample under UV illumination</p>
+            </div>
+            <div class="image-container">
+                <img src="images/linespect-algae.jpg" alt="Captured algae cells">
+                <p class="image-caption">Algae cells captured using optimized imaging system</p>
+            </div>
+        </div>
+
+        <div class="achievement-card">
+            <h3>Complete Redesign of Optical Backplate</h3>
+            <ul>
+                <li><strong>Stray Light Reduction:</strong> Implemented shielding solutions to dramatically improve imaging quality</li>
+                <li><strong>Mirror Mount Simplification:</strong> Redesigned mounts for faster and more repeatable optical alignment</li>
+                <li><strong>System Size Optimization:</strong> Minimized tube diameter while maintaining full field of view (FOV)</li>
+                <li><strong>Component Integration:</strong> Combined NVIDIA mount and backplane into a single 3D-printed component</li>
+                <li><strong>Assembly Refinement:</strong> Reduced screw count and part complexity for streamlined manufacturing</li>
+            </ul>
+        </div>
+
+        <div class="image-container">
+            <img src="images/linespect-growth.jpg" alt="Algae growth prediction graph">
+            <p class="image-caption">Figure 4: Limiting algae growth graph showing HABForecastr's predictive capabilities</p>
+        </div>
+
+        <h3>HAB Camera System</h3>
+        <ul>
+            <li><strong>Housing Design:</strong> Optimized to fit within 4" copper pipe while maintaining optical performance</li>
+            <li><strong>Optical Path Modeling:</strong> Reduced tube size while preserving full field of view</li>
+            <li><strong>Mounting Flexibility:</strong> Added compatibility for both NVIDIA and Odroid boards</li>
+            <li><strong>Beam Splitter Enhancement:</strong> Enabled interchangeability with dichroic mirrors for improved adjustability</li>
+            <li><strong>Laser Diode Mount:</strong> Designed with fine horizontal/vertical adjustment and integrated cooling</li>
+        </ul>
+
+        <h3>Testing & Validation</h3>
+        <div class="technical-grid">
+            <div class="technical-card">
+                <h4>LED Configuration Testing</h4>
+                <p>Tested multiple setups (700, 1000, 1200 mA) to define optimal current levels for brightness without component damage</p>
+            </div>
+            <div class="technical-card">
+                <h4>Optical Measurements</h4>
+                <p>Used ImageJ and custom 3D-printed jigs to measure FOV, depth of field, and light sheet thickness</p>
+            </div>
+            <div class="technical-card">
+                <h4>Algae Imaging Research</h4>
+                <p>Demonstrated UV lighting was unnecessary by comparing results with laser illumination</p>
+            </div>
+        </div>
+
+        <h3>Electronics & Fabrication Support</h3>
+        <ul>
+            <li>Reflow soldered LED boards from scratch and repaired faulty components</li>
+            <li>Conducted rigorous testing of LED drivers to identify issues and prevent overcurrent damage</li>
+            <li>Recovered two critical NVIDIA Orin Nano boards after system shutdown</li>
+            <li>Learned precision glass and mirror cutting techniques for prototype assembly</li>
+            <li>Gained exposure to Zemax software for toroidal lens modeling</li>
+        </ul>
+
+        <h3>Additional Projects</h3>
+        
+        <div class="highlight-box">
+            <h3>Microplastics Detection System</h3>
+            <p>Created comprehensive CAD mockup of the product to support proposal development for environmental monitoring applications</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>3D Printer Maintenance & Recovery</h3>
+            <p>
+                Diagnosed and recovered SLA and FDM printers, resolving both hardware and firmware issues 
+                to restore full functionality.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
         <h2>Product Overview: HABForecastr</h2>
         
         <div class="product-overview">
             <h3>Predicting Harmful Algal Blooms</h3>
             <p>
-                HABForecastr is a revolutionary submersible microscope that predicts harmful algal blooms (HABs) 
+                HABForecastr is a submersible microscope that predicts harmful algal blooms (HABs) 
                 7 days in advance — providing critical time to act, not react. Think of it as a weather forecast 
                 for marine ecosystems, enabling proactive management of water resources.
             </p>
@@ -357,109 +428,10 @@
     </section>
 
     <section class="content-section">
-        <h2>My Contributions to HABForecastr</h2>
-        
-        <h3>Optical System Development</h3>
-        
-        <div class="image-grid">
-            <div class="image-container">
-                <img src="images/linespect-microscope.jpg" alt="Microscope assembly showing algae sample">
-                <p class="image-caption">Microscope assembly with algae sample under UV illumination</p>
-            </div>
-            <div class="image-container">
-                <img src="images/linespect-algae.jpg" alt="Captured algae cells">
-                <p class="image-caption">Algae cells captured using optimized imaging system</p>
-            </div>
-        </div>
-
-        <div class="achievement-card">
-            <h3>Complete Redesign of Optical Backplate</h3>
-            <ul>
-                <li><strong>Stray Light Reduction:</strong> Implemented shielding solutions to dramatically improve imaging quality</li>
-                <li><strong>Mirror Mount Simplification:</strong> Redesigned mounts for faster and more repeatable optical alignment</li>
-                <li><strong>System Size Optimization:</strong> Minimized tube diameter while maintaining full field of view (FOV)</li>
-                <li><strong>Component Integration:</strong> Combined NVIDIA mount and backplane into a single 3D-printed component</li>
-                <li><strong>Assembly Refinement:</strong> Reduced screw count and part complexity for streamlined manufacturing</li>
-            </ul>
-        </div>
-
-        <div class="image-container">
-            <img src="images/linespect-growth.jpg" alt="Algae growth prediction graph">
-            <p class="image-caption">Figure 4: Limiting algae growth graph showing HABForecastr's predictive capabilities</p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Technical Development</h2>
-        
-        <h3>HAB Camera System</h3>
-        <ul>
-            <li><strong>Housing Design:</strong> Optimized to fit within 4" copper pipe while maintaining optical performance</li>
-            <li><strong>Optical Path Modeling:</strong> Reduced tube size while preserving full field of view</li>
-            <li><strong>Mounting Flexibility:</strong> Added compatibility for both NVIDIA and Odroid boards</li>
-            <li><strong>Beam Splitter Enhancement:</strong> Enabled interchangeability with dichroic mirrors for improved adjustability</li>
-            <li><strong>Laser Diode Mount:</strong> Designed with fine horizontal/vertical adjustment and integrated cooling</li>
-        </ul>
-
-        <h3>Testing & Validation</h3>
-        <div class="technical-grid">
-            <div class="technical-card">
-                <h4>LED Configuration Testing</h4>
-                <p>Tested multiple setups (700, 1000, 1200 mA) to define optimal current levels for brightness without component damage</p>
-            </div>
-            <div class="technical-card">
-                <h4>Optical Measurements</h4>
-                <p>Used ImageJ and custom 3D-printed jigs to measure FOV, depth of field, and light sheet thickness</p>
-            </div>
-            <div class="technical-card">
-                <h4>Algae Imaging Research</h4>
-                <p>Demonstrated UV lighting was unnecessary by comparing results with laser illumination</p>
-            </div>
-        </div>
-
-        <h3>Electronics & Manufacturing Excellence</h3>
-        <ul>
-            <li>Reflow soldered LED boards from scratch and repaired faulty components</li>
-            <li>Conducted rigorous testing of LED drivers to identify issues and prevent overcurrent damage</li>
-            <li>Recovered two critical NVIDIA Orin Nano boards after system shutdown</li>
-            <li>Learned precision glass and mirror cutting techniques for prototype assembly</li>
-            <li>Independently mastered Zemax software for toroidal lens modeling</li>
-        </ul>
-    </section>
-
-    <section class="content-section">
-        <h2>Additional Projects</h2>
-        
-        <div class="highlight-box">
-            <h3>Microplastics Detection System</h3>
-            <p>Created comprehensive CAD mockup of the product to support proposal development for environmental monitoring applications</p>
-        </div>
-
-        <div class="highlight-box">
-            <h3>3D Printer Maintenance & Recovery</h3>
-            <p>
-                Diagnosed and recovered the FDM printer, resolving both hardware and firmware issues 
-                to restore full functionality. Left the printer perfectly calibrated for future use.
-            </p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Impact & Future Applications</h2>
+        <h2>Impact</h2>
         <p>
-            The HABForecastr technology I helped develop has the potential to save millions of dollars 
-            annually by providing early warning of harmful algal blooms. Key benefits include:
-        </p>
-        <ul>
-            <li>Preventing beach closures that cost $50 million in lost wages and tourism</li>
-            <li>Protecting shellfish industries from $5.58 million in contamination losses</li>
-            <li>Reducing healthcare costs by enabling preventive measures</li>
-            <li>Maintaining property values for coastal real estate</li>
-        </ul>
-        
-        <p>
-            This technology represents a significant advancement in marine environmental monitoring, 
-            providing communities with the tools they need to protect both public health and economic interests.
+            The HABForecastr technology has the potential to save millions annually by providing early warning of harmful algal blooms, 
+            protecting coastal communities, industries, and public health.
         </p>
     </section>
 
@@ -467,7 +439,7 @@
         <h2>Skills & Technologies</h2>
         <div class="skills-used">
             <span class="skill-tag">Optical Design</span>
-            <span class="skill-tag">Zemax</span>
+            <span class="skill-tag">Exposure to Zemax</span>
             <span class="skill-tag">Lightsheet Microscopy</span>
             <span class="skill-tag">CAD Design</span>
             <span class="skill-tag">3D Printing</span>
