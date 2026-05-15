@@ -1,334 +1,493 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aramaki Lab Research - Sofia Odeh</title>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            /* High Impact Professional Palette */
-            --navy: #0A1628;         /* Rich Navy - almost black */
-            --navy-light: #1E3A5F;   /* Medium Navy */
-            --gold: #F4C430;         /* Bright Gold - high contrast */
-            --gold-muted: #C9A961;   /* Softer gold for subtle uses */
-            --maroon: #7C2E41;       /* Deep Maroon */
-            --white: #FFFFFF;
-            --off-white: #FAFAFA;
-            --gray: #6B7280;
-            --text-dark: #1A1A1A;
-            --text-light: #FFFFFF;
-            --bg-light: #FAFAFA;
-            --primary: #0A1628;
-            --secondary: #7C2E41;
-            --accent: #F4C430;
+            --navy:       #1a2340;
+            --navy-mid:   #22304f;
+            --navy-light: #2e4070;
+            --gold:       #b8982a;
+            --gold-light: #d4af5a;
+            --gold-pale:  #e8d49a;
+            --maroon:     #6b2737;
+            --cream:      #f5f2eb;
+            --text-dark:  #1a2340;
+            --text-light: #f5f2eb;
+            --text-muted: #8a9ab8;
+            --text-body:  #3a4a5c;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
             line-height: 1.6;
             color: var(--text-dark);
+            background: var(--cream);
         }
 
+        /* ===== NAV ===== */
         nav {
             background: var(--navy);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid rgba(184,152,42,0.25);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .nav-brand {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: bold;
+            color: var(--gold-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
             text-decoration: none;
         }
 
         .back-button {
-            color: var(--text-light);
+            color: var(--text-muted);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             transition: color 0.3s;
         }
 
-        .back-button:hover {
-            color: var(--accent);
+        .back-button:hover { color: var(--gold-light); }
+
+        /* ===== HERO ===== */
+        .project-hero {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 6rem 2rem 3.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .project-hero {
-            background: var(--off-white);
-            color: var(--navy);
-            padding: 8rem 2rem 4rem;
-            text-align: center;
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 50% 120%, rgba(184,152,42,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 10% 20%, rgba(107,39,55,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-rule {
+            width: 48px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 auto 1.2rem;
+            opacity: 0.7;
         }
 
         .project-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.6rem;
+            position: relative;
         }
 
-        .project-hero p {
-            color: var(--maroon);
-            font-size: 1.1rem;
+        .project-hero .meta {
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold-pale);
+            opacity: 0.8;
+            position: relative;
         }
 
+        /* ===== CONTENT ===== */
         .content-section {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
 
         .content-section h2 {
+            font-family: 'Cormorant Garamond', serif;
             color: var(--navy);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1.4rem;
             padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--gold);
+            border-bottom: 1px solid rgba(184,152,42,0.45);
+            letter-spacing: 0.03em;
         }
 
         .content-section h3 {
             color: var(--maroon);
-            font-size: 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             margin-top: 2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .content-section p {
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            font-size: 1.1rem;
+            margin-bottom: 1.3rem;
+            line-height: 1.9;
+            font-size: 0.97rem;
+            color: var(--text-body);
         }
 
-        .content-section ul, .content-section ol {
-            margin-left: 2rem;
-            margin-bottom: 1.5rem;
+        .content-section ul,
+        .content-section ol {
+            margin-left: 1.8rem;
+            margin-bottom: 1.3rem;
+            color: var(--text-body);
         }
 
         .content-section li {
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
+            margin-bottom: 0.6rem;
+            line-height: 1.7;
+            font-size: 0.97rem;
         }
 
+        strong { color: var(--navy); font-weight: 500; }
+
+        /* phase divider band */
+        .phase-band {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 1.8rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(184,152,42,0.2);
+            border-bottom: 1px solid rgba(184,152,42,0.2);
+        }
+
+        .phase-band .phase-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.3rem;
+        }
+
+        .phase-band h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.7rem;
+            font-weight: 300;
+            color: var(--text-light);
+            letter-spacing: 0.06em;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* highlight box */
         .highlight-box {
-            background: var(--bg-light);
-            border-left: 4px solid var(--gold);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 5px;
+            background: white;
+            border-left: 3px solid var(--gold);
+            padding: 1.3rem 1.5rem;
+            margin: 1.8rem 0;
+            border-radius: 0 2px 2px 0;
         }
 
         .highlight-box h3 {
             color: var(--navy);
             margin-top: 0;
+            margin-bottom: 0.6rem;
         }
 
+        /* images */
         .image-container {
-            margin: 2rem 0;
+            margin: 1.8rem 0;
             text-align: center;
         }
 
         .image-container img {
-            max-width: 100%;
+            max-width: 70%;
             height: auto;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .image-container img.dark-bg {
+            background: #111;
+            max-width: 75%;
         }
 
         .image-caption {
             font-style: italic;
-            color: var(--gray);
-            margin-top: 1rem;
-            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            font-size: 0.87rem;
         }
 
+        /* side-by-side images */
+        .image-pair {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+            align-items: flex-start;
+        }
+
+        .image-pair .image-container {
+            flex: 1;
+            margin: 0;
+        }
+
+        .image-pair .image-container img {
+            max-width: 100%;
+        }
+
+        /* skills */
         .skills-used {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 2rem 0;
+            gap: 0.7rem;
+            margin: 1.8rem 0;
         }
 
         .skill-tag {
-            background: var(--navy);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            background: transparent;
+            border: 1px solid rgba(26,35,64,0.3);
+            color: var(--navy);
+            padding: 0.35rem 0.9rem;
+            border-radius: 2px;
+            font-size: 0.78rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
         }
 
+        /* footer */
         footer {
-            background: var(--navy);
+            background: #111926;
             color: var(--text-light);
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid rgba(184,152,42,0.2);
             margin-top: 4rem;
         }
 
+        footer p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+
         footer a {
-            color: var(--gold);
+            color: var(--gold-light);
             text-decoration: none;
+            transition: color 0.25s;
         }
 
-        footer a:hover {
-            text-decoration: underline;
-        }
+        footer a:hover { color: var(--gold-pale); }
 
-        strong {
-            color: var(--navy);
-            font-weight: 600;
+        @media (max-width: 640px) {
+            .image-container img { max-width: 95%; }
+            .image-pair { flex-direction: column; }
+            .project-hero h1 { font-size: 2rem; }
         }
     </style>
 </head>
 
 <body>
+
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">Sofia Odeh</a>
-            <a href="index.html#projects" class="back-button">
-                ← Back to Projects
-            </a>
+            <a href="index.html#projects" class="back-button">← Back to Projects</a>
         </div>
     </nav>
 
     <div class="project-hero">
+        <div class="hero-rule"></div>
         <h1>Aramaki Lab Research</h1>
-        <p>2024 - Present | Northeastern University</p>
+        <p class="meta">2024 – Present &nbsp;·&nbsp; Northeastern University</p>
     </div>
 
+    <!-- INTRO -->
     <section class="content-section">
-        <h2>Context</h2>
+        <h2>Overview</h2>
         <p>
-            During my junior year, I took Multi-Messenger Astrophysics taught by Professor Tsuogo Aramaki. 
-            Beyond being deeply interested in the class material, I found his research work at the Aramaki 
-            Lab cutting-edge and asked for the opportunity to learn more and potentially get involved.
-        </p>
-        <p>
-            I was thrilled to learn that they needed a mechanical engineer, and I could promptly join the 
-            team. For the remainder of that semester, I worked 7+ hours a week under the guidance of PhD 
-            student Jiancheng Zeng.
+            I joined the Aramaki Lab after taking Multi-Messenger Astrophysics with Professor Aramaki. 
+            The lab needed a mechanical engineer, and I've been contributing to the GRAMS (Gamma-Ray and 
+            AntiMatter Survey) experiment since, working on both mechanical design and data analysis.
         </p>
     </section>
 
+    <!-- BACKGROUND -->
     <section class="content-section">
         <h2>Background</h2>
         <p>
-            Our team at the Aramaki Lab is developing two CCD-based detectors in parallel:
+            Dark matter constitutes ~27% of the universe but has never been directly detected. The GRAMS 
+            experiment searches for dark matter signatures using a Liquid Argon Time Projection Chamber 
+            (LArTPC). Cosmic ray muons bombard Earth at ~1 per cm²/min and can pass through the TPC, 
+            mimicking the signals GRAMS is designed to detect. Without a reliable veto, these background 
+            events contaminate the data.
         </p>
-        <ul>
-            <li><strong>GRAMS</strong> - Gamma-Ray and AntiMatter Survey</li>
-            <li><strong>MicroGRAMS</strong> - Smaller-scale prototype detector</li>
-        </ul>
-        <p>
-            The goal is to track the trajectory and energy deposition of cosmic particles to identify their 
-            characteristics and origins. These experiments target the MeV energy range, a region with a 
-            significant research gap, and aim to enable indirect observations of antimatter.
-        </p>
-        
-        <div class="highlight-box">
-            <h3>Technical Details</h3>
-            <p>
-                The detector is a Liquid Argon Time Projection Chamber (LArTPC) that employs SiPM 
-                (Silicon Photomultiplier) technology. When a particle enters the chamber, the SiPMs 
-                detect scintillation light produced in the plastic scintillator, while also capturing 
-                the ionized electrons.
-            </p>
-        </div>
     </section>
 
+    <!-- PHASE 1 BAND -->
+    <div class="phase-band">
+        <p class="phase-label">Phase 1</p>
+        <h2>TPC Mechanical Mounting System</h2>
+    </div>
+
     <section class="content-section">
-        <h2>My Role & Contributions</h2>
-        
         <h3>The Challenge</h3>
         <p>
-            Before our flight in May 2025, our team needs to conduct routine tests to ensure reliable 
-            data acquisition, control of environmental factors, and proper heat transfer of components. 
-            To perform these tests, we need to immerse the TPC in a liquid argon chamber at the lab—but 
-            no mounting solution existed to do so safely.
+            Before the planned flight in May 2025, the team needed to conduct routine tests to ensure 
+            reliable data acquisition, environmental control, and proper heat transfer. This required 
+            immersing the TPC in a liquid argon chamber at the lab — but no mounting solution existed 
+            to do so safely.
         </p>
 
-        <h3>My Solution</h3>
+        <h3>Design & Solution</h3>
         <p>
-            As the team's mechanical engineer, I designed and 3D printed a component that could:
+            As the team's mechanical engineer, I designed and 3D printed a component that could interface 
+            securely with the flange of the liquid argon chamber, avoid interference with surrounding 
+            tubes and sensitive components, and hold the delicate detector with enough stability to 
+            prevent positional shifts that could compromise data quality.
         </p>
-        <ol>
-            <li>Interface securely with the flange of the liquid argon chamber</li>
-            <li>Avoid interference with surrounding obstacles (tubes, pipes, and other sensitive components)</li>
-            <li>Hold the extremely delicate detector with high stability, preventing even the smallest 
-                positional shifts that could compromise data quality</li>
-        </ol>
 
         <div class="image-container">
             <img src="images/aramaki-cad.jpg" alt="CAD Model of TPC Holder">
-            <p class="image-caption">CAD Model of the TPC holder (LEFT) and the implemented, white, 3D-printed holder (RIGHT)</p>
+            <p class="image-caption">CAD model of the TPC holder (left) and the implemented 3D-printed holder (right)</p>
         </div>
 
         <h3>Process & Iteration</h3>
         <p>
-            The design process required many iterations, as there was little existing CAD to reference 
-            and significant trial and error was needed to achieve the correct fits and tolerances. 
-            I took ownership of weekly prototyping, which also gave me hands-on experience with rigorous 
-            3D printer maintenance and troubleshooting.
+            The design required many iterations — little existing CAD was available to reference, and 
+            significant trial and error was needed to achieve correct fits and tolerances. I took 
+            ownership of weekly prototyping, gaining hands-on experience with rigorous 3D printer 
+            maintenance and troubleshooting.
         </p>
 
         <div class="image-container">
             <img src="images/aramaki-lab.jpg" alt="Implemented TPC Holder in Lab">
-            <p class="image-caption">The implemented TPC holder in use at the Aramaki Lab</p>
+            <p class="image-caption">The implemented TPC holder in use at the Aramaki Lab — still in active use today</p>
         </div>
     </section>
 
+    <!-- PHASE 2 BAND -->
+    <div class="phase-band">
+        <p class="phase-label">Phase 2</p>
+        <h2>Cosmic Muon Coincidence Detection System</h2>
+    </div>
+
     <section class="content-section">
-        <h2>Results</h2>
+
+        <h3>Detector Construction</h3>
         <p>
-            By the end of the semester, I had fully implemented and tested my design, and it is still 
-            being used in the lab today! The mounting solution has enabled consistent and reliable 
-            testing procedures, contributing to the project's progress toward the May 2025 flight.
+            Constructed plastic scintillator paddles wrapped in Teflon and sealed for light-tightness. 
+            SiPMs coupled to each paddle convert scintillation photons to voltage pulses.
         </p>
-        
-        <div class="highlight-box">
-            <h3>Key Achievements</h3>
-            <ul>
-                <li>Successfully designed and implemented critical lab infrastructure</li>
-                <li>Enabled routine testing procedures that were previously impossible</li>
-                <li>Gained experience in aerospace-grade component design</li>
-                <li>Strengthened interdisciplinary collaboration skills</li>
-            </ul>
+
+        <h3>Mechanical Jig (v2)</h3>
+        <p>
+            Engineered a fully 3D-printed modular mounting system to suspend dual scintillator arrays 
+            at a fixed 1-meter height above the LArTPC. The design comprises a split retainer base, 
+            gusseted support arms, and adjustable collar clamps interfacing with the chamber flange, 
+            enabling precise and repeatable detector alignment while remaining fully adjustable for 
+            laboratory use.
+        </p>
+
+        <div class="image-container">
+            <img src="images/aramaki-jig-v2.jpg" alt="Phase 2 modular mounting system CAD render" class="dark-bg">
+            <p class="image-caption">3D-printed modular mounting system for dual scintillator arrays</p>
         </div>
+
+        <h3>Signal Optimization</h3>
+        <p>
+            Identified poor signal-to-noise ratio caused by ground loops. Implemented copper mesh 
+            grounding scheme and unified cable shielding. Rise times improved from ~100 ns to 5 ns.
+        </p>
+
+        <h3>Coincidence Detection and Analysis</h3>
+        <p>
+            When scintillation paddles on opposite sides of the detector fire at the same time, we can 
+            identify through-going muons. From 19,118 events, 429 muon candidates were identified at 
+            ±200 ns coincidence window, with 40 events within ±10 ns.
+        </p>
+
+        <div class="image-container">
+            <img src="images/aramaki-waveform.jpg" alt="Four-panel oscilloscope waveform showing simultaneous signals">
+            <p class="image-caption">Muon candidate event showing simultaneous signals on 3 of 4 arrays with Δt = 0 ns</p>
+        </div>
+
+        <div class="image-container">
+            <img src="images/aramaki-coincidence-graph.jpg" alt="Coincidence count scaling with window size">
+            <p class="image-caption">Coincidence count scaling with window size, demonstrating separation of true muon signals from accidental background</p>
+        </div>
+
+        <h3>Python Data Analysis</h3>
+        <p>
+            Analyzed 1M+ cosmic muon events using Python, achieving Landau distribution fitting with 
+            MPV at 7.1 mV. Top detector crosshatch shows uniform spatial response (247–363 coincidences 
+            per tile).
+        </p>
+
+        <div class="image-container">
+            <img src="images/aramaki-timing-histogram.jpg" alt="Top-bottom timing distribution histogram">
+            <p class="image-caption">Top-bottom timing distribution histogram</p>
+        </div>
+
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/aramaki-crosshatch-top.jpg" alt="Top set crosshatch coincidence grid">
+                <p class="image-caption">Top detector crosshatch — coincidences per tile</p>
+            </div>
+            <div class="image-container">
+                <img src="images/aramaki-crosshatch-bottom.jpg" alt="Bottom set crosshatch coincidence grid">
+                <p class="image-caption">Bottom detector crosshatch — coincidences per tile</p>
+            </div>
+        </div>
+
     </section>
 
+    <!-- NEXT STEPS -->
     <section class="content-section">
-        <h2>Skills & Technologies Used</h2>
+        <h2>Next Steps</h2>
+        <p>
+            Set per-channel trigger thresholds to normalize rates across all pixels. Detailed bias 
+            voltage study per paddle. Integrate veto system with GRAMS LArTPC for lab-scale testing.
+        </p>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="content-section">
+        <h2>Skills & Technologies</h2>
         <div class="skills-used">
-            <span class="skill-tag">SolidWorks</span>
+            <span class="skill-tag">Autodesk Inventor</span>
             <span class="skill-tag">3D Printing (FDM)</span>
             <span class="skill-tag">Rapid Prototyping</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Data Analysis</span>
+            <span class="skill-tag">Instrumentation Development</span>
+            <span class="skill-tag">Scintillator Detector Design</span>
+            <span class="skill-tag">SiPM Technology</span>
             <span class="skill-tag">Tolerance Analysis</span>
             <span class="skill-tag">Lab Equipment Design</span>
-            <span class="skill-tag">Interdisciplinary Collaboration</span>
         </div>
     </section>
 
     <footer>
         <p>Want to learn more about this project?</p>
-        <p><a href="mailto:odeh.s@northeastern.edu">Contact me</a> | <a href="index.html">Back to main page</a></p>
+        <p><a href="mailto:odeh.s@northeastern.edu">Contact me</a> &nbsp;|&nbsp; <a href="index.html">Back to main page</a></p>
     </footer>
+
 </body>
 </html>
