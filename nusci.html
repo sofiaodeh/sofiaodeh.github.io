@@ -4,74 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NU SCI Magazine - Sofia Odeh</title>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --primary: #3E2723;      /* Deep Chocolate */
-            --accent: #C65D00;       /* Terracotta */
-            --secondary: #F5E6D3;    /* Sand */
-            --highlight: #87A96B;    /* Sage Green */
-            --text: #1C1412;         /* Espresso */
-            --white: #FEFEFE;
-            --light-sand: #FAF4EC;
+            --navy:       #1a2340;
+            --navy-mid:   #22304f;
+            --navy-light: #2e4070;
+            --gold:       #b8982a;
+            --gold-light: #d4af5a;
+            --gold-pale:  #e8d49a;
+            --maroon:     #6b2737;
+            --cream:      #f5f2eb;
+            --text-dark:  #1a2340;
+            --text-light: #f5f2eb;
+            --text-muted: #8a9ab8;
+            --text-body:  #3a4a5c;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
             line-height: 1.6;
             color: var(--text-dark);
-            background: white;
+            background: var(--cream);
         }
 
+        /* ===== NAV ===== */
         nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--navy);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid rgba(184,152,42,0.25);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .nav-brand {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: bold;
+            color: var(--gold-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
             text-decoration: none;
         }
 
         .back-button {
-            color: var(--text-light);
+            color: var(--text-muted);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             transition: color 0.3s;
         }
 
-        .back-button:hover {
-            color: var(--accent);
-        }
+        .back-button:hover { color: var(--gold-light); }
 
+        /* ===== HERO ===== */
         .project-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: var(--navy);
             color: var(--text-light);
-            padding: 8rem 2rem 4rem;
+            padding: 6rem 2rem 3.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -80,228 +85,430 @@
         .project-hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('images/milky-way.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.3;
-            z-index: 0;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 50% 120%, rgba(184,152,42,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 10% 20%, rgba(107,39,55,0.15) 0%, transparent 60%);
+            pointer-events: none;
         }
 
-        .project-hero-content {
-            position: relative;
-            z-index: 1;
+        .hero-rule {
+            width: 48px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 auto 1.2rem;
+            opacity: 0.7;
         }
 
         .project-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.6rem;
+            position: relative;
         }
 
-        .logo-container {
-            margin: 2rem auto;
-            width: 150px;
-            height: 150px;
-            background: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .project-hero .meta {
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold-pale);
+            opacity: 0.8;
+            position: relative;
         }
 
-        .logo-container img {
-            width: 80%;
-            height: auto;
-        }
-
+        /* ===== CONTENT ===== */
         .content-section {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 1rem 2rem;
         }
 
         .content-section h2 {
-            color: var(--secondary);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--navy);
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1.4rem;
             padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 1px solid rgba(184,152,42,0.45);
+            letter-spacing: 0.03em;
         }
 
         .content-section h3 {
-            color: var(--text-dark);
-            font-size: 1.5rem;
+            color: var(--maroon);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             margin-top: 2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .content-section p {
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            font-size: 1.1rem;
+            margin-bottom: 1.3rem;
+            line-height: 1.9;
+            font-size: 0.97rem;
+            color: var(--text-body);
         }
 
-        .objective-box {
-            background: linear-gradient(135deg, var(--bg-light), white);
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--accent);
+        .content-section ul,
+        .content-section ol {
+            margin-left: 1.8rem;
+            margin-bottom: 1.3rem;
+            color: var(--text-body);
         }
 
-        .sample-newsletter {
-            background: white;
-            border: 2px solid var(--primary);
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 2rem 0;
+        .content-section li {
+            margin-bottom: 0.6rem;
+            line-height: 1.7;
+            font-size: 0.97rem;
+        }
+
+        strong { color: var(--navy); font-weight: 500; }
+
+        /* phase divider band */
+        .phase-band {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 1.8rem 2rem;
             text-align: center;
+            border-top: 1px solid rgba(184,152,42,0.2);
+            border-bottom: 1px solid rgba(184,152,42,0.2);
         }
 
-        .sample-newsletter h3 {
-            color: var(--secondary);
-            margin-bottom: 1rem;
+        .phase-band .phase-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.3rem;
         }
 
-        .newsletter-button {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+        .phase-band h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.7rem;
+            font-weight: 300;
+            color: var(--text-light);
+            letter-spacing: 0.06em;
+            border: none;
+            padding: 0;
+            margin: 0;
         }
 
-        .newsletter-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .contributions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .contribution-card {
-            background: var(--bg-light);
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .contribution-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .contribution-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .contribution-card h4 {
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-
+        /* highlight box */
         .highlight-box {
-            background: var(--bg-light);
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 5px;
+            background: white;
+            border-left: 3px solid var(--gold);
+            padding: 1.3rem 1.5rem;
+            margin: 1.8rem 0;
+            border-radius: 0 2px 2px 0;
         }
 
         .highlight-box h3 {
-            color: var(--accent);
+            color: var(--navy);
             margin-top: 0;
+            margin-bottom: 0.6rem;
         }
 
+        /* images */
+        .image-container {
+            margin: 1.8rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 70%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            display: block;
+            margin: 0 auto;
+            border: 3px solid #4a4a4a;
+        }
+
+        .image-container img.dark-bg {
+            background: #111;
+            max-width: 75%;
+        }
+
+        .image-caption {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            font-size: 0.87rem;
+        }
+
+        /* side-by-side images */
+        .image-pair {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+            align-items: flex-start;
+        }
+
+        .image-pair .image-container {
+            flex: 1;
+            margin: 0;
+        }
+
+        .image-pair .image-container img {
+            max-width: 100%;
+        }
+
+        /* skills */
         .skills-used {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 2rem 0;
+            gap: 0.7rem;
+            margin: 1.8rem 0;
         }
 
         .skill-tag {
-            background: var(--primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            background: transparent;
+            border: 1px solid rgba(26,35,64,0.3);
+            color: var(--navy);
+            padding: 0.35rem 0.9rem;
+            border-radius: 2px;
+            font-size: 0.78rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
         }
 
-        .space-image-bg {
-            background-image: url('images/milky-way.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            padding: 4rem 2rem;
-            margin: 2rem 0;
-            border-radius: 10px;
-            position: relative;
-        }
-
-        .space-image-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.6);
-            border-radius: 10px;
-        }
-
-        .space-image-content {
-            position: relative;
-            color: white;
-            text-align: center;
-        }
-
+        /* footer */
         footer {
-            background: rgba(26, 26, 46, 1);
+            background: #111926;
             color: var(--text-light);
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid rgba(184,152,42,0.2);
             margin-top: 4rem;
         }
 
+        footer p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+
         footer a {
-            color: var(--accent);
+            color: var(--gold-light);
             text-decoration: none;
+            transition: color 0.25s;
+        }
+
+        footer a:hover { color: var(--gold-pale); }
+
+        
+        /* ===== SHARED COMPONENTS ===== */
+        .button-row { margin: 2rem 0; }
+
+        .content-section h4 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--navy);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.6rem 0 0.6rem;
+        }
+
+        .panel,
+        .phase-card,
+        .team-info,
+        .objective-box,
+        .sample-newsletter {
+            background: white;
+            border: 1px solid rgba(26,35,64,0.12);
+            padding: 1.5rem 1.7rem;
+            margin: 1.8rem 0;
+            border-radius: 2px;
+        }
+
+        .phase-card h3,
+        .team-info h3,
+        .objective-box h3,
+        .sample-newsletter h3 { margin-top: 0; }
+
+        .team-info,
+        .objective-box { border-left: 3px solid var(--gold); }
+
+        .card-grid,
+        .constraints-grid,
+        .contributions-grid,
+        .stats-grid,
+        .hosts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1.8rem 0;
+        }
+
+        .constraint-item,
+        .contribution-card,
+        .stat-box,
+        .host-card {
+            background: white;
+            border: 1px solid rgba(26,35,64,0.12);
+            border-top: 2px solid var(--gold);
+            padding: 1.2rem 1.3rem;
+            border-radius: 2px;
+        }
+
+        .constraint-item strong,
+        .contribution-card h4,
+        .host-card h4 {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin: 0 0 0.4rem;
+        }
+
+        .constraint-item p,
+        .contribution-card p,
+        .host-card p { margin-bottom: 0.4rem; font-size: 0.92rem; line-height: 1.7; }
+
+        .stat-box { text-align: center; }
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .image-grid {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+            align-items: flex-start;
+        }
+        .image-grid .image-container { flex: 1; margin: 0; }
+        .image-grid .image-container img { max-width: 100%; }
+
+        .text-button,
+        .github-button,
+        .newsletter-button,
+        .spotify-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid var(--gold);
+            color: var(--navy);
+            padding: 0.6rem 1.3rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: background 0.25s, color 0.25s;
+        }
+        .text-button:hover,
+        .github-button:hover,
+        .newsletter-button:hover { background: var(--navy); color: var(--gold-pale); }
+        .github-button:focus-visible,
+        .newsletter-button:focus-visible,
+        .spotify-button:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+
+        .project-hero .spotify-button {
+            color: var(--gold-light);
+            margin-top: 1.6rem;
+            position: relative;
+        }
+        .project-hero .spotify-button:hover { background: rgba(184,152,42,0.15); }
+
+        .project-hero .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--gold-pale);
+            max-width: 560px;
+            margin: 0.9rem auto 0;
+            position: relative;
+        }
+
+        .hero-logo {
+            display: block;
+            max-height: 84px;
+            max-width: 160px;
+            margin: 0 auto 1.4rem;
+            background: var(--cream);
+            padding: 0.6rem;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .space-image-bg {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 1.8rem 2rem;
+            margin: 1.8rem 0;
+            border-radius: 2px;
+            border-top: 2px solid var(--gold);
+        }
+        .space-image-bg h3 { color: var(--gold-light); margin-top: 0; }
+        .space-image-bg p { color: var(--text-light); margin-bottom: 0; }
+
+        .podcast-intro {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+        .podcast-cover {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            border: 3px solid #4a4a4a;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .episode {
+            padding: 1.3rem 0;
+            border-bottom: 1px solid rgba(184,152,42,0.3);
+        }
+        .episode:first-child { padding-top: 0; }
+        .episode h4 { margin-top: 0; }
+        .episode-date {
+            font-size: 0.8rem !important;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted) !important;
+            margin-bottom: 0.6rem !important;
+        }
+
+        @media (max-width: 640px) {
+            .image-container img { max-width: 95%; }
+            .image-pair { flex-direction: column; }
+            .project-hero h1 { font-size: 2rem; }
+        }
+
+        @media (max-width: 640px) {
+            .image-grid { flex-direction: column; }
+            .podcast-intro { grid-template-columns: 1fr; }
+            .podcast-cover { max-width: 220px; }
         }
     </style>
 </head>
 
 <body>
+
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand">Sofia Odeh</a>
-            <a href="index.html#projects" class="back-button">
-                ← Back to Projects
-            </a>
+            <a href="index.html#projects" class="back-button">← Back to Projects</a>
         </div>
     </nav>
 
     <div class="project-hero">
-        <div class="project-hero-content">
-            <div class="logo-container">
-                <img src="images/nusci-logo.png" alt="NU SCI Logo">
-            </div>
-            <h1>NU SCI Magazine</h1>
-            <p>Newsletter Writer | Science Communication</p>
-        </div>
+        <img src="images/nusci-logo.png" alt="NU SCI Magazine logo" class="hero-logo">
+        <div class="hero-rule"></div>
+        <h1>NU SCI Magazine</h1>
+        <p class="meta">Newsletter Writer &nbsp;·&nbsp; Science Communication &nbsp;·&nbsp; 2023 – 2025</p>
     </div>
 
     <section class="content-section">
@@ -309,7 +516,7 @@
         <p>
             In September 2023, I joined NU SCI Magazine as a Newsletter Writer, initiating a weekly email 
             newsletter focused on promoting industry engagement through concise updates on scientific developments. 
-            Our publication stands out through our innovative approach of presenting science in an engaging and 
+            The publication stands out through its approach of presenting science in an engaging and 
             non-traditional manner, fostering curiosity among readers from all backgrounds.
         </p>
 
@@ -320,8 +527,8 @@
                 audiences ranging from non-STEM majors to aspiring scientists.</strong>
             </p>
             <p>
-                We believe science should be exciting and accessible to everyone, regardless of their background. 
-                Through creative storytelling and visual design, we transform complex scientific concepts into 
+                The team believes science should be exciting and accessible to everyone, regardless of their background. 
+                Through creative storytelling and visual design, the newsletter transforms complex scientific concepts into 
                 compelling narratives that inspire wonder and understanding.
             </p>
         </div>
@@ -330,30 +537,26 @@
     <section class="content-section">
         <h2>My Role & Contributions</h2>
         <p>
-            As a Newsletter Writer, I work closely with our editorial team to ensure the precision and quality 
-            of scientific content while maintaining accessibility for our diverse readership.
+            As a Newsletter Writer, I worked closely with the editorial team to ensure the precision and quality 
+            of scientific content while keeping it accessible for a diverse readership.
         </p>
 
         <div class="contributions-grid">
             <div class="contribution-card">
-                <div class="contribution-icon">🔬</div>
                 <h4>Content Curation</h4>
-                <p>Meticulously select articles showcasing the latest developments in physics, space, and technology</p>
+                <p>Selected articles showcasing the latest developments in physics, space, and technology</p>
             </div>
             <div class="contribution-card">
-                <div class="contribution-icon">✍️</div>
                 <h4>Feature Writing</h4>
-                <p>Craft compelling feature articles that bridge complex science with engaging storytelling</p>
+                <p>Wrote feature articles that bridge complex science with engaging storytelling</p>
             </div>
             <div class="contribution-card">
-                <div class="contribution-icon">🎨</div>
                 <h4>Visual Design</h4>
-                <p>Create captivating visuals using Canva to enhance reader engagement and comprehension</p>
+                <p>Created visuals in Canva to enhance reader engagement and comprehension</p>
             </div>
             <div class="contribution-card">
-                <div class="contribution-icon">🔧</div>
                 <h4>Technical Enhancement</h4>
-                <p>Contribute to formatting improvements and technical refinements of the newsletter platform</p>
+                <p>Contributed formatting improvements and technical refinements of the newsletter platform</p>
             </div>
         </div>
     </section>
@@ -364,8 +567,8 @@
             <div class="space-image-content">
                 <h3>Space & Technology Coverage</h3>
                 <p>
-                    Specializing in astronomy and space technology, I bring the wonders of the universe 
-                    to our readers through carefully researched articles and stunning visual presentations.
+                    I specialized in astronomy and space technology, bringing the universe to readers 
+                    through carefully researched articles and visual presentations.
                 </p>
             </div>
         </div>
@@ -379,7 +582,7 @@
             <a href="https://nuscimagazine.com/sunday-sci-10-01-23/" 
                target="_blank" 
                class="newsletter-button">
-                Read Sample Newsletter →
+                Read Sample Newsletter
             </a>
         </div>
     </section>
@@ -387,13 +590,13 @@
     <section class="content-section">
         <h2>Impact & Approach</h2>
         <p>
-            What sets our newsletter apart is our commitment to making science accessible without 
-            dumbing it down. We respect our readers' intelligence while acknowledging that not everyone 
+            What set the newsletter apart was its commitment to making science accessible without 
+            dumbing it down, respecting readers' intelligence while acknowledging that not everyone 
             has a scientific background.
         </p>
 
         <div class="highlight-box">
-            <h3>Our Approach</h3>
+            <h3>The Approach</h3>
             <ul>
                 <li><strong>Clarity First:</strong> Complex concepts explained in clear, jargon-free language</li>
                 <li><strong>Visual Storytelling:</strong> Infographics and images that enhance understanding</li>
@@ -407,7 +610,7 @@
     <section class="content-section">
         <h2>Weekly Process</h2>
         <p>
-            Creating each newsletter is a collaborative effort that requires careful planning and execution:
+            Creating each newsletter was a collaborative effort that required careful planning and execution:
         </p>
         <ol>
             <li><strong>Research Phase:</strong> Scan recent scientific publications and news for compelling stories</li>
@@ -437,12 +640,13 @@
     </section>
 
     <footer>
-        <p>Want to read our newsletter or learn more?</p>
+        <p>Want to read the newsletter or learn more?</p>
         <p>
             <a href="https://nuscimagazine.com/sunday-sci-10-01-23/" target="_blank">Read Sample</a> | 
             <a href="mailto:odeh.s@northeastern.edu">Contact me</a> | 
             <a href="index.html">Back to main page</a>
         </p>
     </footer>
+
 </body>
 </html>
