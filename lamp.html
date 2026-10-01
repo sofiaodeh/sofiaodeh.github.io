@@ -322,9 +322,20 @@
     <section class="content-section">
         <h2>Overview</h2>
         <p>
-            A pendant lamp combining a 3D-printed PETG lattice skeleton with a cast agar bioplastic skin. The canopy uses an
-            8-pointed Mudéjar star lattice, drawing on the Spanish-Islamic geometric tradition.
+            A pendant lamp combining a 3D-printed PETG lattice skeleton with a cast agar bioplastic skin. The canopy carries an
+            eight-pointed Mudéjar star lattice, based on the open-centered outline stars of Spanish alicatado tilework, and the
+            whole skeleton is modeled as a single printable body. The design is now at a v1 freeze, ahead of test printing.
         </p>
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lamp-front.png" alt="Front view of the lamp skeleton CAD model showing star bands and support ribs">
+                <p class="image-caption">Front view of the v1 skeleton</p>
+            </div>
+            <div class="image-container">
+                <img src="images/lamp-iso.png" alt="Isometric view of the lamp skeleton CAD model">
+                <p class="image-caption">Isometric view, with the hub and ribs below the seam ring</p>
+            </div>
+        </div>
     </section>
 
     <section class="content-section">
@@ -343,42 +354,97 @@
     </section>
 
     <section class="content-section">
-        <h2>Lattice</h2>
+        <h2>Building the Lattice from Nodes</h2>
         <p>
-            Full 8-pointed stars on 16 angular divisions, with a one-division (22.5°) strut offset. Cell aspect ratios stay
-            near-square across all three bands (1.14, 1.21, 1.33), so the same strut construction works throughout: about 96
-            diagonals, 16 verticals, and 4 hoops, swept with a 0.10–0.12″ circular profile. Estimated 40–50 g of PETG and about
-            5 hours of printing.
+            My first plan was to project a flat lattice sketch onto the dome, and it kept failing. Parts of the sketch fell outside
+            the face along the projection direction, and below the widest ring a straight projection hits the doubly curved
+            surface twice. Instead of fighting the surface, I switched to a method that doesn't depend on it.
         </p>
         <p>
-            The top band is left untessellated. The stars would compress about three times there, so open spokes run to a plain
-            compression ring at the oculus, which also tensions the agar skin.
+            I set up a reference axis on the dome centerline and station planes every 22.5°, which divides the dome into 16
+            segments. Every structural node is fully defined by two relations: it sits on a profile circle and on a station plane.
+            I modeled a single 22.5° repeat unit and generated the rest with a 16× circular pattern, which keeps the model
+            parametric and replaced roughly 100 hand-placed struts with a few lines per band.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>From Truss to Star</h2>
+        <p>
+            The first lattice used hoops, verticals, and crossing diagonals through shared nodes. When I built two bands and looked
+            at them, they read as a structural truss, not Mudéjar ornament: all four line families met at single points, so there
+            was no open star center. I suppressed that version rather than deleting it and redesigned around the alicatado motif,
+            reusing the rings, axis, station planes, and node sketches.
+        </p>
+        <p>
+            Each cell between two rings now holds one eight-pointed outline star. Neighboring stars meet tip to tip, and the gaps
+            between them form the crosses of the classic star-and-cross layout. Each star is a parametric sketch on a plane through
+            three of its cell's corner nodes: a diamond through the edge midpoints, overlaid with a rectangle scaled by 1/√2 using
+            sketch equations, trimmed to one closed 16-segment outline. Each star is swept as a strut and patterned 16 times around its band, across four bands from the seam ring
+            up to a crown ring at the oculus, for 64 stars in total.
+        </p>
+        <div class="highlight-box">
+            <p>
+                <strong>A side effect I kept:</strong> because each star lies on a flat plane through its cell corners, every band
+                becomes a 16-sided faceted lantern. That faceting is itself characteristic of Mudéjar lanterns and cupolas.
+            </p>
+        </div>
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lamp-top.png" alt="Top view of the lamp skeleton showing the 16-fold star pattern">
+                <p class="image-caption">Top view, showing the 16-fold pattern</p>
+            </div>
+            <div class="image-container">
+                <img src="images/lamp-section.png" alt="Section view of the lamp skeleton showing one star band, rings, ribs, and hub">
+                <p class="image-caption">Section view through the hoops, ribs, and hub</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Problems I Solved</h2>
+        <p>
+            Getting the lattice to combine into one solid took a series of fixes, and I traced each failure to its cause rather
+            than patching it.
+        </p>
+        <p>
+            <strong>Zero-thickness contacts.</strong> Combine failed where the seam ring met the strut ends, because the ring had
+            been extruded in one direction and its face sat coplanar with the struts. A mid-plane extrusion fixed it. Neighboring
+            stars touching exactly at their tips caused the same error, so I added 0.14″ spherical node beads at every shared tip.
+            They give each joint real shared volume and read as a rivet-style detail. I validated the beads on one band before
+            applying them to the rest.
+        </p>
+        <p>
+            <strong>Spikes at the crown.</strong> Sweep mitering at the acute star tips left spikes poking above the crown ring.
+            Instead of cutting them off afterward, I flattened those tips in the sketch so each ends 0.06″ below the point inside
+            the ring.
+        </p>
+        <p>
+            <strong>Sketches on tilted planes.</strong> The standard center rectangle aligns to the sketch axes, not the star, so it
+            broke on the tilted cell planes. A three-point center rectangle aligned to the star's own axes solved it.
+        </p>
+        <p>
+            <strong>Proportions.</strong> The first stars looked too heavy for their size, so I moved from round 0.11″ struts to
+            flat-faced struts with crisper outlines. I also managed the bodies deliberately, separating sweeps that had merged
+            into a rib body and rejoining everything with body patterns and Combine.
         </p>
     </section>
 
     <section class="content-section">
         <h2>Designing for Printing</h2>
         <p>
-            The skeleton is modeled as one part and split at its widest point. Each half prints with that face on the bed, so the
-            radius only decreases as it rises and no supports are needed.
-        </p>
-    </section>
-
-    <section class="content-section">
-        <h2>A Modeling Problem I Solved</h2>
-        <p>
-            The struts are projected from Top Plane sketches onto the dome surface, then mirrored and circularly patterned 16 times.
-            Below the widest point, a projection hits the surface twice. The fix is to split the loft into one face per band and
-            project band by band. If that fails, the fallback is straight 3D-sketch chords, which sink about 0.055″ at midspan, an
-            acceptable deviation for this lamp.
+            The original plan split the dome at its widest ring so each half could print without supports. I now have access to a
+            printer with water-soluble support, which removes those overhang limits. Whether the skeleton prints in one piece or
+            splits at the widest ring depends on that printer's build volume, which I'm still confirming. The material will be
+            PETG if the printer pairs it with PVA support, or PLA with attention to heat near the light source.
         </p>
     </section>
 
     <section class="content-section">
         <h2>Next Steps</h2>
         <ol>
-            <li>Split the loft faces at the profile circles if needed, then model the band 1 diagonals and star pattern.</li>
-            <li>Print band 1 as a roughly 40-minute test coupon before modeling bands 2 and 3.</li>
+            <li>Run a final geometry check, record the part's mass in PETG, and confirm the overall envelope against the build volume.</li>
+            <li>Print a quarter sector of the lowest band to test strut size, node beads, and tip details.</li>
             <li>Print the full skeleton.</li>
             <li>Cast the agar skin 2–3 mm wet (5 g agar and 3 g glycerin per 250 ml water) and drape it over the skeleton while leathery.</li>
         </ol>
@@ -388,11 +454,12 @@
         <h2>Skills & Technologies</h2>
         <div class="skills-used">
             <span class="skill-tag">SolidWorks Surface Modeling</span>
-            <span class="skill-tag">Lofts & Projected Curves</span>
-            <span class="skill-tag">Geometric Pattern Design</span>
+            <span class="skill-tag">3D Sketching</span>
+            <span class="skill-tag">Parametric Pattern Design</span>
+            <span class="skill-tag">Sketch Equations</span>
+            <span class="skill-tag">Multibody Modeling</span>
             <span class="skill-tag">Design for Additive Manufacturing</span>
             <span class="skill-tag">Bioplastics</span>
-            <span class="skill-tag">Trade-off Decisions</span>
         </div>
     </section>
 
