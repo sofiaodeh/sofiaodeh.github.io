@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Sofia Odeh Resume Preview</title>
+  <desc id="desc">A stylized preview of Sofia Odeh's resume.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f8f4ee"/>
+      <stop offset="100%" stop-color="#f0ebdf"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="1200" fill="url(#bg)"/>
+  <rect x="60" y="60" width="780" height="1080" fill="#fdfcf9" stroke="#1a2340" stroke-width="5"/>
+
+  <rect x="95" y="95" width="160" height="8" fill="#b8982a"/>
+  <text x="95" y="190" fill="#1a2340" font-family="Georgia, 'Times New Roman', serif" font-size="66" font-weight="700">SOFIA</text>
+  <text x="95" y="255" fill="#1a2340" font-family="Georgia, 'Times New Roman', serif" font-size="66" font-weight="700">ODEH</text>
+  <text x="95" y="320" fill="#1a2340" font-family="Arial, sans-serif" font-size="23" letter-spacing="3">MECHANICAL ENGINEER • ASTROPHYSICS</text>
+
+  <line x1="95" y1="350" x2="805" y2="350" stroke="#b8982a" stroke-width="3"/>
+
+  <g fill="#1a2340" font-family="Arial, sans-serif">
+    <text x="95" y="420" font-size="28" font-weight="700">EDUCATION</text>
+    <text x="95" y="470" font-size="22" font-weight="700">Northeastern University</text>
+    <text x="95" y="500" font-size="20">BS Mechanical Engineering, Astrophysics Minor</text>
+    <text x="95" y="530" font-size="20">Expected Dec 2026</text>
+
+    <text x="95" y="595" font-size="28" font-weight="700">EXPERIENCE</text>
+    <text x="95" y="645" font-size="22" font-weight="700">LineSpect</text>
+    <text x="95" y="675" font-size="20">Optical engineering • prototyping • CAD</text>
+    <text x="95" y="710" font-size="22" font-weight="700">Lutron Electronics</text>
+    <text x="95" y="740" font-size="20">Precision tooling • tolerance analysis</text>
+
+    <text x="95" y="810" font-size="28" font-weight="700">SKILLS</text>
+    <text x="95" y="855" font-size="20">CAD • Creo • Inventor • 3D Printing • Python • MATLAB</text>
+    <text x="95" y="885" font-size="20">Optics • Prototyping • Systems Design • Research</text>
+
+    <text x="95" y="950" font-size="28" font-weight="700">CONTACT</text>
+    <text x="95" y="990" font-size="20">odeh.s@northeastern.edu</text>
+    <text x="95" y="1025" font-size="20">linkedin.com/in/sofia-odeh</text>
+  </g>
+
+  <rect x="575" y="430" width="260" height="350" fill="#1a2340" opacity="0.96"/>
+  <rect x="600" y="460" width="210" height="8" fill="#d4af5a"/>
+  <text x="600" y="540" fill="#f5f2eb" font-family="Arial, sans-serif" font-size="24" font-weight="700">PROJECTS</text>
+  <text x="600" y="590" fill="#f5f2eb" font-family="Arial, sans-serif" font-size="18">• Aramaki Lab</text>
+  <text x="600" y="620" fill="#f5f2eb" font-family="Arial, sans-serif" font-size="18">• Lutron Co-op</text>
+  <text x="600" y="650" fill="#f5f2eb" font-family="Arial, sans-serif" font-size="18">• LineSpect</text>
+  <text x="600" y="680" fill="#f5f2eb" font-family="Arial, sans-serif" font-size="18">• Podcast</text>
+  <text x="600" y="710" fill="#f5f2eb" font-family="Arial, sans-serif" font-size="18">• Research design</text>
+</svg>

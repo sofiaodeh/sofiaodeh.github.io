@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LineSpect Co-op - Sofia Odeh</title>
+    <title>Raíces / Judhur Lamp - Sofia Odeh</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
@@ -12,6 +12,7 @@
         :root {
             --navy:       #1a2340;
             --navy-mid:   #22304f;
+            --navy-light: #2e4070;
             --gold:       #b8982a;
             --gold-light: #d4af5a;
             --gold-pale:  #e8d49a;
@@ -115,14 +116,13 @@
             color: var(--gold-pale);
             opacity: 0.8;
             position: relative;
-            margin-bottom: 0.25rem;
         }
 
         /* ===== CONTENT ===== */
         .content-section {
             max-width: 860px;
             margin: 0 auto;
-            padding: 1.8rem 2rem;
+            padding: 1rem 2rem;
         }
 
         .content-section h2 {
@@ -142,7 +142,7 @@
             font-weight: 500;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-top: 1.8rem;
+            margin-top: 2rem;
             margin-bottom: 0.8rem;
         }
 
@@ -153,7 +153,8 @@
             color: var(--text-body);
         }
 
-        .content-section ul {
+        .content-section ul,
+        .content-section ol {
             margin-left: 1.8rem;
             margin-bottom: 1.3rem;
             color: var(--text-body);
@@ -167,84 +168,48 @@
 
         strong { color: var(--navy); font-weight: 500; }
 
-        /* nda note */
-        .nda-note {
-            background: white;
-            border-left: 3px solid var(--gold);
-            padding: 1rem 1.3rem;
-            border-radius: 0 2px 2px 0;
-            font-size: 0.9rem;
-            color: var(--text-body);
-            margin: 1.5rem 0;
-            font-style: italic;
+        /* phase divider band */
+        .phase-band {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 1.8rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(184,152,42,0.2);
+            border-bottom: 1px solid rgba(184,152,42,0.2);
         }
 
-        /* achievement card → now a clean outlined list block */
-        .achievement-card {
-            background: white;
-            border: 1px solid rgba(184,152,42,0.25);
-            border-left: 3px solid var(--gold);
-            border-radius: 0 2px 2px 0;
-            padding: 1.3rem 1.5rem;
-            margin: 1.5rem 0;
+        .phase-band .phase-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.3rem;
         }
 
-        /* testing grid */
-        .technical-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.2rem;
-            margin: 1.5rem 0;
-        }
-
-        .technical-card {
-            background: white;
-            border: 1px solid rgba(184,152,42,0.2);
-            border-radius: 2px;
-            padding: 1.2rem 1.3rem;
-            transition: border-color 0.25s;
-        }
-
-        .technical-card:hover { border-color: rgba(184,152,42,0.5); }
-
-        .technical-card h4 {
+        .phase-band h2 {
             font-family: 'Cormorant Garamond', serif;
-            color: var(--navy);
-            font-size: 1.05rem;
-            font-weight: 400;
-            margin-bottom: 0.6rem;
-            letter-spacing: 0.02em;
-        }
-
-        .technical-card p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 0;
+            font-size: 1.7rem;
+            font-weight: 300;
+            color: var(--text-light);
+            letter-spacing: 0.06em;
+            border: none;
+            padding: 0;
+            margin: 0;
         }
 
         /* highlight box */
         .highlight-box {
             background: white;
             border-left: 3px solid var(--gold);
-            padding: 1.2rem 1.4rem;
-            margin: 1.2rem 0;
+            padding: 1.3rem 1.5rem;
+            margin: 1.8rem 0;
             border-radius: 0 2px 2px 0;
         }
 
         .highlight-box h3 {
             color: var(--navy);
-            font-size: 0.95rem;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
             margin-top: 0;
-            margin-bottom: 0.5rem;
-        }
-
-        .highlight-box p {
-            margin-bottom: 0;
-            font-size: 0.93rem;
+            margin-bottom: 0.6rem;
         }
 
         /* images */
@@ -254,13 +219,18 @@
         }
 
         .image-container img {
-            max-width: 60%;
+            max-width: 70%;
             height: auto;
             border-radius: 4px;
             box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-            border: 1px solid #4a4a4a;
             display: block;
             margin: 0 auto;
+            border: 3px solid #4a4a4a;
+        }
+
+        .image-container img.dark-bg {
+            background: #111;
+            max-width: 75%;
         }
 
         .image-caption {
@@ -270,6 +240,7 @@
             font-size: 0.87rem;
         }
 
+        /* side-by-side images */
         .image-pair {
             display: flex;
             gap: 1.5rem;
@@ -291,7 +262,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.7rem;
-            margin: 1.5rem 0;
+            margin: 1.8rem 0;
         }
 
         .skill-tag {
@@ -326,7 +297,7 @@
         footer a:hover { color: var(--gold-pale); }
 
         @media (max-width: 640px) {
-            .image-container img { max-width: 92%; }
+            .image-container img { max-width: 95%; }
             .image-pair { flex-direction: column; }
             .project-hero h1 { font-size: 2rem; }
         }
@@ -344,113 +315,89 @@
 
     <div class="project-hero">
         <div class="hero-rule"></div>
-        <h1>LineSpect Co-op</h1>
-        <p class="meta">Mechanical and Optical Engineer &nbsp;·&nbsp; January – April 2025</p>
-        <p class="meta">San Francisco, CA</p>
+        <h1>Raíces / Judhur</h1>
+        <p class="meta">Personal project &nbsp;·&nbsp; In progress &nbsp;·&nbsp; SolidWorks</p>
     </div>
 
     <section class="content-section">
+        <h2>Overview</h2>
         <p>
-            I was the only mechanical engineer at an optics startup building a submersible light-sheet microscope for early
-            detection of harmful algal blooms. My work moved between CAD, the 3D printer, the soldering station, and the optics
-            bench within the same day.
-        </p>
-        <div class="nda-note">
-            <strong>Note:</strong> Designs, component details, and test parameters are under NDA. This page describes the scope of my work and my role. The images show the broader optical system and imaging results. I am happy to walk through my contributions in an interview.
-        </div>
-        <div class="image-container">
-            <img src="images/linespect-diagram.jpg" alt="Light-sheet microscope optical system diagram">
-            <p class="image-caption">Optical system: light-sheet microscopy setup for algae detection</p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Optical Backplate Redesign</h2>
-        <div class="achievement-card">
-            <p>
-                Redesigned the backplate that holds the optics and electronics: added stray-light shielding, simplified the mirror
-                mounts for repeatable alignment, reduced the tube diameter while keeping the full field of view, and combined separate
-                mounts into a single printed part with fewer fasteners.
-            </p>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Camera Housing</h2>
-        <p>
-            Designed a compact camera housing around the optical path, with an adjustable laser diode mount with integrated cooling
-            and an interchangeable beam splitter mount. Packaged the compute board, cameras, LED illumination, and wiring within a
-            tight envelope.
+            A pendant lamp combining a 3D-printed PETG lattice skeleton with a cast agar bioplastic skin. The canopy uses an
+            8-pointed Mudéjar star lattice, drawing on the Spanish-Islamic geometric tradition.
         </p>
     </section>
 
     <section class="content-section">
-        <h2>Testing & Validation</h2>
-        <div class="technical-grid">
-            <div class="technical-card">
-                <h4>Optical Characterization</h4>
-                <p>Built custom printed jigs and measured field of view, depth of field, and light-sheet thickness in ImageJ</p>
-            </div>
-            <div class="technical-card">
-                <h4>LED Drive Testing</h4>
-                <p>Tested LED drive configurations to find a safe operating point for brightness without component damage</p>
-            </div>
-            <div class="technical-card">
-                <h4>Illumination Study</h4>
-                <p>Compared illumination options and showed that UV lighting was unnecessary</p>
-            </div>
-        </div>
-
-        <div class="image-pair">
-            <div class="image-container">
-                <img src="images/linespect-microscope.jpg" alt="Microscope assembly showing algae sample">
-                <p class="image-caption">Microscope assembly with algae sample under UV illumination</p>
-            </div>
-            <div class="image-container">
-                <img src="images/linespect-algae.jpg" alt="Captured algae cells">
-                <p class="image-caption">Algae cells captured using the optimized imaging system</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Electronics & Lab Support</h2>
+        <h2>Canopy Form</h2>
         <p>
-            Reflow soldered LED boards, debugged LED drivers, recovered failed embedded boards, and repaired the lab's SLA and FDM
-            printers. Also built a CAD concept model to support a proposal for a microplastics detection system, and gained exposure
-            to Zemax for lens modeling.
+            The canopy is a lofted surface through five profile circles tied to a 3-point arc silhouette, giving a near-spherical
+            ovoid: seam ring r = 2.60″ at Z = 2.5″, widest r = 3.17″ at Z = 5.16″, oculus r = 1.25″ at Z = 8.00″.
         </p>
-    </section>
-
-    <section class="content-section">
-        <h2>What I Took From It</h2>
         <div class="highlight-box">
             <p>
-                With no other mechanical engineer on the project, every design decision and every failure was mine to resolve.
-                I learned to start from what the measurement needs, design outward, and find problems by testing hardware rather
-                than debating it on paper.
+                <strong>A deliberate trade-off:</strong> a traditional Mudéjar bell needs an inflection point, which a circular arc
+                cannot produce; it would take a spline. I chose to keep the near-spherical shape and keep the project moving,
+                rather than rework the silhouette for precision the lamp doesn't need.
             </p>
         </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Lattice</h2>
+        <p>
+            Full 8-pointed stars on 16 angular divisions, with a one-division (22.5°) strut offset. Cell aspect ratios stay
+            near-square across all three bands (1.14, 1.21, 1.33), so the same strut construction works throughout: about 96
+            diagonals, 16 verticals, and 4 hoops, swept with a 0.10–0.12″ circular profile. Estimated 40–50 g of PETG and about
+            5 hours of printing.
+        </p>
+        <p>
+            The top band is left untessellated. The stars would compress about three times there, so open spokes run to a plain
+            compression ring at the oculus, which also tensions the agar skin.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>Designing for Printing</h2>
+        <p>
+            The skeleton is modeled as one part and split at its widest point. Each half prints with that face on the bed, so the
+            radius only decreases as it rises and no supports are needed.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>A Modeling Problem I Solved</h2>
+        <p>
+            The struts are projected from Top Plane sketches onto the dome surface, then mirrored and circularly patterned 16 times.
+            Below the widest point, a projection hits the surface twice. The fix is to split the loft into one face per band and
+            project band by band. If that fails, the fallback is straight 3D-sketch chords, which sink about 0.055″ at midspan, an
+            acceptable deviation for this lamp.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>Next Steps</h2>
+        <ol>
+            <li>Split the loft faces at the profile circles if needed, then model the band 1 diagonals and star pattern.</li>
+            <li>Print band 1 as a roughly 40-minute test coupon before modeling bands 2 and 3.</li>
+            <li>Print the full skeleton.</li>
+            <li>Cast the agar skin 2–3 mm wet (5 g agar and 3 g glycerin per 250 ml water) and drape it over the skeleton while leathery.</li>
+        </ol>
     </section>
 
     <section class="content-section">
         <h2>Skills & Technologies</h2>
         <div class="skills-used">
-            <span class="skill-tag">Autodesk Inventor</span>
-            <span class="skill-tag">Optical Design</span>
-            <span class="skill-tag">Exposure to Zemax</span>
-            <span class="skill-tag">Light-sheet Microscopy</span>
-            <span class="skill-tag">3D Printing (SLA/FDM)</span>
-            <span class="skill-tag">Reflow Soldering</span>
-            <span class="skill-tag">ImageJ Analysis</span>
-            <span class="skill-tag">Glass/Mirror Cutting</span>
-            <span class="skill-tag">Rapid Prototyping</span>
-            <span class="skill-tag">Electronics Debugging</span>
+            <span class="skill-tag">SolidWorks Surface Modeling</span>
+            <span class="skill-tag">Lofts & Projected Curves</span>
+            <span class="skill-tag">Geometric Pattern Design</span>
+            <span class="skill-tag">Design for Additive Manufacturing</span>
+            <span class="skill-tag">Bioplastics</span>
+            <span class="skill-tag">Trade-off Decisions</span>
         </div>
     </section>
 
     <footer>
-        <p>Want to learn more about my work at LineSpect?</p>
+        <p>Want to learn more about this project?</p>
         <p><a href="mailto:odeh.s@northeastern.edu">Contact me</a> &nbsp;|&nbsp; <a href="index.html">Back to main page</a></p>
     </footer>
 

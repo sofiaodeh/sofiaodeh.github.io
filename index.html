@@ -140,6 +140,46 @@
             position: relative;
         }
 
+        .resume-preview {
+            margin: 2rem auto 0;
+            max-width: 240px;
+            width: 100%;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .resume-preview:hover {
+            transform: translateY(-3px);
+        }
+
+        .resume-preview a {
+            display: block;
+            text-decoration: none;
+            color: var(--text-light);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(184,152,42,0.35);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.14);
+        }
+
+        .resume-preview img {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #f8f4ee;
+        }
+
+        .resume-preview-label {
+            display: block;
+            padding: 0.8rem 0.9rem;
+            text-align: center;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-pale);
+            background: rgba(26,35,64,0.65);
+        }
+
         .btn {
             display: inline-block;
             padding: 0.42rem 1.1rem;
@@ -321,6 +361,18 @@
 
         .project-card:hover .click-hint { opacity: 1; }
 
+        div.project-card:hover { transform: none; }
+
+        .nda-note {
+            max-width: 1100px;
+            margin: 2.5rem auto 0;
+            padding: 0 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.03em;
+        }
+
         /* ===== FOOTER ===== */
         footer {
             background: #111926;
@@ -400,12 +452,18 @@
         <h1>Sofia Odeh</h1>
         <p class="subtitle">Mechanical Engineer &nbsp;·&nbsp; Astrophysics Minor</p>
         <p class="subtitle">Northeastern University &nbsp;·&nbsp; Graduating December 2026</p>
+        <p class="subtitle">Available January 2027 &nbsp;·&nbsp; Spanish (EU) citizen, eligible to work in the EU and Switzerland</p>
         <div class="contact-buttons">
             <a href="mailto:odeh.s@northeastern.edu" class="btn">Email</a>
-            <a href="https://www.linkedin.com/in/sofia-odeh" class="btn" target="_blank">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/sofiaodeh" class="btn" target="_blank">LinkedIn</a>
             <a href="tel:914-527-5222" class="btn">(914) 527-5222</a>
         </div>
-    </section>
+        <div class="resume-preview">
+            <a href="images/SofiaOdeh_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                <img src="images/sofia-resume-preview.svg" alt="Sofia Odeh resume preview" />
+                <span class="resume-preview-label">Open Resume</span>
+            </a>
+        </div>    </section>
 
     <section id="about" class="about-section">
         <p class="section-label">Background</p>
@@ -416,23 +474,19 @@
             </div>
             <div class="about-content">
                 <p>
-                    I am a mechanical engineering student at Northeastern University with a minor in astrophysics,
-                    graduating December 2026. My experience spans optical engineering, mechanical design, astrophysics
-                    research, and robotics, and I am at my best when the work moves between the screen and the workshop
-                    in the same day.
+                    I do my best work when the day moves between CAD, the workshop, and the test bench. At LineSpect,
+                    I was the only mechanical engineer on a submersible microscope. At Lutron Electronics, I designed
+                    tooling for a production line. At Northeastern's Aramaki Lab, I build detector hardware for a physics
+                    experiment, and this term I lead the actuation system for my capstone team's robotic gripper.
                 </p>
                 <p>
-                    Through co-ops at LineSpect and Lutron Electronics I developed strong skills in CAD (Inventor, Creo),
-                    precision prototyping (SLA/FDM), tolerance analysis, and cross-functional collaboration. At Northeastern's
-                    Aramaki Lab I build detector arrays by hand for a cosmic ray experiment, and as the mechanical lead of a
-                    student robotics team I coordinate design through fabrication and testing. This combination of practical
-                    engineering experience and a deep curiosity for fundamental physics is what drives my work.
+                    The astrophysics minor comes from the same place as the engineering: I like working inside the physics
+                    of an instrument, not only around it.
                 </p>
                 <p>
-                    I also host The Art of Inquiry, a podcast about researchers and thinkers whose work crosses disciplines,
-                    and I founded Boston Clothing Outreach, a community initiative combining design with social impact.
-                    I speak English and Spanish natively and Italian at an intermediate level, and I hold EU citizenship.
-                    Outside of work I swing dance, write poetry, and am always looking for the next live jazz show.
+                    Outside engineering, I host The Art of Inquiry, a podcast about people whose work crosses disciplines,
+                    and I founded Boston Clothing Outreach. I speak English and Spanish natively and Italian at an
+                    intermediate level. I also swing dance, write poetry, and go looking for live jazz wherever I am.
                 </p>
             </div>
         </div>
@@ -446,17 +500,8 @@
             <a href="linespect.html" class="project-card">
                 <div class="project-header"><h3>LineSpect Co-Op</h3></div>
                 <div class="project-content">
-                    <p>Designed and prototyped precision optical housings for a submersible microscope predicting harmful algal blooms. Fast-paced startup where the work moved between CAD, the 3D printer, and the soldering station in the same hour.</p>
+                    <p>The only mechanical engineer at an optics startup building a submersible light-sheet microscope for early detection of harmful algal blooms. Designed optical housings and mounts, packaged electronics and wiring into a compact enclosure, built test jigs, and ran optical characterization.</p>
                     <span class="project-status">Co-op 2025</span>
-                    <p class="click-hint">View details →</p>
-                </div>
-            </a>
-
-            <a href="aramaki-lab.html" class="project-card">
-                <div class="project-header"><h3>Aramaki Lab Research</h3></div>
-                <div class="project-content">
-                    <p>Building a cosmic muon coincidence detection system for the GRAMS dark matter experiment. Constructed scintillator arrays, engineered 3D-printed mounting systems, and analyzed 1M+ events in Python.</p>
-                    <span class="project-status">2024 – Present</span>
                     <p class="click-hint">View details →</p>
                 </div>
             </a>
@@ -470,12 +515,20 @@
                 </div>
             </a>
 
-            <a href="https://sofiaodeh.github.io/artofinquiry/" class="project-card" target="_blank">
-                <div class="project-header"><h3>Art of Inquiry Podcast</h3></div>
+            <div class="project-card">
+                <div class="project-header"><h3>Adaptive Robotic Gripper (Senior Capstone)</h3></div>
                 <div class="project-content">
-                    <p>A podcast about people whose work crosses disciplines. I interview researchers, designers, and thinkers, handling everything from guest outreach to recording, editing, brand design, and distribution.</p>
-                    <span class="project-status">2025 – Present</span>
-                    <p class="click-hint">Visit website →</p>
+                    <p>A bioinspired gripper that combines compliant silicone fingers with motor-driven actuation to hold irregular and delicate objects without damaging them. As actuation lead on a five-person team, I handle motor selection, drive electronics with encoder feedback and a load cell, and the test plan, and I build the parametric CAD and FEA studies of the fingers. Demonstration December 2026. The design is being evaluated for a university patent, so I share it at a high level only.</p>
+                    <span class="project-status">2026 – In progress</span>
+                </div>
+            </div>
+
+            <a href="aramaki-lab.html" class="project-card">
+                <div class="project-header"><h3>Aramaki Lab Research</h3></div>
+                <div class="project-content">
+                    <p>Built scintillator arrays and a cosmic muon coincidence system whose data is used to characterize the veto system for the GRAMS flight detector. Designed 3D-printed mounting systems for a liquid argon detector, fixed a grounding problem in the readout, and analyzed 1M+ events in Python.</p>
+                    <span class="project-status">2024 – Present</span>
+                    <p class="click-hint">View details →</p>
                 </div>
             </a>
 
@@ -483,7 +536,16 @@
                 <div class="project-header"><h3>NEST — Lunar Exploration</h3></div>
                 <div class="project-content">
                     <p>Led the mechanical redesign and prototyping of networked mini-COBRA robotic modules for coordinated lunar surface exploration. CAD, 3D printing, assembly, and testing.</p>
-                    <span class="project-status">Completed</span>
+                    <span class="project-status">Apr 2024 – Dec 2025</span>
+                    <p class="click-hint">View details →</p>
+                </div>
+            </a>
+
+            <a href="lamp.html" class="project-card">
+                <div class="project-header"><h3>Raíces / Judhur Lamp</h3></div>
+                <div class="project-content">
+                    <p>A pendant lamp with a 3D-printed PETG lattice skeleton based on an 8-pointed Mudéjar star pattern and a cast agar bioplastic skin. Surface-modeled in SolidWorks and split so both halves print without supports.</p>
+                    <span class="project-status">Personal project – In progress</span>
                     <p class="click-hint">View details →</p>
                 </div>
             </a>
@@ -497,6 +559,15 @@
                 </div>
             </a>
 
+            <a href="https://sofiaodeh.github.io/artofinquiry/" class="project-card" target="_blank">
+                <div class="project-header"><h3>Art of Inquiry Podcast</h3></div>
+                <div class="project-content">
+                    <p>A podcast about people whose work crosses disciplines. I interview researchers, designers, and thinkers, handling everything from guest outreach to recording, editing, brand design, and distribution.</p>
+                    <span class="project-status">2025 – Present</span>
+                    <p class="click-hint">Visit website →</p>
+                </div>
+            </a>
+
             <a href="nusci.html" class="project-card">
                 <div class="project-header"><h3>NU SCI Magazine</h3></div>
                 <div class="project-content">
@@ -507,6 +578,7 @@
             </a>
 
         </div>
+        <p class="nda-note">Industry work at Lutron Electronics and LineSpect is under NDA. I am happy to discuss scope and my role in an interview.</p>
     </section>
 
     <footer id="contact">
@@ -514,9 +586,10 @@
         <div class="footer-links">
             <a href="mailto:odeh.s@northeastern.edu">odeh.s@northeastern.edu</a>
             <a href="tel:914-527-5222">(914) 527-5222</a>
-            <a href="https://www.linkedin.com/in/sofia-odeh" target="_blank">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/sofiaodeh" target="_blank">LinkedIn</a>
+            <a href="SofiaOdeh_Resume.pdf" target="_blank">Resume (PDF)</a>
         </div>
-        <p class="footer-copy">© 2024 Sofia Odeh</p>
+        <p class="footer-copy">© 2026 Sofia Odeh</p>
     </footer>
 
     <script>
@@ -529,4 +602,4 @@
         });
     </script>
 </body>
-</html>  
+</html>
