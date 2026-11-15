@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily — Personal Tracker App | Sofia Odeh</title>
+    <meta name="description" content="Daily: a private, installable web app for habits, strength training, cycle-aware nutrition, and recipes, designed by Sofia Odeh.">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy:       #1a2340;
+            --navy-mid:   #22304f;
+            --navy-light: #2e4070;
+            --gold:       #b8982a;
+            --gold-light: #d4af5a;
+            --gold-pale:  #e8d49a;
+            --maroon:     #6b2737;
+            --cream:      #f5f2eb;
+            --text-dark:  #1a2340;
+            --text-light: #f5f2eb;
+            --text-muted: #8a9ab8;
+        }
+
+        body {
+            font-family: 'Jost', 'Futura', 'Avenir Next', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--cream);
+        }
+
+        img { max-width: 100%; display: block; }
+
+        /* ===== NAV ===== */
+        nav {
+            background: var(--navy);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid rgba(184,152,42,0.25);
+        }
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            color: var(--gold-light);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+        }
+        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold-light); }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 7rem 2rem 3.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 50% 120%, rgba(184,152,42,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 10% 20%, rgba(107,39,55,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .back-link {
+            position: relative;
+            display: inline-block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.74rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 1.6rem;
+        }
+        .back-link:hover { color: var(--gold-light); }
+        .hero-rule { width: 48px; height: 1px; background: var(--gold); margin: 0 auto 1.2rem; opacity: 0.7; }
+        .hero h1 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2.8rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.55rem;
+            position: relative;
+        }
+        .hero .subtitle {
+            font-size: 0.82rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold-pale);
+            opacity: 0.85;
+            margin-bottom: 0.3rem;
+            position: relative;
+        }
+        .hero .subtitle + .subtitle { color: var(--text-muted); font-size: 0.76rem; }
+        .hero-buttons { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.6rem; position: relative; }
+        .btn {
+            display: inline-block;
+            padding: 0.42rem 1.1rem;
+            color: var(--gold-pale);
+            text-decoration: none;
+            border-radius: 2px;
+            border: 1px solid rgba(184,152,42,0.4);
+            font-size: 0.74rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.25s;
+        }
+        .btn:hover { background: rgba(184,152,42,0.12); border-color: var(--gold-light); color: var(--gold-light); }
+        .hero-shot {
+            position: relative;
+            margin: 2.6rem auto 0;
+            max-width: 260px;
+            border: 1px solid rgba(184,152,42,0.35);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+        }
+
+        /* ===== SECTIONS ===== */
+        section { padding: 4.5rem 2rem; }
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 0.4rem;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 2.4rem;
+        }
+        .prose {
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 0.97rem;
+            line-height: 1.95;
+            color: #3a4a5c;
+        }
+        .prose p { margin-bottom: 1.3rem; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose a { color: var(--maroon); text-decoration: underline; text-underline-offset: 0.15em; }
+        .prose h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: var(--navy);
+            margin: 2rem 0 0.6rem;
+        }
+
+        .facts {
+            max-width: 940px;
+            margin: 0 auto 2.8rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .fact {
+            border-top: 2px solid var(--gold);
+            padding-top: 0.7rem;
+        }
+        .fact b {
+            display: block;
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+        .fact span { font-size: 0.9rem; color: #3a4a5c; }
+
+        /* features on navy */
+        .dark { background: var(--navy); }
+        .dark .section-title { color: var(--text-light); }
+        .feature-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.4rem;
+        }
+        .feature {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(184,152,42,0.18);
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .feature figure {
+            background: rgba(0,0,0,0.25);
+            padding: 1.4rem 1.4rem 0;
+            border-bottom: 1px solid rgba(184,152,42,0.15);
+            height: 340px;
+            overflow: hidden;
+        }
+        .feature figure img {
+            width: 200px;
+            margin: 0 auto;
+            border-radius: 14px 14px 0 0;
+            border: 1px solid rgba(184,152,42,0.25);
+            border-bottom: 0;
+        }
+        .feature-text { padding: 1.1rem 1.4rem 1.4rem; }
+        .feature h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--gold-pale);
+            margin-bottom: 0.4rem;
+        }
+        .feature p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.75; }
+
+        /* architecture */
+        .diagram {
+            max-width: 860px;
+            margin: 0 auto 2.4rem;
+            background: #fff;
+            border: 1px solid rgba(184,152,42,0.3);
+            border-radius: 2px;
+            padding: 1.4rem;
+            overflow-x: auto;
+        }
+        .diagram svg { min-width: 640px; width: 100%; height: auto; display: block; }
+
+        .rules {
+            max-width: 720px;
+            margin: 0 auto;
+            border-left: 2px solid var(--maroon);
+            padding-left: 1.4rem;
+        }
+        .rules p { font-size: 0.95rem; color: #3a4a5c; line-height: 1.85; margin-bottom: 0.9rem; }
+        .rules b { font-weight: 500; color: var(--navy); }
+
+        .cta {
+            text-align: center;
+            background: var(--navy);
+            color: var(--text-light);
+        }
+        .cta p { color: var(--text-muted); max-width: 620px; margin: 0 auto 1.6rem; font-size: 0.95rem; line-height: 1.85; }
+        .cta .section-title { color: var(--text-light); }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #111926;
+            color: var(--text-light);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(184,152,42,0.2);
+        }
+        .footer-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--gold-light);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; transition: color 0.25s; }
+        .footer-links a:hover { color: var(--gold-light); }
+        .footer-copy { font-size: 0.7rem; color: rgba(138,154,184,0.45); letter-spacing: 0.1em; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.1rem; }
+            .nav-container { padding: 0 1.4rem; }
+            .nav-links { gap: 1.2rem; }
+            section { padding: 3.5rem 1.4rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <a href="index.html#projects" class="back-link">← All projects</a>
+        <div class="hero-rule"></div>
+        <h1>Daily</h1>
+        <p class="subtitle">A personal tracker for habits, training, health &amp; food</p>
+        <p class="subtitle">Personal project &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Web app, installable on iPhone &amp; Android</p>
+        <div class="hero-buttons">
+            <a href="https://sofiaodeh.github.io/daily-app/" class="btn" target="_blank" rel="noopener noreferrer">Try the demo</a>
+            <a href="https://github.com/sofiaodeh/daily-app" class="btn" target="_blank" rel="noopener noreferrer">Code on GitHub</a>
+        </div>
+        <div class="hero-shot">
+            <img src="images/daily/today.jpg" alt="Daily app, Today screen: weekday heading, weekly completion rings and a checklist of daily habits" width="520" height="1126">
+        </div>
+    </header>
+
+    <section>
+        <p class="section-label">Overview</p>
+        <h2 class="section-title">Why I built it</h2>
+        <div class="facts">
+            <div class="fact"><b>Role</b><span>Requirements, design, deployment</span></div>
+            <div class="fact"><b>Built with</b><span>HTML, CSS, JavaScript, AI-assisted coding</span></div>
+            <div class="fact"><b>Runs on</b><span>Cloudflare Pages, Workers KV, Access</span></div>
+            <div class="fact"><b>Status</b><span>In daily use</span></div>
+        </div>
+        <div class="prose">
+            <p>I kept my routines spread across a notes app, a workout app, a spreadsheet and a chat thread: habits, gym sessions, what to cook, my cycle. None of them talked to each other, and most were tied to tools I would lose access to after graduating. I wanted one place that would still fit my life in five years, whatever job or city I end up in.</p>
+            <p>So I treated it like any other design problem: list what it has to do, decide what it must never do, and build the smallest thing that meets both. It had to work offline, open like an app on my phone, sync with my laptop, keep my data private, and be easy to change when my life changes. It must never need a subscription, and it must never lock my data inside someone else&rsquo;s platform.</p>
+        </div>
+    </section>
+
+    <section class="dark">
+        <p class="section-label">Features</p>
+        <h2 class="section-title">What it does</h2>
+        <div class="feature-grid">
+            <article class="feature">
+                <figure><img src="images/daily/today.jpg" alt="Today screen with daily habits and weekly rings" loading="lazy" width="520" height="1126"></figure>
+                <div class="feature-text">
+                    <h3>Today</h3>
+                    <p>Checklists that know what day it is. Items can be limited to certain weekdays, and whole lists can be switched on for a season of life, like a semester or a job, or set to expire on a date. Weekly rings show progress, and a missed habit gets a gentle &ldquo;a light version counts today&rdquo; instead of a broken streak.</p>
+                </div>
+            </article>
+            <article class="feature">
+                <figure><img src="images/daily/train.jpg" alt="Train screen with weight steppers and set logging" loading="lazy" width="520" height="1126"></figure>
+                <div class="feature-text">
+                    <h3>Train</h3>
+                    <p>A weekly gym schedule with set-by-set logging, quick weight steppers, and a progress line for every lift. A rule-based coach reads the history and suggests when to add reps, add weight, or swap an exercise for a variation, and missed leg days get a make-up prompt.</p>
+                </div>
+            </article>
+            <article class="feature">
+                <figure><img src="images/daily/cycle.jpg" alt="Cycle screen with a phase ring and food suggestions" loading="lazy" width="520" height="1126"></figure>
+                <div class="feature-text">
+                    <h3>Cycle</h3>
+                    <p>A period log that learns your average cycle and shows the current phase on a ring. Tapping a phase lists foods to prioritize, each with a one-line reason drawn from published research, with a clear note on where the evidence is strong and where it is thin.</p>
+                </div>
+            </article>
+            <article class="feature">
+                <figure><img src="images/daily/food.jpg" alt="Food screen with a searchable recipe list" loading="lazy" width="520" height="1126"></figure>
+                <div class="feature-text">
+                    <h3>Food</h3>
+                    <p>A searchable recipe book of the meals I actually cook, plus a page of food guidance from the Quran, each note linked to its source.</p>
+                </div>
+            </article>
+            <article class="feature">
+                <figure><img src="images/daily/history.jpg" alt="History screen with four weeks of habit streaks" loading="lazy" width="520" height="1126"></figure>
+                <div class="feature-text">
+                    <h3>History</h3>
+                    <p>Four weeks of every daily habit at a glance, with current streaks, a gym log, and recent notes, so patterns are easy to spot without any charts to configure.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section>
+        <p class="section-label">Design</p>
+        <h2 class="section-title">A tool that feels like mine</h2>
+        <div class="prose">
+            <p>I wanted to enjoy opening it every morning, so the visual language comes from my own mood board rather than a template: Moroccan interiors, old engraving plates, 1970s posters and Arabic calligraphy. The palette is oxblood, saffron and walnut ink on a deep tobacco background, with headings set in Cormorant Garamond italic and body text in Jost.</p>
+            <p>The one ornament is an engraved eight-pointed khatam star behind the date, drawn as hairlines like an astrolabe. It is the same geometry family as the Mud&eacute;jar star in my <a href="lamp.html">Ra&iacute;ces / Judhur lamp</a>, and it became the app icon as well.</p>
+            <h3>Designed to change</h3>
+            <p>Everything personal lives in plain text: one checklist item or one exercise per line, with simple rules like <em>Lamp | Tue, Fri</em> or <em>## School | until 2026-12-31</em>. When a semester ends or a routine changes, I edit a line instead of rebuilding the app.</p>
+        </div>
+    </section>
+
+    <section style="background:#ece7dc">
+        <p class="section-label">Engineering</p>
+        <h2 class="section-title">How it works</h2>
+        <div class="diagram">
+            <svg viewBox="0 0 760 300" role="img" aria-label="Architecture: phone and laptop each keep a local copy, pass through Cloudflare Access login, and sync through a Pages Function to Workers KV storage, which keeps daily snapshots">
+                <defs>
+                    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6b2737"/></marker>
+                </defs>
+                <g font-family="Jost, sans-serif" font-size="13" fill="#1a2340">
+                    <rect x="20" y="40" width="150" height="80" rx="3" fill="#f5f2eb" stroke="#b8982a"/>
+                    <text x="95" y="72" text-anchor="middle" font-weight="500">Phone</text>
+                    <text x="95" y="94" text-anchor="middle" font-size="11" fill="#5a6a80">installed web app</text>
+                    <text x="95" y="109" text-anchor="middle" font-size="11" fill="#5a6a80">local copy, offline</text>
+
+                    <rect x="20" y="180" width="150" height="80" rx="3" fill="#f5f2eb" stroke="#b8982a"/>
+                    <text x="95" y="212" text-anchor="middle" font-weight="500">Laptop</text>
+                    <text x="95" y="234" text-anchor="middle" font-size="11" fill="#5a6a80">same app in browser</text>
+                    <text x="95" y="249" text-anchor="middle" font-size="11" fill="#5a6a80">local copy, offline</text>
+
+                    <rect x="230" y="40" width="140" height="220" rx="3" fill="#1a2340"/>
+                    <text x="300" y="130" text-anchor="middle" fill="#e8d49a" font-weight="500">Cloudflare</text>
+                    <text x="300" y="148" text-anchor="middle" fill="#e8d49a" font-weight="500">Access</text>
+                    <text x="300" y="172" text-anchor="middle" font-size="11" fill="#8a9ab8">email-code login,</text>
+                    <text x="300" y="187" text-anchor="middle" font-size="11" fill="#8a9ab8">only my address</text>
+
+                    <rect x="430" y="40" width="140" height="80" rx="3" fill="#f5f2eb" stroke="#b8982a"/>
+                    <text x="500" y="72" text-anchor="middle" font-weight="500">Pages</text>
+                    <text x="500" y="94" text-anchor="middle" font-size="11" fill="#5a6a80">serves the app,</text>
+                    <text x="500" y="109" text-anchor="middle" font-size="11" fill="#5a6a80">deploys from GitHub</text>
+
+                    <rect x="430" y="180" width="140" height="80" rx="3" fill="#f5f2eb" stroke="#b8982a"/>
+                    <text x="500" y="212" text-anchor="middle" font-weight="500">Sync function</text>
+                    <text x="500" y="234" text-anchor="middle" font-size="11" fill="#5a6a80">/api/state</text>
+                    <text x="500" y="249" text-anchor="middle" font-size="11" fill="#5a6a80">read &amp; write state</text>
+
+                    <rect x="620" y="180" width="120" height="80" rx="3" fill="#6b2737"/>
+                    <text x="680" y="212" text-anchor="middle" fill="#f5f2eb" font-weight="500">Workers KV</text>
+                    <text x="680" y="234" text-anchor="middle" font-size="11" fill="#e8d49a">latest state +</text>
+                    <text x="680" y="249" text-anchor="middle" font-size="11" fill="#e8d49a">30 daily snapshots</text>
+                </g>
+                <g stroke="#6b2737" stroke-width="1.5" fill="none" marker-end="url(#ah)">
+                    <path d="M170 80 H226"/>
+                    <path d="M170 220 H226"/>
+                    <path d="M370 80 H426"/>
+                    <path d="M370 220 H426"/>
+                    <path d="M570 220 H616"/>
+                </g>
+            </svg>
+        </div>
+        <div class="prose">
+            <p>The whole app is a single HTML file with no framework and no build step, so it loads instantly and is easy to read and change. Every tap saves to the device first, which means it works on a plane or in a basement gym. A few seconds later the change is sent to a small serverless function that stores my data as one document in Cloudflare&rsquo;s key-value storage, and the other device pulls it in the next time it opens. If two devices disagree, the most recent change wins, and the storage keeps a snapshot of each day for a month as a safety net.</p>
+            <p>Privacy is handled before the app even loads. Cloudflare Access sits in front of everything and only lets in my email address, using a one-time code instead of a password, so the page, the sync function and the data are all invisible to anyone else. Updates go through GitHub: I commit a change and the site redeploys itself within a minute on both devices.</p>
+            <h3>The coach</h3>
+        </div>
+        <div class="rules" style="margin-top:0.8rem">
+            <p><b>Progress by evidence, not feel.</b> When every set hits the top of its rep range in two sessions in a row, the coach suggests the next step.</p>
+            <p><b>Different rules for different goals.</b> Lower-body lifts move up in weight. Upper-body lifts add reps first and only add weight once 15 reps are easy, and a session with too much upper-body volume gets flagged.</p>
+            <p><b>Plateaus become variations.</b> No progress in three weeks, or an eight-week block completed, triggers a suggested swap from a library of alternatives for that movement.</p>
+        </div>
+    </section>
+
+    <section>
+        <p class="section-label">Reflection</p>
+        <h2 class="section-title">My role &amp; what I learned</h2>
+        <div class="prose">
+            <p>I wrote the requirements, made the design and data decisions, chose the architecture, and set up and deployed the hosting, login, storage and GitHub pipeline. The code itself was written with AI assistance (Claude): I described behavior, reviewed and tested what came back on my own devices, and kept iterating until it matched how I actually live, from the weekday gym schedule to how missed days should feel.</p>
+            <p>The biggest lesson was the same one I rely on in the lab: break the problem down to what you actually know before building it back up. Most of the work was deciding what the app should not do. It also taught me practical web fundamentals I had never touched as a mechanical engineer: offline-first storage, serverless functions, access control, and deployment pipelines.</p>
+        </div>
+    </section>
+
+    <section class="cta">
+        <p class="section-label">Try it</p>
+        <h2 class="section-title">Use it or make it yours</h2>
+        <p>The demo runs entirely in your browser. Its habits, workouts, weights and recipes are example placeholders, not my own, so you can change them to fit your routine. The code is open source under the MIT license, with a guide for hosting your own private copy with sync for free. Change the lists, the routines, the colors, anything.</p>
+        <div class="hero-buttons">
+            <a href="https://sofiaodeh.github.io/daily-app/" class="btn" target="_blank" rel="noopener noreferrer">Open the demo</a>
+            <a href="https://github.com/sofiaodeh/daily-app" class="btn" target="_blank" rel="noopener noreferrer">View the code</a>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p class="footer-title">Let's Connect</p>
+        <div class="footer-links">
+            <a href="mailto:odeh.s@northeastern.edu">odeh.s@northeastern.edu</a>
+            <a href="tel:914-527-5222">(914) 527-5222</a>
+            <a href="https://www.linkedin.com/in/sofiaodeh" target="_blank">LinkedIn</a>
+            <a href="images/SofiaOdeh_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume (PDF)</a>
+        </div>
+        <p class="footer-copy">© 2026 Sofia Odeh</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+            });
+        });
+    </script>
+</body>
+</html>
