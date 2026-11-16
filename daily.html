@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily — Personal Tracker App | Sofia Odeh</title>
-    <meta name="description" content="Daily: a private, installable web app for habits, strength training, cycle-aware nutrition, and recipes, designed by Sofia Odeh.">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Yawm (يوم) — Personal Tracker App | Sofia Odeh</title>
+    <meta name="description" content="Yawm (يوم): a private, installable web app for habits, training, cycle-aware food, money, reading, music and reflection, designed by Sofia Odeh.">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -317,15 +317,15 @@
     <header class="hero">
         <a href="index.html#projects" class="back-link">← All projects</a>
         <div class="hero-rule"></div>
-        <h1>Daily</h1>
-        <p class="subtitle">A personal tracker for habits, training, health &amp; food</p>
+        <h1>Yawm <span lang="ar" dir="rtl" style="font-family:'Amiri',serif;font-style:normal">يوم</span></h1>
+        <p class="subtitle">A personal app for the whole day: habits, training, health, food, money &amp; reflection</p>
         <p class="subtitle">Personal project &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Web app, installable on iPhone &amp; Android</p>
         <div class="hero-buttons">
             <a href="https://sofiaodeh.github.io/daily-app/" class="btn" target="_blank" rel="noopener noreferrer">Try the demo</a>
             <a href="https://github.com/sofiaodeh/daily-app" class="btn" target="_blank" rel="noopener noreferrer">Code on GitHub</a>
         </div>
         <div class="hero-shot">
-            <img src="images/today.jpg" alt="Daily app, Today screen: weekday heading, weekly completion rings and a checklist of daily habits" width="520" height="1125">
+            <img src="images/today.jpg" alt="Yawm app, Today screen: weekday heading with an engraved medallion, weekly rings, morning sleep, energy and mood, pills and daily habits" width="520" height="1125">
         </div>
     </header>
 
@@ -341,6 +341,7 @@
         <div class="prose">
             <p>I kept my routines spread across a notes app, a workout app, a spreadsheet and a chat thread: habits, gym sessions, what to cook, my cycle. None of them talked to each other, and most were tied to tools I would lose access to after graduating. I wanted one place that would still fit my life in five years, whatever job or city I end up in.</p>
             <p>So I treated it like any other design problem: list what it has to do, decide what it must never do, and build the smallest thing that meets both. It had to work offline, open like an app on my phone, sync with my laptop, keep my data private, and be easy to change when my life changes. It must never need a subscription, and it must never lock my data inside someone else&rsquo;s platform.</p>
+            <p>It started as <em>Daily</em>. As it grew from a checklist into the place I plan my training, cook, read, track money and look back on each week, I renamed it <em>yawm</em>, Arabic for &ldquo;day.&rdquo;</p>
         </div>
     </section>
 
@@ -349,38 +350,59 @@
         <h2 class="section-title">What it does</h2>
         <div class="feature-grid">
             <article class="feature">
-                <figure><img src="images/today.jpg" alt="Today screen with daily habits and weekly rings" loading="lazy" width="520" height="1125"></figure>
+                <figure><img src="images/today.jpg" alt="Today screen with sleep, energy and mood, pills and daily habits" loading="lazy" width="520" height="1125"></figure>
                 <div class="feature-text">
                     <h3>Today</h3>
-                    <p>Checklists that know what day it is. Items can be limited to certain weekdays, and whole lists can be switched on for a season of life, like a semester or a job, or set to expire on a date. Weekly rings show progress, and a missed habit gets a gentle &ldquo;a light version counts today&rdquo; instead of a broken streak.</p>
+                    <p>Checklists that know what day it is: items limited to certain weekdays, seasonal lists for a semester or a job that expire on a date, and a gentle &ldquo;a light version counts today&rdquo; instead of a broken streak. Mornings log sleep, energy and mood; pills can be daily, every other day, or a short course several times a day; and a daily writing prompt and &ldquo;on this day&rdquo; notes bring back what happened a week, a month and a year ago.</p>
                 </div>
             </article>
             <article class="feature">
                 <figure><img src="images/train.jpg" alt="Train screen with weight steppers and set logging" loading="lazy" width="520" height="1125"></figure>
                 <div class="feature-text">
                     <h3>Train</h3>
-                    <p>A weekly gym schedule with set-by-set logging, quick weight steppers, and a progress line for every lift. A rule-based coach reads the history and suggests when to add reps, add weight, or swap an exercise for a variation.</p>
+                    <p>A weekly gym schedule I can rearrange in two taps, swapping days or turning one into mobility, with success measured over the week: two upper and two lower sessions, whichever days they land on. Set-by-set logging, rest timers, personal records, and a rule-based coach that suggests when to add reps, add weight or swap an exercise.</p>
                 </div>
             </article>
             <article class="feature">
-                <figure><img src="images/cycle.jpg" alt="Cycle screen with a phase ring and food suggestions" loading="lazy" width="520" height="1125"></figure>
+                <figure><img src="images/cycle.jpg" alt="Cycle screen with a phase ring and food priorities" loading="lazy" width="520" height="1125"></figure>
                 <div class="feature-text">
                     <h3>Cycle</h3>
-                    <p>A period log that learns your average cycle and shows the current phase on a ring. Tapping a phase lists foods to prioritize, each with a one-line reason drawn from published research, with a clear note on where the evidence is strong and where it is thin.</p>
+                    <p>A period log that learns the average cycle and shows the current phase on a ring, with foods to prioritize in each phase and a one-line reason drawn from published research, including where the evidence is thin.</p>
                 </div>
             </article>
             <article class="feature">
-                <figure><img src="images/food.jpg" alt="Food screen with a searchable recipe list" loading="lazy" width="520" height="1125"></figure>
+                <figure><img src="images/food.jpg" alt="Food screen with recipes, meal plan and Sunnah guidance" loading="lazy" width="520" height="1125"></figure>
                 <div class="feature-text">
                     <h3>Food</h3>
-                    <p>A searchable recipe book of the meals I actually cook, plus a page of food guidance from the Quran, each note linked to its source.</p>
+                    <p>A recipe book of the meals I actually cook, a flexible plan of meal ideas for the current cycle phase that re-ranks around what is already in the kitchen, an automatic shopping list, and a page of food guidance from the Quran and hadith, each note linked to its source.</p>
                 </div>
             </article>
             <article class="feature">
-                <figure><img src="images/history.jpg" alt="History screen with four weeks of habit streaks" loading="lazy" width="520" height="1125"></figure>
+                <figure><img src="images/money.jpg" alt="Money screen with monthly spending by category against limits" loading="lazy" width="520" height="1125"></figure>
                 <div class="feature-text">
-                    <h3>History</h3>
-                    <p>Four weeks of every daily habit at a glance, with current streaks, a gym log, and recent notes, so patterns are easy to spot without any charts to configure.</p>
+                    <h3>Money</h3>
+                    <p>Bank and card statements import as CSV and investment statements as PDF, read entirely in the browser. Categories learn from one correction, subscriptions and trial charges surface on their own, monthly limits turn gold and then red, and a monthly check-in asks for one win and one thing to change.</p>
+                </div>
+            </article>
+            <article class="feature">
+                <figure><img src="images/invest.jpg" alt="Investments explained in plain words with a role bar" loading="lazy" width="520" height="1125"></figure>
+                <div class="feature-text">
+                    <h3>Investments, explained</h3>
+                    <p>Holdings described in plain language, a role bar showing how much is broad, steady, cushioning or speculative, a rough estimate of big-tech exposure, what changed since the last statement, and one short lesson a week. A separate tally tracks interest earned so it can be given away.</p>
+                </div>
+            </article>
+            <article class="feature">
+                <figure><img src="images/reflect.jpg" alt="Reflect screen with the commonplace book" loading="lazy" width="520" height="1125"></figure>
+                <div class="feature-text">
+                    <h3>Reflect</h3>
+                    <p>A weekly review, yearly goals linked to habits, a reading list with covers, page logs, notes and Goodreads import, a commonplace book for lines and ideas from books, conversations and songs, and a year in review.</p>
+                </div>
+            </article>
+            <article class="feature">
+                <figure><img src="images/insights.jpg" alt="Insights screen with listening by mood over eight weeks" loading="lazy" width="520" height="1125"></figure>
+                <div class="feature-text">
+                    <h3>Insights</h3>
+                    <p>Patterns written as plain sentences once there is enough data: which weekdays habits slip, how sleep shapes energy and training, what changes across cycle phases, and, with Spotify connected, how sad, nostalgic, upbeat or instrumental music lines up with mood.</p>
                 </div>
             </article>
         </div>
@@ -391,7 +413,8 @@
         <h2 class="section-title">A tool that feels like mine</h2>
         <div class="prose">
             <p>I wanted to enjoy opening it every morning, so the visual language comes from my own mood board rather than a template: Moroccan interiors, old engraving plates, 1970s posters and Arabic calligraphy. The palette is oxblood, saffron and walnut ink on a deep tobacco background, with headings set in Cormorant Garamond italic and body text in Jost.</p>
-            <p>The one ornament is an engraved eight-pointed khatam star behind the date, drawn as hairlines like an astrolabe. It is the same geometry family as the Mud&eacute;jar star in my <a href="lamp.html">Ra&iacute;ces / Judhur lamp</a>, and it became the app icon as well.</p>
+            <p>The signature is an engraved gold medallion behind the date: a hairline eight-pointed khatam, the same geometry family as the Mud&eacute;jar star in my <a href="lamp.html">Ra&iacute;ces / Judhur lamp</a>, with a red cross-stitch star at its center taken from Palestinian tatreez. It is also the app icon, and tapping it syncs.</p>
+            <p>The same idea of roots runs through the whole interface. Every page carries its name in Spanish and Arabic, set in Cormorant Garamond and Amiri (<em>Hoy &middot; اليوم</em>, <em>Mesa &middot; مائدة</em>, <em>Huellas &middot; آثار</em>), and section dividers are a line of tatreez stitches instead of a plain rule. Six color themes (Andalus, Tatreez, Observatory, Olive grove, Azulejo, and Paper &amp; ink) change the palette without changing the character.</p>
             <h3>Designed to change</h3>
             <p>Everything personal lives in plain text: one checklist item or one exercise per line, with simple rules like <em>Lamp | Tue, Fri</em> or <em>## School | until 2026-12-31</em>. When a semester ends or a routine changes, I edit a line instead of rebuilding the app.</p>
         </div>
@@ -449,9 +472,11 @@
         <div class="prose">
             <p>The whole app is a single HTML file with no framework and no build step, so it loads instantly and is easy to read and change. Every tap saves to the device first, which means it works on a plane or in a basement gym. A few seconds later the change is sent to a small serverless function that stores my data as one document in Cloudflare&rsquo;s key-value storage, and the other device pulls it in the next time it opens. If two devices disagree, the most recent change wins, and the storage keeps a snapshot of each day for a month as a safety net.</p>
             <p>Privacy is handled before the app even loads. Cloudflare Access sits in front of everything and only lets in my email address, using a one-time code instead of a password, so the page, the sync function and the data are all invisible to anyone else. Updates go through GitHub: I commit a change and the site redeploys itself within a minute on both devices.</p>
+            <p>A few integrations stay just as private. Spotify sign-in uses PKCE in the browser, so no secret is stored anywhere; Last.fm tags give each artist a mood, and my own labels override them. Investment PDFs are parsed on the device with pdf.js, and only the extracted numbers are saved. When syncing started failing after a few hundred kilobytes of statement data, I traced it to the free plan&rsquo;s 10&nbsp;ms CPU limit and rewrote the function to store the document as raw text without parsing it.</p>
             <h3>The coach</h3>
         </div>
         <div class="rules" style="margin-top:0.8rem">
+            <p><b>Success is weekly.</b> Two upper and two lower sessions count as a full week, whichever days they fall on, and a reminder appears only when the remaining days can no longer fit a missed leg day.</p>
             <p><b>Progress by evidence, not feel.</b> When every set hits the top of its rep range in two sessions in a row, the coach suggests the next step.</p>
             <p><b>Rules that fit the person.</b> Each exercise is tagged by type, and each type can follow its own progression rule and weekly volume limit, so the coach adapts to whatever someone is training for.</p>
             <p><b>Plateaus become variations.</b> No progress in three weeks, or an eight-week block completed, triggers a suggested swap from a library of alternatives for that movement.</p>
@@ -463,14 +488,14 @@
         <h2 class="section-title">My role &amp; what I learned</h2>
         <div class="prose">
             <p>I wrote the requirements, made the design and data decisions, chose the architecture, and set up and deployed the hosting, login, storage and GitHub pipeline. The code itself was written with AI assistance (Claude): I described behavior, reviewed and tested what came back on my own devices, and kept iterating until it matched how I actually live, from the weekday gym schedule to how missed days should feel.</p>
-            <p>The biggest lesson was the same one I rely on in the lab: break the problem down to what you actually know before building it back up. Most of the work was deciding what the app should not do. It also taught me practical web fundamentals I had never touched as a mechanical engineer: offline-first storage, serverless functions, access control, and deployment pipelines.</p>
+            <p>The biggest lesson was the same one I rely on in the lab: break the problem down to what you actually know before building it back up. Most of the work was deciding what the app should not do. It also taught me practical web fundamentals I had never touched as a mechanical engineer: offline-first storage, serverless functions, access control, OAuth, parsing messy real-world files, and deployment pipelines. Debugging those, from a redirect URI that had to match character for character to a function quietly hitting a CPU limit, felt a lot like debugging a test rig.</p>
         </div>
     </section>
 
     <section class="cta">
         <p class="section-label">Try it</p>
         <h2 class="section-title">Use it or make it yours</h2>
-        <p>The demo runs entirely in your browser. Its habits, workouts, weights and recipes are example placeholders, not my own, so you can change them to fit your routine. The code is open source under the MIT license, with a guide for hosting your own private copy with sync for free. Change the lists, the routines, the colors, anything.</p>
+        <p>The demo runs entirely in your browser. Its habits, workouts, weights, pills, recipes and money figures are example placeholders, not my own, so you can change them to fit your routine. The code is open source under the MIT license, with a guide for hosting your own private copy with sync for free. Change the lists, the routines, the colors, anything.</p>
         <div class="hero-buttons">
             <a href="https://sofiaodeh.github.io/daily-app/" class="btn" target="_blank" rel="noopener noreferrer">Open the demo</a>
             <a href="https://github.com/sofiaodeh/daily-app" class="btn" target="_blank" rel="noopener noreferrer">View the code</a>
