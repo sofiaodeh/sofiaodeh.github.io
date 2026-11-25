@@ -297,6 +297,40 @@
 
         footer a:hover { color: var(--gold-pale); }
 
+        /* project facts */
+        .project-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 1.2rem 2rem;
+            background: white;
+            border-top: 2px solid var(--gold);
+            padding: 1.4rem 1.6rem;
+            margin: 0 0 2rem;
+        }
+
+        .project-facts dt {
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--maroon);
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-facts dd {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: var(--text-body);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem 1.6rem;
+            margin-top: 0.8rem;
+        }
+
         @media (max-width: 640px) {
             .image-container img { max-width: 95%; }
             .image-pair { flex-direction: column; }
@@ -322,6 +356,11 @@
 
     <section class="content-section">
         <h2>Overview</h2>
+        <dl class="project-facts">
+            <div><dt>Role</dt><dd>Concept, CAD, fabrication, finishing</dd></div>
+            <div><dt>Built with</dt><dd>SolidWorks, MJF nylon, kozo washi, agar &amp; tea size</dd></div>
+            <div><dt>Status</dt><dd>Prototype built</dd></div>
+        </dl>
         <p>
             A lamp built from a 3D-printed nylon lattice lined with kozo washi. The canopy carries an eight-pointed Mudéjar star
             lattice, based on the open-centered outline stars of Spanish alicatado tilework. I modeled the whole skeleton in
@@ -545,8 +584,14 @@
     </section>
 
     <footer>
-        <p>Want to learn more about this project?</p>
-        <p><a href="mailto:odeh.s@northeastern.edu">Contact me</a> &nbsp;|&nbsp; <a href="index.html">Back to main page</a></p>
+        <p>Let's connect</p>
+        <div class="footer-links">
+            <a href="mailto:odeh.s@northeastern.edu">odeh.s@northeastern.edu</a>
+            <a href="tel:914-527-5222">(914) 527-5222</a>
+            <a href="https://www.linkedin.com/in/sofiaodeh">LinkedIn</a>
+            <a href="images/SofiaOdeh_Resume.pdf">Resume (PDF)</a>
+        </div>
+        <p style="margin-top:1.2rem;"><a href="index.html#projects">← All projects</a></p>
     </footer>
 
 </body>
