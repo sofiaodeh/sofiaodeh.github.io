@@ -173,6 +173,7 @@
             background: var(--navy);
             color: var(--text-light);
             padding: 1.8rem 2rem;
+            margin: 2.5rem 0 1.5rem;
             text-align: center;
             border-top: 1px solid rgba(184,152,42,0.2);
             border-bottom: 1px solid rgba(184,152,42,0.2);
@@ -316,27 +317,31 @@
     <div class="project-hero">
         <div class="hero-rule"></div>
         <h1>Raíces / Judhur</h1>
-        <p class="meta">Personal project &nbsp;·&nbsp; In progress &nbsp;·&nbsp; SolidWorks</p>
+        <p class="meta">Personal project &nbsp;·&nbsp; Prototype built &nbsp;·&nbsp; SolidWorks, MJF, washi</p>
     </div>
 
     <section class="content-section">
         <h2>Overview</h2>
         <p>
-            A pendant lamp combining a 3D-printed PETG lattice skeleton with a cast agar bioplastic skin. The canopy carries an
-            eight-pointed Mudéjar star lattice, based on the open-centered outline stars of Spanish alicatado tilework, and the
-            whole skeleton is modeled as a single printable body. The design is now at a v1 freeze, ahead of test printing.
+            A lamp built from a 3D-printed nylon lattice lined with kozo washi. The canopy carries an eight-pointed Mudéjar star
+            lattice, based on the open-centered outline stars of Spanish alicatado tilework. I modeled the whole skeleton in
+            SolidWorks as a single printable body, had it printed in one piece by multi jet fusion, and lined it by hand with
+            washi sized with agar. Lit from inside, the stars read as a dark, crisp silhouette against glowing paper.
         </p>
-        <div class="image-pair">
-            <div class="image-container">
-                <img src="images/lamp-front.png" alt="Front view of the lamp skeleton CAD model showing star bands and support ribs">
-                <p class="image-caption">Front view of the v1 skeleton</p>
-            </div>
-            <div class="image-container">
-                <img src="images/lamp-iso.png" alt="Isometric view of the lamp skeleton CAD model">
-                <p class="image-caption">Isometric view, with the hub and ribs below the seam ring</p>
-            </div>
+        <p>
+            The lamp was designed as a pendant. The current prototype sits on a borrowed table base while I design a base made for it.
+        </p>
+        <!-- TODO: replace with your lit hero photo -->
+        <div class="image-container">
+            <img src="images/lamp-lit.jpg" alt="The finished lamp lit from inside, with the star lattice silhouetted against glowing washi">
+            <p class="image-caption">The finished prototype, lit</p>
         </div>
     </section>
+
+    <div class="phase-band">
+        <p class="phase-label">Phase 1</p>
+        <h2>Designing the skeleton</h2>
+    </div>
 
     <section class="content-section">
         <h2>Canopy Form</h2>
@@ -350,6 +355,16 @@
                 cannot produce; it would take a spline. I chose to keep the near-spherical shape and keep the project moving,
                 rather than rework the silhouette for precision the lamp doesn't need.
             </p>
+        </div>
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lamp-front.png" alt="Front view of the lamp skeleton CAD model showing star bands and support ribs">
+                <p class="image-caption">Front view of the v1 skeleton</p>
+            </div>
+            <div class="image-container">
+                <img src="images/lamp-iso.png" alt="Isometric view of the lamp skeleton CAD model">
+                <p class="image-caption">Isometric view, with the hub and ribs below the seam ring</p>
+            </div>
         </div>
     </section>
 
@@ -430,23 +445,86 @@
         </p>
     </section>
 
+    <div class="phase-band">
+        <p class="phase-label">Phase 2</p>
+        <h2>Making it</h2>
+    </div>
+
     <section class="content-section">
-        <h2>Designing for Printing</h2>
+        <h2>Fabrication</h2>
         <p>
-            The original plan split the dome at its widest ring so each half could print without supports. I now have access to a
-            printer with water-soluble support, which removes those overhang limits. Whether the skeleton prints in one piece or
-            splits at the widest ring depends on that printer's build volume, which I'm still confirming. The material will be
-            PETG if the printer pairs it with PVA support, or PLA with attention to heat near the light source.
+            After a round of test fits, I 3D printed the skeleton in one piece in multi jet fusion (MJF) nylon. MJF needs no
+            support structures, so the dome printed without splitting at the widest ring, and it gave crisper star outlines and
+            a tougher part than an FDM print would have.
         </p>
+        <!-- TODO: replace with a photo of the bare print -->
+        <div class="image-container">
+            <img src="images/lamp-print.jpg" alt="The bare grey MJF nylon lattice skeleton before skinning">
+            <p class="image-caption">The skeleton as printed, in raw grey MJF nylon</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Skinning the Lattice</h2>
+        <p>
+            The skin went through the same kind of rethinking as the lattice. My first plan was a cast agar bioplastic sheet draped
+            over the skeleton while leathery. I replaced it with thin kozo washi, a Japanese mulberry paper, sized onto the struts
+            with a dilute agar solution (about 1–1.5% agar with a few drops of glycerin), tinted with black tea. The paper keeps
+            the lightness of the lattice, the agar keeps the bioplastic idea in the bond, and the tea gives the glow a warm,
+            honeyed tone.
+        </p>
+
+        <h3>Testing before committing</h3>
+        <p>
+            Before skinning the whole dome, I sized single washi squares onto individual star cells to compare three variables: paper
+            on the outside of the lattice, paper on the inside, and size tinted with black tea for a warmer glow. Outside, the struts
+            showed through as soft shadow lines. Inside, they stood in front of the paper as a crisp, dark star silhouette. I chose
+            the inside, because it makes the Mudéjar pattern the main event, and used the tea-tinted size for the whole skin.
+        </p>
+        <!-- TODO: replace with your test-cell photo -->
+        <div class="image-container">
+            <img src="images/lamp-test-cells.jpg" alt="Washi test squares sized onto individual star cells of the lattice">
+            <p class="image-caption">Test cells on the middle band</p>
+        </div>
+
+        <h3>From gores to bands</h3>
+        <p>
+            I planned 16 vertical gores, one per star column, and tested a single full-height strip. It bonded well, but its edge ran
+            through the open part of a cell, and when lit every overlap shows as a darker line where two layers of paper meet.
+            So I switched to horizontal bands. A sphere is curved in two directions and won't take a flat sheet, but each band
+            between two rings curves in only one direction, so a single strip wraps it cleanly. The horizontal seams land on the
+            rings, where they disappear, and each band needs only one vertical seam at the back.
+        </p>
+        <!-- TODO: replace with your band photo -->
+        <div class="image-container">
+            <img src="images/lamp-band.jpg" alt="The first horizontal washi band on the middle of the lattice">
+            <p class="image-caption">The first horizontal band</p>
+        </div>
+        <p>
+            The final print has no binding grooves, so the band edges are folded over the rings and sized down instead of being
+            bound with thread.
+        </p>
+
+        <div class="highlight-box">
+            <p>
+                <strong>Patchwork as a material choice:</strong> where the paper opened up or creased, I patched it with more
+                washi rather than starting over. The layered patches, visible fibers, and uneven translucency give the lamp a raw,
+                handmade surface, and the star lattice carries the order, so the paper doesn't have to.
+            </p>
+        </div>
+        <!-- TODO: replace with your patchwork close-up -->
+        <div class="image-container">
+            <img src="images/lamp-patchwork.jpg" alt="Close-up of layered washi patches behind the star struts">
+            <p class="image-caption">Patch layering in the upper band</p>
+        </div>
     </section>
 
     <section class="content-section">
         <h2>Next Steps</h2>
         <ol>
-            <li>Run a final geometry check, record the part's mass in PETG, and confirm the overall envelope against the build volume.</li>
-            <li>Print a quarter sector of the lowest band to test strut size, node beads, and tip details.</li>
-            <li>Print the full skeleton.</li>
-            <li>Cast the agar skin 2–3 mm wet (5 g agar and 3 g glycerin per 250 ml water) and drape it over the skeleton while leathery.</li>
+            <li>Design a base made for the shade, or develop the hanging hardware for the original pendant version.</li>
+            <li>Settle the final light: a warm LED at 2700 K or lower, to bring out the tea tint in the washi.</li>
+            <li>Carry what I learned from printing and skinning into a v2 skeleton, including built-in channels for finishing the paper edges.</li>
         </ol>
     </section>
 
@@ -459,7 +537,10 @@
             <span class="skill-tag">Sketch Equations</span>
             <span class="skill-tag">Multibody Modeling</span>
             <span class="skill-tag">Design for Additive Manufacturing</span>
-            <span class="skill-tag">Bioplastics</span>
+            <span class="skill-tag">MJF Nylon</span>
+            <span class="skill-tag">Material Testing</span>
+            <span class="skill-tag">Washi &amp; Paper Techniques</span>
+            <span class="skill-tag">Agar Sizing</span>
         </div>
     </section>
 
