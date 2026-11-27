@@ -127,6 +127,9 @@ kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-r
   <p>Turn on the microphone so the work hears your claps and stamps, and the camera so it sees you dance. Everything stays on this device: nothing is recorded or sent anywhere.</p>
   <div class="row"><label class="toggle"><input type="checkbox" id="phones" checked>Llevo auriculares <small>I’m wearing headphones</small></label></div>
   <p class="status">With speakers, the painting can’t tell its own claps from yours, so guide claps are muted while it listens. With AirPods or other Bluetooth headphones, choose your computer’s or phone’s built-in microphone as the input: headphone mics filter out claps.</p>
+  <div class="lbl">Micrófono<small>which microphone it listens to</small></div>
+  <select id="micSel" aria-label="Microphone" style="width:100%;margin-top:4px"><option value="">(se elige al encender · chosen when the mic turns on)</option></select>
+  <p class="status" style="margin-top:4px">With AirPods, pick your computer’s built-in microphone here: headphone mics crackle and filter out claps.</p>
   <div class="lbl">Sensibilidad<small>how easily it hears you</small></div>
   <input type="range" id="sens" min="0" max="1" step="0.05" value="0.6" aria-label="Microphone sensitivity">
   <p class="status" style="margin-top:4px">Raise it if soft claps (sordas) aren’t heard; lower it if it reacts to noise or talking. The bar below shows what it hears.</p>
@@ -141,6 +144,7 @@ kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-r
   <p>Speakers only: the painting plays 8 clicks and listens to measure its own delay. Or tap along with heel beats.</p>
   <div class="row"><button id="loopCal">Medir con altavoces<small>measure with speakers</small></button><button id="tapCal">Tocar al ritmo<small>tap along</small></button><button id="testOpen">Prueba de oídos<small>test with a steady beat</small></button><button id="resetSync">Restablecer<small>reset timing</small></button></div>
   <div class="status" id="calStatus"></div>
+  <p class="status" style="margin-top:10px;opacity:.6">versión 27-nov · detector 3</p>
   <div class="row"><button class="go" id="sensesDone">Listo<small>done</small></button><button id="micOff">Apagar micrófono<small>turn the microphone off</small></button></div>
 </section>
 
@@ -419,12 +423,12 @@ class Onset extends AudioWorkletProcessor{
       const tot=this.e[0]+this.e[1]+this.e[2]+this.e[3]+1e-14, t=currentTime+(i+1-ch.length)/sampleRate;
       // the room's noise floor: drifts up slowly, drops quickly, so a steady hum or fan becomes the baseline
       if(this.floor<0) this.floor=tot; else if(tot<this.floor) this.floor+= (tot-this.floor)*0.2; else this.floor*=1.0015;
-      if(this.cap>=0){ for(let k=0;k<4;k++) this.acc[k]+=this.e[k]; if(tot>this.peak) this.peak=tot; this.cap--;
-        if(this.cap<0 && this.peak>this.floor*this.fm*1.4) this.port.postMessage({type:'onset', t:this.t0, f:this.acc.slice(), peak:this.peak}); }
+      if(this.cap>=0){ for(let k=0;k<4;k++) this.acc[k]+=this.e[k]; if(tot>this.peak) this.peak=tot; if(tot>this.floor*this.fm*0.25) this.loud++; this.cap--;
+        if(this.cap<0 && this.peak>this.floor*this.fm*1.4 && this.loud>=2) this.port.postMessage({type:'onset', t:this.t0, f:this.acc.slice(), peak:this.peak}); }
       const df=Math.log(tot)-Math.log(this.slow);
       if(this.warm>0) this.warm--;
       else if(this.refr>0) this.refr--;
-      else if(this.cap<0 && df>this.dfT && tot>this.floor*this.fm){ this.t0=t-this.hop/sampleRate; this.cap=Math.round(0.03*sampleRate/this.hop); this.acc=this.e.slice(); this.peak=tot; this.refr=Math.round(0.09*sampleRate/this.hop); }
+      else if(this.cap<0 && df>this.dfT && tot>this.floor*this.fm){ this.t0=t-this.hop/sampleRate; this.cap=Math.round(0.03*sampleRate/this.hop); this.acc=this.e.slice(); this.peak=tot; this.loud=0; this.refr=Math.round(0.09*sampleRate/this.hop); }
       this.slow+=(tot-this.slow)*0.06;
       this.lvl=Math.max(this.lvl,tot); if(++this.lvlN>=15){ this.port.postMessage({type:'lvl', v:this.lvl/(this.hop/64)}); this.lvl=0; this.lvlN=0; }
       this.e=[0,0,0,0]; this.n=0;
@@ -436,7 +440,8 @@ try{ registerProcessor('palmas-onset', Onset); }catch(e){}`;
 async function micStart(){
   ensureCtx(); await actx.resume();
   try{
-    if(!mic.stream || mic.stream.getAudioTracks().every(t=>t.readyState==='ended')) mic.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
+    if(!mic.stream || mic.stream.getAudioTracks().every(t=>t.readyState==='ended')){ const want=store.get('micId',''); const c={echoCancellation:false, noiseSuppression:false, autoGainControl:false}; if(want) c.deviceId={exact:want};
+      try{ mic.stream=await navigator.mediaDevices.getUserMedia({audio:c}); }catch(err){ if(want){ delete c.deviceId; store.set('micId',''); mic.stream=await navigator.mediaDevices.getUserMedia({audio:c}); } else throw err; } }
   }catch(e){ toast('El micrófono no está disponible.','microphone permission was refused or unavailable'); return false; }
   try{ if(!mic.workletReady){ const url=URL.createObjectURL(new Blob([WORKLET],{type:'application/javascript'})); await actx.audioWorklet.addModule(url); mic.workletReady=true; } }
   catch(e){ mic.stream.getTracks().forEach(t=>t.stop()); feedback('No pude abrir los oídos.','this browser blocked the listening module; open the page from your website (https)'); return false; }
@@ -446,7 +451,7 @@ async function micStart(){
   const sink=actx.createGain(); sink.gain.value=0; mic.node.connect(sink); sink.connect(actx.destination);
   mic.node.port.onmessage=e=>{ const m=e.data; if(m.type==='lvl'){ const raw=Math.min(100, Math.max(0,(Math.log10(m.v+1e-9)+7)*16)); mic.lvlShow=Math.max(raw,(mic.lvlShow||0)*0.88); const w=mic.lvlShow.toFixed(1)+'%'; $('micLvl').style.width=w; $('micLvl2').style.width=w; } else { flashMeters(); onMicOnset(m); } };
   const trk=mic.stream.getAudioTracks()[0], st=trk.getSettings(); if(st.latency) mic.trackLat=st.latency;
-  mic.label=trk.label||'default'; mic.rt=store.get(rtKey(),null);
+  mic.label=trk.label||'default'; mic.rt=store.get(rtKey(),null); fillMicList(st.deviceId);
   mic.on=true; $('micBtn').setAttribute('aria-pressed','true'); return true;
 }
 function flashMeters(){ for(const id of ['micLvl','micLvl2']){ const el=$(id); el.style.background='#f3e9d8'; setTimeout(()=>el.style.background='',120); } }
@@ -454,6 +459,10 @@ let heardTimer=null;
 function heardNote(type, what){ const el=$('heardNote'); if(!el) return; const names={clara:'una clara',sorda:'una sorda',golpe:'un golpe (pisada)'};
   el.innerHTML = type==='heard' ? `<b style="color:#f2c46e">Oída:</b> ${names[what]||what} <small>heard</small>` : `<b style="color:#bba996">Ignorada:</b> ${what} <small>ignored</small>`;
   clearTimeout(heardTimer); heardTimer=setTimeout(()=>{ el.innerHTML='Da una palmada: aquí verás si la oye. <small>clap: you’ll see here whether it hears it</small>'; },2500); }
+async function fillMicList(current){
+  try{ const devs=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='audioinput'); const sel=$('micSel'); sel.innerHTML='';
+    devs.forEach((d,i)=>{ const o=document.createElement('option'); o.value=d.deviceId; o.textContent=d.label||('Micrófono '+(i+1)); if(d.deviceId===current) o.selected=true; sel.appendChild(o); }); }catch(e){}
+}
 function micStop(){ if(mic.stream) mic.stream.getTracks().forEach(t=>t.stop()); mic.stream=null; if(mic.src) mic.src.disconnect(); mic.on=false; $('micBtn').setAttribute('aria-pressed','false'); }
 // time from a sound being scheduled to hearing it, reacting, and the mic picking up the clap = output + input delay
 function rtKey(){ return 'rt:'+(mic.label||'default'); }
@@ -967,6 +976,7 @@ $('micBtn').onclick=async()=>{ if(!mic.on && !(await micStart())){ openSenses();
 $('camBtn').onclick=async()=>{ if(cam.on){ camStop(); return; } await camStart(); };
 $('phones').checked=mic.phones; $('phones').onchange=e=>{ mic.phones=e.target.checked; store.set('phones',mic.phones); };
 $('learnBtn').onclick=learnStart;
+$('micSel').onchange=async e=>{ store.set('micId',e.target.value); if(mic.on){ micStop(); await micStart(); } };
 $('micOff').onclick=()=>{ micStop(); show('senses',false); if(!tr.on && audio.paused) show('intro',true); };
 $('resetSync').onclick=()=>{ mic.leakFeats=null; store.set('leakFeats',null); mic.sens=0.6; store.set('sens',0.6); $('sens').value=0.6; if(mic.node) mic.node.port.postMessage({type:'sens', v:0.6}); mic.rt=null; store.set(rtKey(),null); mic.leakPeak=0; store.set('leakPeak',0); mic.leakOff=0; store.set('leakOff',0); calib.tap=0; store.set('tapLat',0); $('calStatus').textContent='Timing reset. Run Prueba de oídos, or just start: it re-learns within a few claps.'; };
 $('testOpen').onclick=async()=>{ if(!mic.on && !(await micStart())) return; show('senses',false); show('test',true); testPlot(); };
