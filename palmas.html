@@ -7,7 +7,7 @@
 <meta name="description" content="Palmas: an interactive painting that listens and watches, and teaches flamenco compás.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500;1,6..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bodoni+Moda:ital,opsz,wght@1,6..96,500;1,6..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --card:#0d0909; --ink:#f3e9d8; --muted:#bba996; --accent:#d9452c; --teal:#3f8a86; --line:#3b2b27; --stage:#000000;
@@ -64,9 +64,10 @@ select{font:inherit;font-size:.9rem;padding:6px 8px;background:var(--card);color
 #countNum{display:block;font:italic 700 clamp(2.6rem,7vw,4.2rem)/1 "Bodoni Moda",Didot,serif;color:var(--muted)}
 #countNum.acc{color:var(--accent)}
 #countLbl{display:block;font-size:.78rem;color:var(--muted)}
-#jaleo{left:50%;top:40%;transform:translate(-50%,-50%) rotate(-3deg);padding:10px 34px 16px;pointer-events:none}
+#jaleo{left:50%;top:40%;transform:translate(-50%,-50%) rotate(-5deg);padding:12px 30px 14px;pointer-events:none;background:#d4222a;box-shadow:10px 10px 0 #2a44b0}
 #jaleo[hidden]{transform:translate(-50%,-50%) rotate(-3deg) scale(.92)}
-#jaleo span{font:italic 700 clamp(2.4rem,8vw,5rem)/1 "Bodoni Moda",Didot,serif;color:var(--ink)}
+#jaleo span{font:400 clamp(2.2rem,7.5vw,4.6rem)/1 "Archivo Black","Arial Black",sans-serif;color:#0d0909;letter-spacing:-0.01em;text-transform:uppercase}
+#jaleo[hidden]{transform:translate(-50%,-50%) rotate(-5deg) scale(.9)}
 #palma{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(150px + env(safe-area-inset-bottom,0px));width:88px;height:88px;border-radius:50%;background:var(--accent);border-color:var(--accent);font:italic 700 1.05rem "Bodoni Moda",serif}
 #rest{left:50%;bottom:calc(6vh + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:10px 20px;text-align:center}
 #rest[hidden]{transform:translate(-50%,8px)}
@@ -76,6 +77,15 @@ select{font:inherit;font-size:.9rem;padding:6px 8px;background:var(--card);color
 #summary .lbl{margin-top:10px}
 #sumStats > div > div:first-child{font-size:1.5rem!important}
 #statement p.en{color:var(--muted);font-size:.9rem;margin-top:4px}
+.fx{position:fixed;inset:0;pointer-events:none;display:grid;place-items:center;transition:opacity .9s ease}
+.fx[hidden]{display:grid;opacity:0}
+#credit .t{font:400 clamp(3.4rem,13vw,9rem)/0.9 "Archivo Black","Arial Black",sans-serif;color:#d4222a;letter-spacing:0.02em;text-shadow:7px 7px 0 #2a44b0}
+#credit .s{font:italic 500 clamp(1.1rem,2.6vw,1.7rem)/1.2 "Bodoni Moda",Didot,serif;color:var(--ink);margin-top:14px;text-align:center}
+#fin span{font:italic 700 clamp(5rem,20vw,13rem)/1 "Bodoni Moda",Didot,serif;color:#d4222a;text-shadow:0 0 30px rgba(212,34,42,.45)}
+#curtain{position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(150,10,20,0) 0%,#b3121e 18%,#d4222a 50%,#b3121e 82%,rgba(150,10,20,0) 100%);transform:translateX(-120%)}
+#curtain.go{animation:curtain 1.5s cubic-bezier(.6,.05,.3,1) forwards}
+@keyframes curtain{to{transform:translateX(120%)}}
+@media (prefers-reduced-motion: reduce){ #curtain.go{animation:none} }
 .meter{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:8px}
 .meter i{display:block;height:100%;width:0;background:var(--accent)}
 kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
@@ -201,6 +211,9 @@ kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-r
 
 <div class="card" id="count" hidden><span id="countNum">1</span><span id="countLbl"></span></div>
 <div class="card" id="jaleo" hidden aria-live="polite"><span id="jaleoText">¡Olé!</span></div>
+<div class="fx" id="credit" hidden><div><div class="t">PALMAS</div><div class="s">una obra de Sofía Odeh</div></div></div>
+<div class="fx" id="fin" hidden><span>Fin</span></div>
+<div id="curtain"></div>
 <button id="palma" hidden aria-label="Clap">Palma</button>
 <div class="card" id="rest" hidden><p>Da palmas, pisa o baila para despertar la obra. <small style="color:var(--muted)">clap, stamp or dance to wake the painting</small></p></div>
 
@@ -291,10 +304,24 @@ function renderField(F,W,H,P1,P2,poseH,poseF,wH,wF,wStatic){
   const d=g.getImageData(0,0,F.w,F.h).data; for(let i=0,j=3;i<F.a.length;i++,j+=4) F.a[i]=d[j]/255;
 }
 let lastDraw=0, poseH=0, poseF=0;
+// a rare reward: the weave ripples into polka dots for a moment
+let patT0=-1e9; function triggerPattern(){ patT0=performance.now(); }
+function patternEnv(now){ const t=(now-patT0)/1000; if(t<0||t>2.2) return 0; return t<0.4? t/0.4 : t<1.1 ? 1 : 1-(t-1.1)/1.1; }
+// film finish: fine grain and a soft vignette
+let grainC=null, vig=null, vigKey='';
+function filmFinish(W,H){
+  if(reduceMotion) return;
+  if(!grainC){ grainC=mk(180,180); const g=grainC.getContext('2d'), id=g.createImageData(180,180); for(let i=0;i<id.data.length;i+=4){ const v=Math.random()*255; id.data[i]=id.data[i+1]=id.data[i+2]=v; id.data[i+3]=255; } g.putImageData(id,0,0); }
+  const key=W+'x'+H; if(vigKey!==key){ vigKey=key; vig=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.35,W/2,H/2,Math.max(W,H)*0.75); vig.addColorStop(0,'rgba(0,0,0,0)'); vig.addColorStop(1,'rgba(0,0,0,0.55)'); }
+  ctx.fillStyle=vig; ctx.fillRect(0,0,W,H);
+  ctx.save(); ctx.globalAlpha=0.05; ctx.globalCompositeOperation='overlay'; const ox=Math.random()*180, oy=Math.random()*180; ctx.translate(-ox,-oy); ctx.fillStyle=ctx.createPattern(grainC,'repeat'); ctx.fillRect(ox,oy,W,H); ctx.restore();
+}
 function draw(now){
   const W=cv.width, H=cv.height, t=now/1000, sc=Math.min(W,H)/900;
   let vit=0.62; if(tr.on && tr.vitalShown!=null){ tr.vitalShown+=(tr.vital-tr.vitalShown)*0.04; vit=tr.vitalShown; } else if(rest.on) vit=0.5;
-  const pc=envelope(anim.claps,now,ATK,HOLD+60,REL+180), ps=envelope(anim.stomps,now,SATK,SHOLD+60,SREL+180);
+  let bpmNow=96; if(tr.on) bpmNow=tr.bpm; else if(!audio.paused && song.beats.length){ if(!draw.bt || now-draw.bt>500){ draw.bt=now; draw.bpm=bpmAt(audio.currentTime); } bpmNow=draw.bpm||120; }
+  const ks=Math.max(0.3,Math.min(1,(60/bpmNow)/0.62));
+  const pc=envelope(anim.claps,now,ATK*ks,(HOLD+60)*ks,(REL+180)*ks), ps=envelope(anim.stomps,now,SATK*ks,(SHOLD+60)*ks,(SREL+180)*ks);
   const bH=anticipation(0), bF=anticipation(1);
   // the moving hand and foot travel continuously: a little before the beat (breath), fully on it
   poseH+=(Math.max(pc, 0.25*bH)-poseH)*0.5; poseF+=(Math.max(ps, 0.25*bF)-poseF)*0.5;
@@ -309,8 +336,11 @@ function draw(now){
   const lift=gap*3.4, amb=(2+12*(1-vit)+(rest.on?5:0))*sc*DPR*0.6;
   const hitPts=[[P1.x+G.hHit[0]*P1.s, P1.y+G.hHit[1]*P1.s],[P2.x+G.fHit[0]*P2.s, P2.y+G.fHit[1]*P2.s]];
   for(let i=ripples.length-1;i>=0;i--) if(now-ripples[i].t0>1600) ripples.splice(i,1);
-  const COLD=[86,140,138], WARM=[214,74,44], GOLD=[248,196,112], mixc=(a,b,u)=>a.map((v,ii)=>Math.round(v+(b[ii]-v)*u));
-  const base=mixc(COLD,WARM,vit), hi=mixc([170,206,200],GOLD,vit);
+  // Almodóvar palette: cobalt field, red forms, a yellow-white flash; lost = washed-out pastels
+  const mixc=(a,b,u)=>a.map((v,ii)=>Math.round(v+(b[ii]-v)*u));
+  const PASTEL=[178,166,172], COBALT=[48,78,205], ROSE=[196,168,170], RED=[212,32,42], HOT=[255,236,186];
+  const flash=Math.min(1,Math.max(pc,ps)*1.1), base=mixc(PASTEL,COBALT,vit), relief=mixc(ROSE,RED,vit), hi=mixc(relief,HOT,Math.min(1,flash*1.5)*(0.45+0.55*vit));
+  const pat=patternEnv(now), dotS=46*sc*DPR, dotR=15*sc*DPR;
   ctx.setTransform(1,0,0,1,0,0); ctx.globalCompositeOperation='source-over'; ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
   ctx.lineJoin='round'; ctx.lineCap='round';
   const ys=new Float32Array(cols), fv=new Float32Array(cols);
@@ -318,6 +348,7 @@ function draw(now){
     const y0=top+r*gap;
     for(let c=0;c<cols;c++){ const x=c*dx;
       let f=fieldAt(F,x,y0,W,H), d=f*lift;
+      if(pat>0.01){ const qx=((x/dotS)%1+1)%1-0.5, qy=(((y0+(Math.floor(x/dotS)%2)*dotS*0.5)/dotS)%1+1)%1-0.5, dd=Math.hypot(qx,qy)*dotS, dot=Math.max(0,1-dd/dotR); d+=dot*gap*2.2*pat; f=Math.max(f,dot*pat); }
       d+=Math.sin(x*0.004/sc+t*0.8+r*0.21)*Math.sin(y0*0.006/sc-t*0.55)*amb + Math.sin(x*0.013/sc-t*1.7+r*0.5)*amb*0.35*(1-vit);
       for(const rp of ripples){ const tw=(now-rp.t0)/1000, hp=hitPts[rp.g], ddx=x-hp[0], ddy=(y0-hp[1])*(rp.g?2.2:1), dist=Math.hypot(ddx,ddy), front=dist-tw*900*sc*DPR;
         d+=Math.exp(-front*front/(2*(40*sc*DPR)**2))*Math.exp(-tw*2.2)*Math.cos(front/(14*sc*DPR))*gap*1.1*rp.s; }
@@ -325,17 +356,21 @@ function draw(now){
     // fill under the thread so nearer threads hide the ones behind (a relief, like a landscape of sound)
     ctx.beginPath(); ctx.moveTo(0,ys[0]); for(let c=1;c<cols;c++) ctx.lineTo(c*dx,ys[c]); ctx.lineTo(W,y0+gap*2); ctx.lineTo(0,y0+gap*2); ctx.closePath(); ctx.fillStyle='#000'; ctx.fill();
     const fade=0.35+0.65*Math.min(1,Math.min(r,rows-r)/10);
-    ctx.strokeStyle=`rgba(${base[0]},${base[1]},${base[2]},${(0.55*fade).toFixed(3)})`; ctx.lineWidth=0.9*DPR;
+    ctx.strokeStyle=`rgba(${base[0]},${base[1]},${base[2]},${((0.42+0.2*vit)*fade).toFixed(3)})`; ctx.lineWidth=0.9*DPR;
     ctx.beginPath(); ctx.moveTo(0,ys[0]); for(let c=1;c<cols;c++) ctx.lineTo(c*dx,ys[c]); ctx.stroke();
     // where the shape rises, the thread glows
     ctx.beginPath(); let on=false;
     for(let c=0;c<cols;c++){ const v=fv[c]; if(v>0.18){ if(!on){ ctx.moveTo(c*dx,ys[c]); on=true; } else ctx.lineTo(c*dx,ys[c]); } else on=false; }
-    const glowA=Math.min(1,0.35+0.55*vit+0.4*Math.max(pc,ps));
-    ctx.strokeStyle=`rgba(${hi[0]},${hi[1]},${hi[2]},${(glowA*fade).toFixed(3)})`; ctx.lineWidth=1.4*DPR; ctx.stroke();
+    // quiet between beats, a flash of light on the beat (accents brighter), with a red film halation
+    const glowA=Math.min(1,0.22+0.18*vit+0.75*flash*(0.55+0.45*vit)+0.5*pat);
+    if(flash>0.08 && !reduceMotion){ ctx.shadowColor=`rgba(240,36,40,${Math.min(1,1.1*flash*vit).toFixed(3)})`; ctx.shadowBlur=16*DPR; }
+    ctx.strokeStyle=`rgba(${hi[0]},${hi[1]},${hi[2]},${(glowA*fade).toFixed(3)})`; ctx.lineWidth=(1.2+1.4*flash)*DPR; ctx.stroke();
+    ctx.shadowBlur=0;
   }
   warmth+=(warmTarget-warmth)*0.06;
   const bloom=Math.max(warmth*0.6, tr.on?Math.max(0,(tr.vitalShown-0.8)*2)*0.4:0);
-  if(bloom>0.02){ const gr=ctx.createRadialGradient(W/2,H*0.45,0,W/2,H*0.45,Math.max(W,H)*0.7); gr.addColorStop(0,`rgba(220,90,40,${0.12*bloom})`); gr.addColorStop(1,'rgba(220,90,40,0)'); ctx.globalCompositeOperation='lighter'; ctx.fillStyle=gr; ctx.fillRect(0,0,W,H); ctx.globalCompositeOperation='source-over'; }
+  if(bloom>0.02){ const gr=ctx.createRadialGradient(W/2,H*0.45,0,W/2,H*0.45,Math.max(W,H)*0.7); gr.addColorStop(0,`rgba(220,40,50,${0.12*bloom})`); gr.addColorStop(1,'rgba(220,40,50,0)'); ctx.globalCompositeOperation='lighter'; ctx.fillStyle=gr; ctx.fillRect(0,0,W,H); ctx.globalCompositeOperation='source-over'; }
+  filmFinish(W,H);
   updatePlayhead();
 }
 
@@ -644,7 +679,7 @@ function trFrame(){
     for(const c of done){ const ts=tr.events.filter(e=>e.cyc===c && e.target); if(ts.some(e=>e.t>=v-0.25)) continue;
       const good=ts.filter(e=>e.hit && Math.abs(e.err)<0.12 && !e.wrongKind).length;
       ts.forEach(e=>{ if(!e.hit){ vital(-0.06); } tr.log.push({num:e.num, hit:e.hit, err:e.hit?e.err:null, wrong:!!e.wrongKind}); });
-      if(ts.length && good===ts.length){ tr.streak++; tr.best=Math.max(tr.best,tr.streak); jaleo(tr.streak%2===1); } else if(ts.some(e=>e.hit)) tr.streak=0;
+      if(ts.length && good===ts.length){ tr.streak++; tr.best=Math.max(tr.best,tr.streak); jaleo(tr.streak%2===1); if(tr.streak%4===0) triggerPattern(); } else if(ts.some(e=>e.hit)) tr.streak=0;
       compasFeedback(ts, good); adaptTempo(ts.length, good);
       tr.lastScored=Math.max(tr.lastScored,c); stats(); } }
 }
@@ -718,7 +753,8 @@ function progressHtml(){
   return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:56px;display:block"><line x1="10" y1="${(h-8-0.85*(h-18)).toFixed(1)}" x2="${w-10}" y2="${(h-8-0.85*(h-18)).toFixed(1)}" stroke="#3b2b27" stroke-dasharray="3 3"/><path d="${path}" fill="none" stroke="#d9452c" stroke-width="1.6"/>${dots}</svg>
     <p class="status" style="margin-top:4px">${Hs.length} sessions of ${TP[tr.palo].name} · ${LEVELS[tr.level].es}. Best: ${best}%. The dashed line is 85%.${ready?' <b style="color:#f3e9d8">Listo para el siguiente nivel</b> · ready for the next level.':''}</p>`;
 }
-function showSummary(){ saveSession();
+function curtain(){ const c=$('curtain'); c.classList.remove('go'); void c.offsetWidth; c.classList.add('go'); }
+function showSummary(){ saveSession(); curtain();
   const L=tr.log; if(!L.length){ return; }
   const hits=L.filter(x=>x.hit), ok=hits.filter(x=>Math.abs(x.err)<0.12 && !x.wrong).length, pct=Math.round(100*ok/L.length);
   const mean=hits.length?hits.reduce((s,x)=>s+x.err,0)/hits.length:0, sd=hits.length>1?Math.sqrt(hits.reduce((s,x)=>s+(x.err-mean)*(x.err-mean),0)/(hits.length-1)):0;
@@ -799,7 +835,9 @@ function alignCount(o,frames,p){ let best=-1e9, bR=0, ca=1, cn=1;
   for(let r=0;r<p.len;r++){ let a=0,na=0,A=0,N=0; frames.forEach((f,i)=>{ const s=strengthAt(o,f); if(p.acc.includes(p.nums[(i+r)%p.len])){a+=s;A++;} else {na+=s;N++;} });
     const sc=a/Math.max(A,1)-na/Math.max(N,1); if(sc>best){best=sc;bR=r;ca=a/Math.max(A,1);cn=na/Math.max(N,1);} }
   return {r:bR, contrast:ca/Math.max(cn,1e-3)}; }
-function rebuild(){ const p=PALOS[song.palo]; song.frames=trackBeats(song.env,song.period); song.rot=alignCount(song.env,song.frames,p).r; makeBeats(); }
+function alignFour(frames,p){ // tangos/rumba: the 1 carries the foot and the guitar, so look for the strongest low beat in each bar
+  let best=-1e9, bR=0; for(let r=0;r<p.len;r++){ let one=0,n1=0,oth=0,no=0; frames.forEach((f,i)=>{ const s=strengthAt(song.envLo,f); if((i+r)%p.len===0){one+=s;n1++;} else {oth+=s;no++;} }); const sc=one/Math.max(n1,1)-oth/Math.max(no,1); if(sc>best){best=sc;bR=r;} } return bR; }
+function rebuild(){ const p=PALOS[song.palo]; song.frames=trackBeats(song.env,song.period); song.rot = (p.len<=4 && song.envLo) ? alignFour(song.frames,p) : alignCount(song.env,song.frames,p).r; makeBeats(); }
 function makeBeats(){ const p=PALOS[song.palo]; song.beats=song.frames.map((f,i)=>{ const num=p.nums[(i+song.rot)%p.len]; return {t:f/FPS, num, acc:p.acc.includes(num), first:(i+song.rot)%p.len===0}; }); drawClockFace(p); $('clockPalo').textContent=p.name; bpmShow(); }
 function bpmAt(t){ const b=song.beats; if(b.length<3) return Math.round(60*FPS/song.period); let i=b.findIndex(x=>x.t>t); if(i<0) i=b.length-1; const a=Math.max(0,i-4), z=Math.min(b.length-1,i+4); return Math.round(60*(z-a)/(b[z].t-b[a].t)); }
 function bpmShow(){ const v=bpmAt(audio.currentTime||0); $('bpmNow').textContent=v; $('clockBpm').textContent=v+' bpm'+(audio.playbackRate<1?` · ${Math.round(audio.playbackRate*100)}%`:''); }
@@ -810,7 +848,8 @@ function guessPalo(){ let best=-1, bK='tangos';
 function choosePalo(k){
   if(!song.env){ song.pending=k; markPalo(k); return; }
   let guessed=false; if(k==='guess'){ k=guessPalo(); guessed=true; }
-  song.palo=k; song.period=tempoPeriod(song.env,PALOS[k].bpm); rebuild(); markPalo(guessed?'guess':k); $('paloSel').value=k;
+  song.palo=k; song.period=tempoPeriod(song.env,PALOS[k].bpm); rebuild();
+  song.clapOn = PALOS[k].len===12 ? 'acc' : 'all'; $('onAll').setAttribute('aria-pressed', song.clapOn==='all'); $('onAcc').setAttribute('aria-pressed', song.clapOn==='acc'); markPalo(guessed?'guess':k); $('paloSel').value=k;
   $('analysis').textContent=(guessed?'Best guess: ':'')+PALOS[k].name+', about '+bpmAt(0)+' bpm. You can fine-tune it while it plays.'; $('start').disabled=false;
 }
 function markPalo(k){ $('paloBtns').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.palo===k)); }
@@ -820,7 +859,7 @@ function songFrame(){
   if(audio.paused||!song.beats.length) return;
   const t=mediaNow(); if(t<song.lastT-0.05) seekIdx(t);
   while(song.next<song.beats.length && song.beats[song.next].t+song.nudge<=t){ const b=song.beats[song.next];
-    if(song.clapOn==='all'||b.acc) hitClap(b.acc?1:0.55);
+    if(song.clapOn==='all'||b.acc) hitClap(b.acc?1:0.55); else addRipple(0,0.35);
     if(b.first) hitStomp(0.8);
     lightClock(PALOS[song.palo].nums.indexOf(b.num)); song.next++; }
   song.lastT=t;
@@ -901,14 +940,14 @@ $('file').addEventListener('change', async()=>{
   ['intro','again','trainer','statement'].forEach(id=>show(id,false)); show('palo',true); $('start').disabled=true; song.env=null; $('analysis').textContent='Escuchando la canción… listening to the song';
   try{ const buf=await actx.decodeAudioData(await f.arrayBuffer());
     const [hi,mid,lo]=await Promise.all([bandEnergy(buf,'highpass',1500), bandEnergy(buf,'bandpass',700), bandEnergy(buf,'lowpass',200)]);
-    song.env=onsetEnv(hi,mid,lo); $('analysis').textContent=song.pending?'':'Listo. Now choose the palo.'; if(song.pending) choosePalo(song.pending);
+    song.env=onsetEnv(hi,mid,lo); song.envLo=onsetEnv(lo,lo,lo); $('analysis').textContent=song.pending?'':'Listo. Now choose the palo.'; if(song.pending) choosePalo(song.pending);
   }catch(err){ $('analysis').textContent='This file couldn’t be read. Try an MP3, M4A or WAV.'; }
 });
 $('start').onclick=()=>{ show('palo',false); show('title',true); $('adjustBtn').hidden=false; show('clock',true); feedback('',''); drawClockFace(PALOS[song.palo]); play(true); };
 $('replay').onclick=()=>{ show('again',false); show('clock',true); play(true); };
 $('newsong').onclick=()=>{ show('again',false); show('clock',false); show('drawer',false); $('file').value=''; $('file').click(); };
 $('home').onclick=()=>{ show('again',false); show('clock',false); show('drawer',false); $('adjustBtn').hidden=true; show('intro',true); };
-audio.addEventListener('ended', ()=>{ show('again',true); jaleo(true); });
+audio.addEventListener('ended', ()=>{ show('fin',true); setTimeout(()=>{ show('fin',false); show('again',true); },2400); });
 audio.addEventListener('pause', ()=>{ if(!tr.on) ppLabel(true); });
 audio.addEventListener('play', ()=>{ show('again',false); ppLabel(false); });
 $('adjustBtn').onclick=()=>{ const open=$('drawer').hidden; show('drawer',open); $('adjustBtn').setAttribute('aria-expanded',open); };
@@ -933,6 +972,7 @@ function loop(now){
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
+if(!store.get('creditSeen',false) || true){ show('intro',false); show('credit',true); setTimeout(()=>{ show('credit',false); setTimeout(()=>show('intro',true),500); },3000); }
 })();
 </script>
 </body>
