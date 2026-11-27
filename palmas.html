@@ -113,7 +113,7 @@ kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-r
   <h2>Ojos y oídos.</h2>
   <p>Turn on the microphone so the painting hears your claps and stamps, and the camera so it sees you dance. Everything stays on this device: nothing is recorded or sent anywhere.</p>
   <div class="row"><label class="toggle"><input type="checkbox" id="phones" checked>Llevo auriculares <small>I’m wearing headphones</small></label></div>
-  <p class="status">With speakers, the painting can’t tell its own claps from yours, so guide claps are muted while it listens.</p>
+  <p class="status">With speakers, the painting can’t tell its own claps from yours, so guide claps are muted while it listens. With AirPods or other Bluetooth headphones, choose your computer’s or phone’s built-in microphone as the input: headphone mics filter out claps.</p>
   <div class="lbl">Tus palmas<small>teach it your claps</small></div>
   <p>Clap 4 claras (fingers on palm, sharp), then 4 sordas (cupped, soft), then stamp 4 times.</p>
   <div class="row"><button id="learnBtn">Empezar<small>start</small></button><span class="status" id="learnStatus" style="margin:0"></span></div>
@@ -397,7 +397,7 @@ function tapCal(){
   setTimeout(()=>{ calib.mode=null;
     const off=list=>calib.times.map(t=>{ let b=null,bd=0.35; for(const h of list){ const x=Math.abs(h-t); if(x<bd){bd=x;b=h-t;} } return b; }).filter(x=>x!=null).sort((a,b)=>a-b);
     const dm=off(calib.micHits);
-    if(dm.length>=5){ mic.rt=Math.max(0,Math.min(0.6, micRT()+dm[Math.floor(dm.length/2)])); store.set('rt',mic.rt); }
+    if(dm.length>=5){ mic.rt=Math.max(0,Math.min(0.8, micRT()+dm[Math.floor(dm.length/2)])); store.set('rt',mic.rt); }
     const d=off(calib.hits);
     if(dm.length>=5 && d.length<5){ $('calStatus').textContent=`Listo: your claps are synced (total delay ${Math.round(mic.rt*1000)} ms).`; return; }
     if(d.length>=5){ calib.tap=Math.max(-0.25,Math.min(0.35,calib.tap+d[Math.floor(d.length/2)])); store.set('tapLat',calib.tap); $('calStatus').textContent=`Listo: your taps are synced (${Math.round(calib.tap*1000)} ms).`; }
@@ -538,9 +538,19 @@ function trFrame(){
 }
 function stats(){ const r=tr.errs.slice(-24), ok=r.filter(x=>Math.abs(x)<0.12).length, pct=r.length?Math.round(100*ok/r.length):0;
   const bias=r.length?Math.round(1000*r.reduce((s,x)=>s+x,0)/r.length):0;
-  $('clockBpm').textContent=`${tr.bpm} bpm · ${pct}% a tiempo · racha ${tr.streak}`+(r.length>=6&&Math.abs(bias)>=25?` · vas ${Math.abs(bias)} ms ${bias<0?'adelantada':'atrasada'}`:''); }
+  $('clockBpm').textContent=`${tr.bpm} bpm · ${pct}% a tiempo · racha ${tr.streak}`+(tr.synced?` · auriculares sincronizados (${tr.synced} ms)`:'')+(r.length>=6&&Math.abs(bias)>=25?` · vas ${Math.abs(bias)} ms ${bias<0?'adelantada':'atrasada'}`:''); }
+function autoSync(ev){
+  // Bluetooth headphones add a large delay that browsers often don't report. If the claps are consistently
+  // late (or early) by the same amount, that is the device, not the dancer: learn it and correct it.
+  let cd=null; for(const e of tr.events){ if(!e.target) continue; const d=ev.t-e.t; if(d>-0.15 && d<0.55 && (cd==null || Math.abs(d)<Math.abs(cd))) cd=d; }
+  if(cd==null) return;
+  tr.sync.push(cd); if(tr.sync.length>8) tr.sync.shift();
+  if(tr.sync.length>=6){ const srt=[...tr.sync].sort((a,b)=>a-b), med=srt[Math.floor(srt.length/2)], dev=srt.map(x=>Math.abs(x-med)).sort((a,b)=>a-b), mad=dev[Math.floor(dev.length/2)];
+    if(Math.abs(med)>0.06 && mad<0.07){ mic.rt=Math.max(0,Math.min(0.8,micRT()+med)); store.set('rt',mic.rt); ev.t-=med; tr.sync=[]; tr.synced=Math.round(mic.rt*1000); } }
+}
 function trScore(ev){
   if(!tr.on||tr.paused||ev.t==null) return;
+  if(ev.src==='mic') autoSync(ev);
   const spacing=(tr.level===4?0.5:1)*60/tr.bpm, w=Math.min(0.5*spacing,0.3);
   let best=null, bd=1e9; for(const e of tr.events){ if(!e.target||e.hit) continue; const d=Math.abs(ev.t-e.t); if(d<bd){bd=d;best=e;} }
   if(!best||bd>w){ if(tr.level!==1 || ev.kind==='golpe' || ev.kind==='tap') feedback('Fuera de compás.','off the compás'); return; }
@@ -558,7 +568,7 @@ function trScore(ev){
 function trStart(){
   ensureCtx(); actx.resume(); stopSong(); mic.learning=null;
   tr.soundOn = tr.guide && (mic.phones || !mic.on);
-  Object.assign(tr,{on:true, paused:false, events:[], cycle:0, nextStart:actx.currentTime+0.35, errs:[], streak:0, lastScored:-1});
+  Object.assign(tr,{on:true, paused:false, events:[], cycle:0, nextStart:actx.currentTime+0.35, errs:[], streak:0, lastScored:-1, sync:[], synced:0});
   const p=TP[tr.palo]; drawClockFace({...p, acc:accOf(p)}); $('clockPalo').textContent=p.name+' · '+LEVELS[tr.level].es;
   stats(); feedback('Escucha un compás, luego entra.','listen for one compás, then come in');
   if(tr.guide && !tr.soundOn) setTimeout(()=>feedback('Guía en silencio con altavoces.','guide claps are muted because the mic is listening through speakers'),2500);
