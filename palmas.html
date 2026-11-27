@@ -131,6 +131,7 @@ kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-r
   <input type="range" id="sens" min="0" max="1" step="0.05" value="0.6" aria-label="Microphone sensitivity">
   <p class="status" style="margin-top:4px">Raise it if soft claps (sordas) aren’t heard; lower it if it reacts to noise or talking. The bar below shows what it hears.</p>
   <div class="meter" aria-hidden="true"><i id="micLvl2"></i></div>
+  <p class="status" id="heardNote" style="margin-top:6px">Da una palmada: aquí verás si la oye. <small>clap: you’ll see here whether it hears it</small></p>
   <div class="lbl">Tus palmas<small>teach it your claps</small></div>
   <p>Clap 4 claras (fingers on palm, sharp), then 4 sordas (cupped, soft), then stamp 4 times. Take your time: one at a time, it waits for you.</p>
   <div class="row"><button id="learnBtn">Empezar<small>start</small></button><span class="status" id="learnStatus" style="margin:0"></span></div>
@@ -395,7 +396,7 @@ function playKind(kind,t){
 }
 
 /* ================= ears: microphone ================= */
-const mic={leakPeak:store.get('leakPeak',0), leakOff:store.get('leakOff',0), label:'', on:false, stream:null, node:null, src:null, rt:store.get('rt',null), trackLat:0.01, sens:store.get('sens',0.6), phones:store.get('phones',true), centroids:store.get('centroids',null), learning:null};
+const mic={leakFeats:store.get('leakFeats',null), sensFix:(()=>{ const v=store.get('sens',0.6); if(v<0.45) store.set('sens',0.6); return 0; })(), leakPeak:store.get('leakPeak',0), leakOff:store.get('leakOff',0), label:'', on:false, stream:null, node:null, src:null, rt:store.get('rt',null), trackLat:0.01, sens:store.get('sens',0.6), phones:store.get('phones',true), centroids:store.get('centroids',null), learning:null};
 const WORKLET=`
 class Onset extends AudioWorkletProcessor{
   constructor(){ super(); const sr=sampleRate;
@@ -446,6 +447,10 @@ async function micStart(){
   mic.on=true; $('micBtn').setAttribute('aria-pressed','true'); return true;
 }
 function flashMeters(){ for(const id of ['micLvl','micLvl2']){ const el=$(id); el.style.background='#f3e9d8'; setTimeout(()=>el.style.background='',120); } }
+let heardTimer=null;
+function heardNote(type, what){ const el=$('heardNote'); if(!el) return; const names={clara:'una clara',sorda:'una sorda',golpe:'un golpe (pisada)'};
+  el.innerHTML = type==='heard' ? `<b style="color:#f2c46e">Oída:</b> ${names[what]||what} <small>heard</small>` : `<b style="color:#bba996">Ignorada:</b> ${what} <small>ignored</small>`;
+  clearTimeout(heardTimer); heardTimer=setTimeout(()=>{ el.innerHTML='Da una palmada: aquí verás si la oye. <small>clap: you’ll see here whether it hears it</small>'; },2500); }
 function micStop(){ if(mic.stream) mic.stream.getTracks().forEach(t=>t.stop()); mic.stream=null; if(mic.src) mic.src.disconnect(); mic.on=false; $('micBtn').setAttribute('aria-pressed','false'); }
 // time from a sound being scheduled to hearing it, reacting, and the mic picking up the clap = output + input delay
 function rtKey(){ return 'rt:'+(mic.label||'default'); }
@@ -465,11 +470,17 @@ function onMicOnset(m){
   const nearOwn=Math.abs(t-nearestOwnSound(t))<0.09;
   // the quiet check at the start of the test: record when each sound arrives after the beat that was played.
   // A tight cluster is the speakers (and its delay is the true round trip); scattered sounds are the room.
-  if(test.on && test.phase==='quiet'){ let d=null; for(const o of ownTimes){ const x=m.t-o.t; if(x>-0.1 && x<0.6 && (d==null||Math.abs(x)<Math.abs(d))) d=x; } test.quiet.push({d, peak:m.peak}); return; }
-  // speaker leak arrives a fixed time after each sound the piece plays: ignore it unless the sound is clearly louder (you)
-  if(mic.leakPeak){ for(const o of ownTimes){ if(o.target) continue; if(Math.abs(m.t-(o.t+mic.leakOff))<0.05 && m.peak<mic.leakPeak*2.5) return; } }
-  if(!mic.phones && (audioPlaying() || ((tr.on && tr.soundOn) || test.on) && nearOwn)) return;
-  userInput({src:'mic', kind:classify(m.f), t});
+  const fv=features(m.f);
+  if(test.on && test.phase==='quiet'){ let d=null; for(const o of ownTimes){ const x=m.t-o.t; if(x>-0.1 && x<0.6 && (d==null||Math.abs(x)<Math.abs(d))) d=x; } test.quiet.push({d, peak:m.peak, fv}); heardNote('ignored','silencio: midiendo la sala'); return; }
+  // speaker leak: arrives a fixed time after each sound the piece plays AND sounds like the piece's own sounds.
+  // Your claps can land at the same moment, but they sound different (and are usually louder), so they pass.
+  if(mic.leakPeak && mic.leakFeats && mic.leakFeats.length){
+    let timed=false; for(const o of ownTimes){ if(!o.target && Math.abs(m.t-(o.t+mic.leakOff))<0.05){ timed=true; break; } }
+    if(timed){ let dmin=1e9; for(const lf of mic.leakFeats){ const d=Math.hypot(...lf.map((v,i)=>v-fv[i])); if(d<dmin) dmin=d; }
+      if(dmin<0.45 && m.peak<mic.leakPeak*4){ heardNote('ignored','sonido del altavoz'); return; } } }
+  if(!mic.phones && audioPlaying()){ heardNote('ignored','la canción suena por altavoces'); return; }
+  const kind=classify(m.f); heardNote('heard', kind);
+  userInput({src:'mic', kind, t});
 }
 const ownTimes=[];
 function nearestOwnSound(t,skipTargets){ let b=-1e9; for(const o of ownTimes){ if(skipTargets && o.target) continue; if(Math.abs(o.t-t)<Math.abs(b-t)) b=o.t; } return b; }
@@ -585,12 +596,12 @@ function testSchedule(){ if(!test.on) return;
   if(test.phase==='quiet' && actx.currentTime>test.quietEnd){ test.phase='clap'; const msg=[];
     const q=test.quiet, ds=q.filter(x=>x.d!=null).map(x=>x.d).sort((a,b)=>a-b), med=ds.length?ds[Math.floor(ds.length/2)]:0;
     const leak=q.filter(x=>x.d!=null && Math.abs(x.d-med)<0.035), noise=q.length-leak.length;
-    if(leak.length>=3){ const pk=leak.map(x=>x.peak).sort((a,b)=>a-b); mic.leakPeak=pk[Math.floor(pk.length/2)]; mic.leakOff=med; store.set('leakPeak',mic.leakPeak); store.set('leakOff',mic.leakOff);
+    if(leak.length>=3){ const pk=leak.map(x=>x.peak).sort((a,b)=>a-b); mic.leakPeak=pk[Math.floor(pk.length/2)]; mic.leakOff=med; mic.leakFeats=leak.slice(0,8).map(x=>x.fv); store.set('leakPeak',mic.leakPeak); store.set('leakOff',mic.leakOff); store.set('leakFeats',mic.leakFeats);
       // the speakers' sound reaches the mic after exactly the delay your claps will have: use it as the timing correction
       mic.rt=Math.max(-0.4,Math.min(0.8,med)); store.set(rtKey(),mic.rt);
       msg.push(`I can hear the speakers: I measured the sound delay (${Math.round(med*1000)} ms) and will ignore their sound.`); }
     else { mic.leakPeak=0; store.set('leakPeak',0); }
-    if(noise>=3){ mic.sens=Math.max(0,mic.sens-0.15); store.set('sens',mic.sens); $('sens').value=mic.sens; if(mic.node) mic.node.port.postMessage({type:'sens', v:mic.sens}); msg.push('The room is a little noisy, so I lowered the sensitivity.'); }
+    if(noise>=3 && mic.sens>0.45){ mic.sens=Math.max(0.45,mic.sens-0.1); store.set('sens',mic.sens); $('sens').value=mic.sens; if(mic.node) mic.node.port.postMessage({type:'sens', v:mic.sens}); msg.push('The room is a little noisy, so I lowered the sensitivity.'); }
     test.note=msg.join(' '); $('testStats').innerHTML='<b style="color:var(--ink)">Ahora, da palmas.</b> Clap along. '+test.note; } const spb=60/test.bpm; while(test.next<actx.currentTime+0.15){ const t=test.next; schedSound(test.k%4===0?'golpe':'sorda',t); test.beats.push(t); if(test.beats.length>40) test.beats.shift(); test.next+=spb; test.k++; } }
 function testInput(ev){ if(ev.t==null || test.phase!=='clap') return; test.heard++; const spb=60/test.bpm; let bd=1e9; for(const b of test.beats){ const d=ev.t-b; if(Math.abs(d)<Math.abs(bd)) bd=d; } if(Math.abs(bd)<=spb/2){ test.offs.push(bd); if(test.offs.length>40) test.offs.shift(); } testPlot(); }
 function testPlot(){
@@ -954,7 +965,7 @@ $('camBtn').onclick=async()=>{ if(cam.on){ camStop(); return; } await camStart()
 $('phones').checked=mic.phones; $('phones').onchange=e=>{ mic.phones=e.target.checked; store.set('phones',mic.phones); };
 $('learnBtn').onclick=learnStart;
 $('micOff').onclick=()=>{ micStop(); show('senses',false); if(!tr.on && audio.paused) show('intro',true); };
-$('resetSync').onclick=()=>{ mic.rt=null; store.set(rtKey(),null); mic.leakPeak=0; store.set('leakPeak',0); mic.leakOff=0; store.set('leakOff',0); calib.tap=0; store.set('tapLat',0); $('calStatus').textContent='Timing reset. Run Prueba de oídos, or just start: it re-learns within a few claps.'; };
+$('resetSync').onclick=()=>{ mic.leakFeats=null; store.set('leakFeats',null); mic.sens=0.6; store.set('sens',0.6); $('sens').value=0.6; if(mic.node) mic.node.port.postMessage({type:'sens', v:0.6}); mic.rt=null; store.set(rtKey(),null); mic.leakPeak=0; store.set('leakPeak',0); mic.leakOff=0; store.set('leakOff',0); calib.tap=0; store.set('tapLat',0); $('calStatus').textContent='Timing reset. Run Prueba de oídos, or just start: it re-learns within a few claps.'; };
 $('testOpen').onclick=async()=>{ if(!mic.on && !(await micStart())) return; show('senses',false); show('test',true); testPlot(); };
 $('testRun').onclick=()=>{ if(test.on) testStop(); else testStart(); };
 $('testBpm').oninput=e=>{ test.bpm=+e.target.value; $('testBpmV').textContent=test.bpm; };
