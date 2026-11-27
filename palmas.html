@@ -132,12 +132,12 @@ kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-r
   <p class="status" style="margin-top:4px">Raise it if soft claps (sordas) aren’t heard; lower it if it reacts to noise or talking. The bar below shows what it hears.</p>
   <div class="meter" aria-hidden="true"><i id="micLvl2"></i></div>
   <div class="lbl">Tus palmas<small>teach it your claps</small></div>
-  <p>Clap 4 claras (fingers on palm, sharp), then 4 sordas (cupped, soft), then stamp 4 times.</p>
+  <p>Clap 4 claras (fingers on palm, sharp), then 4 sordas (cupped, soft), then stamp 4 times. Take your time: one at a time, it waits for you.</p>
   <div class="row"><button id="learnBtn">Empezar<small>start</small></button><span class="status" id="learnStatus" style="margin:0"></span></div>
   <div class="meter" aria-hidden="true"><i id="micLvl"></i></div>
   <div class="lbl">Sincronizar<small>timing</small></div>
   <p>Speakers only: the painting plays 8 clicks and listens to measure its own delay. Or tap along with heel beats.</p>
-  <div class="row"><button id="loopCal">Medir con altavoces<small>measure with speakers</small></button><button id="tapCal">Tocar al ritmo<small>tap along</small></button><button id="testOpen">Prueba de oídos<small>test with a steady beat</small></button></div>
+  <div class="row"><button id="loopCal">Medir con altavoces<small>measure with speakers</small></button><button id="tapCal">Tocar al ritmo<small>tap along</small></button><button id="testOpen">Prueba de oídos<small>test with a steady beat</small></button><button id="resetSync">Restablecer<small>reset timing</small></button></div>
   <div class="status" id="calStatus"></div>
   <div class="row"><button class="go" id="sensesDone">Listo<small>done</small></button></div>
 </section>
@@ -395,7 +395,7 @@ function playKind(kind,t){
 }
 
 /* ================= ears: microphone ================= */
-const mic={on:false, stream:null, node:null, src:null, rt:store.get('rt',null), trackLat:0.01, sens:store.get('sens',0.6), phones:store.get('phones',true), centroids:store.get('centroids',null), learning:null};
+const mic={leakPeak:store.get('leakPeak',0), label:'', on:false, stream:null, node:null, src:null, rt:store.get('rt',null), trackLat:0.01, sens:store.get('sens',0.6), phones:store.get('phones',true), centroids:store.get('centroids',null), learning:null};
 const WORKLET=`
 class Onset extends AudioWorkletProcessor{
   constructor(){ super(); const sr=sampleRate;
@@ -441,12 +441,14 @@ async function micStart(){
   mic.src.connect(mic.node); mic.node.port.postMessage({type:'sens', v:mic.sens});
   const sink=actx.createGain(); sink.gain.value=0; mic.node.connect(sink); sink.connect(actx.destination);
   mic.node.port.onmessage=e=>{ const m=e.data; if(m.type==='lvl'){ const w=Math.min(100, Math.max(0,(Math.log10(m.v+1e-9)+7)*16))+'%'; $('micLvl').style.width=w; $('micLvl2').style.width=w; } else { flashMeters(); onMicOnset(m); } };
-  const st=mic.stream.getAudioTracks()[0].getSettings(); if(st.latency) mic.trackLat=st.latency;
+  const trk=mic.stream.getAudioTracks()[0], st=trk.getSettings(); if(st.latency) mic.trackLat=st.latency;
+  mic.label=trk.label||'default'; mic.rt=store.get(rtKey(),null);
   mic.on=true; $('micBtn').setAttribute('aria-pressed','true'); return true;
 }
 function flashMeters(){ for(const id of ['micLvl','micLvl2']){ const el=$(id); el.style.background='#f3e9d8'; setTimeout(()=>el.style.background='',120); } }
 function micStop(){ if(mic.stream) mic.stream.getTracks().forEach(t=>t.stop()); if(mic.src) mic.src.disconnect(); mic.on=false; $('micBtn').setAttribute('aria-pressed','false'); }
 // time from a sound being scheduled to hearing it, reacting, and the mic picking up the clap = output + input delay
+function rtKey(){ return 'rt:'+(mic.label||'default'); }
 function micRT(){ return mic.rt!=null ? mic.rt : mic.trackLat + (actx.baseLatency||0) + outLat(); }
 function features(f){ const l=f.map(v=>Math.log10(v+1e-12)), m=(l[0]+l[1]+l[2]+l[3])/4; return l.map(v=>v-m); }
 function classify(f){
@@ -460,7 +462,12 @@ function onMicOnset(m){
   if(mic.learning){ learnOnset(m); return; }
   if(calib.mode==='loop'){ calib.hits.push(m.t); return; }
   if(calib.mode==='tap'){ calib.micHits.push(m.t-micRT()); return; }
-  if(!mic.phones && (audioPlaying() || ((tr.on && tr.soundOn) || test.on) && Math.abs(t-nearestOwnSound(t))<0.09)) return;
+  const nearOwn=Math.abs(t-nearestOwnSound(t))<0.09;
+  // the quiet check at the start of the test: anything heard now is the speakers or the room, not you
+  if(test.on && test.phase==='quiet'){ (nearOwn?test.leak:test.noise).push(m.peak); return; }
+  // if the microphone can hear the speakers, ignore sounds at the beat that are no louder than that leak
+  if(mic.leakPeak && nearOwn && m.peak < mic.leakPeak*3) return;
+  if(!mic.phones && (audioPlaying() || ((tr.on && tr.soundOn) || test.on) && nearOwn)) return;
   userInput({src:'mic', kind:classify(m.f), t});
 }
 const ownTimes=[];
@@ -474,14 +481,23 @@ const LEARN=['clara','clara','clara','clara','sorda','sorda','sorda','sorda','go
 const LEARN_TXT={clara:['Clara','sharp clap'], sorda:['Sorda','soft cupped clap'], golpe:['Pisa','stamp']};
 async function learnStart(){
   if(!mic.on && !(await micStart())) return;
-  mic.learning={i:0, data:{clara:[],sorda:[],golpe:[]}}; learnPrompt();
+  mic.learning={i:0, data:{clara:[],sorda:[],golpe:[]}, last:0, waitUntil:performance.now()+1200};
+  learnPrompt(true);
 }
-function learnPrompt(){ const L=mic.learning, k=LEARN[L.i]; $('learnStatus').textContent=`${LEARN_TXT[k][0]} ${L.data[k].length+1}/4 · ${LEARN_TXT[k][1]}`; }
+// one clap at a time: ignore echoes and quick repeats, and pause between the three kinds
+function learnPrompt(starting){
+  const L=mic.learning, k=LEARN[L.i], n=L.data[k].length, dots='●'.repeat(n)+'○'.repeat(4-n);
+  const head = starting ? 'Preparada… ' : (n===0 && L.i>0 ? 'Ahora: ' : '');
+  $('learnStatus').innerHTML=`<span style="font:italic 700 1.3rem 'Bodoni Moda',serif;color:var(--ink)">${head}${LEARN_TXT[k][0]}</span> <span style="letter-spacing:3px;color:var(--accent)">${dots}</span> <small>${LEARN_TXT[k][1]}, one at a time</small>`;
+}
 function learnOnset(m){
-  const L=mic.learning, k=LEARN[L.i]; L.data[k].push(features(m.f)); L.i++;
+  const L=mic.learning, now=performance.now();
+  if(now<L.waitUntil || now-L.last<700) return;       // too soon: an echo, or still waiting
+  L.last=now; const k=LEARN[L.i]; L.data[k].push(features(m.f)); L.i++;
   if(L.i>=LEARN.length){ const c={}; for(const kk of ['clara','sorda','golpe']){ const a=L.data[kk]; c[kk]=[0,1,2,3].map(j=>a.reduce((s,v)=>s+v[j],0)/a.length); }
-    mic.centroids=c; store.set('centroids',c); mic.learning=null; $('learnStatus').textContent='Aprendido. The painting knows your claps now.'; }
-  else learnPrompt();
+    mic.centroids=c; store.set('centroids',c); mic.learning=null; $('learnStatus').innerHTML='<span style="color:var(--ink)">Aprendido.</span> It knows your claps now.'; return; }
+  if(LEARN[L.i]!==k){ L.waitUntil=now+1500; }        // a breath before switching from claras to sordas to stamps
+  learnPrompt(false);
 }
 
 /* timing calibration */
@@ -492,7 +508,7 @@ async function loopCal(){
   const t0=actx.currentTime+0.5; for(let i=0;i<8;i++){ const t=t0+i*0.5; playKind('golpe',t); calib.times.push(t); }
   $('calStatus').textContent='Escuchando… keep quiet for 5 seconds.';
   setTimeout(()=>{ calib.mode=null; const d=calib.times.map(t=>{ let b=null,bd=1; for(const h of calib.hits){ const x=h-t; if(x>-0.02 && x<0.6 && x<bd){bd=x;b=x;} } return b; }).filter(x=>x!=null);
-    if(d.length>=5){ d.sort((a,b)=>a-b); const rt=d[Math.floor(d.length/2)]; mic.rt=Math.max(0,Math.min(0.6,rt)); store.set('rt',mic.rt);
+    if(d.length>=5){ d.sort((a,b)=>a-b); const rt=d[Math.floor(d.length/2)]; mic.rt=Math.max(0,Math.min(0.6,rt)); store.set(rtKey(),mic.rt);
       $('calStatus').textContent=`Listo: total delay ${Math.round(rt*1000)} ms. Your claps are now measured against what you hear.`; }
     else $('calStatus').textContent='It couldn’t hear the clicks. Turn the volume up, unplug headphones, and try again.'; }, 5200);
 }
@@ -503,7 +519,7 @@ function tapCal(){
   setTimeout(()=>{ calib.mode=null;
     const off=list=>calib.times.map(t=>{ let b=null,bd=0.35; for(const h of list){ const x=Math.abs(h-t); if(x<bd){bd=x;b=h-t;} } return b; }).filter(x=>x!=null).sort((a,b)=>a-b);
     const dm=off(calib.micHits);
-    if(dm.length>=5){ mic.rt=Math.max(0,Math.min(0.8, micRT()+dm[Math.floor(dm.length/2)])); store.set('rt',mic.rt); }
+    if(dm.length>=5){ mic.rt=Math.max(0,Math.min(0.8, micRT()+dm[Math.floor(dm.length/2)])); store.set(rtKey(),mic.rt); }
     const d=off(calib.hits);
     if(dm.length>=5 && d.length<5){ $('calStatus').textContent=`Listo: your claps are synced (total delay ${Math.round(mic.rt*1000)} ms).`; return; }
     if(d.length>=5){ calib.tap=Math.max(-0.25,Math.min(0.35,calib.tap+d[Math.floor(d.length/2)])); store.set('tapLat',calib.tap); $('calStatus').textContent=`Listo: your taps are synced (${Math.round(calib.tap*1000)} ms).`; }
@@ -562,18 +578,24 @@ function camFrame(now){
 
 /* ================= microphone test ================= */
 const test={on:false, bpm:90, next:0, beats:[], offs:[], heard:0};
-function testStart(){ ensureCtx(); actx.resume(); test.on=true; test.beats=[]; test.offs=[]; test.heard=0; test.k=0; test.next=actx.currentTime+0.4; $('testRun').innerHTML='Parar<small>stop the beat</small>'; testPlot(); }
+function testStart(){ ensureCtx(); actx.resume(); test.on=true; test.beats=[]; test.offs=[]; test.heard=0; test.k=0; test.next=actx.currentTime+0.4; test.phase='quiet'; test.leak=[]; test.noise=[]; test.quietEnd=actx.currentTime+0.4+4*60/test.bpm+0.25; $('testStats').innerHTML='<b style="color:var(--ink)">Silencio un momento:</b> stay quiet for the first 4 beats while it listens to the room.'; $('testRun').innerHTML='Parar<small>stop the beat</small>'; testPlot(); }
 function testStop(){ test.on=false; $('testRun').innerHTML='Empezar<small>start the beat</small>'; }
-function testSchedule(){ if(!test.on) return; const spb=60/test.bpm; while(test.next<actx.currentTime+0.15){ const t=test.next; schedSound(test.k%4===0?'golpe':'sorda',t); test.beats.push(t); if(test.beats.length>40) test.beats.shift(); test.next+=spb; test.k++; } }
-function testInput(ev){ if(ev.t==null) return; test.heard++; const spb=60/test.bpm; let bd=1e9; for(const b of test.beats){ const d=ev.t-b; if(Math.abs(d)<Math.abs(bd)) bd=d; } if(Math.abs(bd)<=spb/2){ test.offs.push(bd); if(test.offs.length>40) test.offs.shift(); } testPlot(); }
+function testSchedule(){ if(!test.on) return;
+  if(test.phase==='quiet' && actx.currentTime>test.quietEnd){ test.phase='clap'; const msg=[];
+    if(test.leak.length>=2){ const pk=[...test.leak].sort((a,b)=>a-b); mic.leakPeak=pk[Math.floor(pk.length/2)]; store.set('leakPeak',mic.leakPeak); msg.push('I can hear the beat through the speakers, so I’ll ignore that sound.'); }
+    else { mic.leakPeak=0; store.set('leakPeak',0); }
+    if(test.noise.length>=2){ mic.sens=Math.max(0,mic.sens-0.15); store.set('sens',mic.sens); $('sens').value=mic.sens; if(mic.node) mic.node.port.postMessage({type:'sens', v:mic.sens}); msg.push('The room is a little noisy, so I lowered the sensitivity.'); }
+    test.note=msg.join(' '); $('testStats').innerHTML='<b style="color:var(--ink)">Ahora, da palmas.</b> Clap along. '+test.note; } const spb=60/test.bpm; while(test.next<actx.currentTime+0.15){ const t=test.next; schedSound(test.k%4===0?'golpe':'sorda',t); test.beats.push(t); if(test.beats.length>40) test.beats.shift(); test.next+=spb; test.k++; } }
+function testInput(ev){ if(ev.t==null || test.phase!=='clap') return; test.heard++; const spb=60/test.bpm; let bd=1e9; for(const b of test.beats){ const d=ev.t-b; if(Math.abs(d)<Math.abs(bd)) bd=d; } if(Math.abs(bd)<=spb/2){ test.offs.push(bd); if(test.offs.length>40) test.offs.shift(); } testPlot(); }
 function testPlot(){
   const svg=$('testPlot'); const o=test.offs; let h='<line x1="150" y1="6" x2="150" y2="134" stroke="#d9452c" stroke-width="1.5"/>';
   for(const ms of [-200,-100,100,200]){ const x=150+ms*0.6; h+=`<line x1="${x}" y1="6" x2="${x}" y2="134" stroke="#3b2b27" stroke-width="1"/><text x="${x}" y="138" font-size="7" fill="#7d6a5d" text-anchor="middle">${ms>0?'+':''}${ms}</text>`; }
   h+='<text x="6" y="12" font-size="8" fill="#7d6a5d">pronto · early</text><text x="294" y="12" font-size="8" fill="#7d6a5d" text-anchor="end">tarde · late</text>';
   o.forEach((d,i)=>{ const x=Math.max(4,Math.min(296,150+d*1000*0.6)), y=128-(o.length-1-i)*3, a=Math.abs(d); h+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.2" fill="${a<0.06?'#f2c46e':a<0.12?'#e0884a':'#7d6a5d'}" opacity="${(0.35+0.65*(i+1)/o.length).toFixed(2)}"/>`; });
   svg.innerHTML=h;
+  if(test.phase==='quiet') return;
   if(o.length){ const m=o.reduce((s,x)=>s+x,0)/o.length, sd=o.length>1?Math.sqrt(o.reduce((s,x)=>s+(x-m)*(x-m),0)/(o.length-1)):0, ok=o.filter(x=>Math.abs(x)<0.06).length;
-    $('testStats').textContent=`Claps heard: ${test.heard} · average ${m<0?'−':'+'}${Math.round(Math.abs(m)*1000)} ms · spread ${Math.round(sd*1000)} ms · ${Math.round(100*ok/o.length)}% within 60 ms`;
+    $('testStats').textContent=`Claps heard: ${test.heard} · average ${m<0?'−':'+'}${Math.round(Math.abs(m)*1000)} ms · spread ${Math.round(sd*1000)} ms · ${Math.round(100*ok/o.length)}% within 60 ms`+(test.note?' · '+test.note:'');
     $('testApply').disabled = !(o.length>=8 && Math.abs(m)>0.03 && sd<0.08); test.mean=m; }
   else $('testStats').textContent=`Claps heard: ${test.heard}`;
 }
@@ -706,11 +728,12 @@ function stats(){ const L=tr.log.slice(-24), r=tr.errs.slice(-24), ok=L.filter(x
 function autoSync(ev){
   // Bluetooth headphones add a large delay that browsers often don't report. If the claps are consistently
   // late (or early) by the same amount, that is the device, not the dancer: learn it and correct it.
-  let cd=null; for(const e of tr.events){ if(!e.target) continue; const d=ev.t-e.t; if(d>-0.15 && d<0.55 && (cd==null || Math.abs(d)<Math.abs(cd))) cd=d; }
+  const half=0.48*(tr.level===4?0.5:1)*60/tr.bpm, lim=Math.min(0.55,half);
+  let cd=null; for(const e of tr.events){ if(!e.target) continue; const d=ev.t-e.t; if(d>-lim && d<lim && (cd==null || Math.abs(d)<Math.abs(cd))) cd=d; }
   if(cd==null) return;
   tr.sync.push(cd); if(tr.sync.length>8) tr.sync.shift();
   if(tr.sync.length>=6){ const srt=[...tr.sync].sort((a,b)=>a-b), med=srt[Math.floor(srt.length/2)], dev=srt.map(x=>Math.abs(x-med)).sort((a,b)=>a-b), mad=dev[Math.floor(dev.length/2)];
-    if(Math.abs(med)>0.06 && mad<0.07){ mic.rt=Math.max(0,Math.min(0.8,micRT()+med)); store.set('rt',mic.rt); ev.t-=med; tr.sync=[]; tr.synced=Math.round(mic.rt*1000); } }
+    if(Math.abs(med)>0.06 && mad<0.07){ mic.rt=Math.max(0,Math.min(0.8,micRT()+med)); store.set(rtKey(),mic.rt); store.set(rtKey(),mic.rt); ev.t-=med; tr.sync=[]; tr.synced=Math.round(mic.rt*1000); } }
 }
 function trScore(ev){
   if(!tr.on||tr.paused||ev.t==null) return;
@@ -769,9 +792,10 @@ function showSummary(){ saveSession(); curtain();
     const hs=xs.filter(x=>x.hit), me=hs.length?hs.reduce((a,x)=>a+x.err,0)/hs.length:0, col=me<-0.03?'#6fb3ae':me>0.03?'#e0884a':(acc?'#d9452c':'#7d6a5d');
     svg.insertAdjacentHTML('beforeend',`<rect x="${(i*bw+bw*0.18).toFixed(1)}" y="${(64-h).toFixed(1)}" width="${(bw*0.64).toFixed(1)}" height="${h.toFixed(1)}" fill="${col}" rx="2"/><text x="${(i*bw+bw/2).toFixed(1)}" y="78" text-anchor="middle" font-size="10" fill="#f3e9d8" font-family="Instrument Sans, sans-serif">${n}</text><text x="${(i*bw+bw/2).toFixed(1)}" y="89" text-anchor="middle" font-size="7.5" fill="#bba996" font-family="Instrument Sans, sans-serif">${hs.length?(me<0?'−':'+')+Math.round(Math.abs(me)*1000)+' ms':'–'}</text>`); });
   const worst=nums.map(n=>{ const xs=L.filter(x=>x.num===n); return [n, xs.filter(x=>x.hit && Math.abs(x.err)<0.12).length/xs.length]; }).sort((a,b)=>a[1]-b[1])[0];
-  let adv = pct>=85 ? 'Muy bien. Try a faster tempo, or the next level.' : pct>=60 ? 'Getting there. Stay at this tempo for a few more rounds.' : 'Slow it down a little (− button) and keep the guide claps on.';
+  const deviceShift = hits.length>=6 && Math.abs(mean)>0.13 && sd<0.07;
+  let adv = deviceShift ? `You’re very steady (${Math.round(sd*1000)} ms spread), but every clap is shifted by about ${Math.round(Math.abs(mean)*1000)} ms. That’s a sound delay from your headphones or speakers, not you. It now corrects this automatically within a few claps; if it doesn’t, open Oídos → Restablecer, then Prueba de oídos.` : pct>=85 ? 'Muy bien. Try a faster tempo, or the next level.' : pct>=60 ? 'Getting there. Stay at this tempo for a few more rounds.' : 'Slow it down a little (− button) and keep the guide claps on.';
   if(worst && worst[1]<0.6 && nums.length>1) adv+=` The beat to work on: ${worst[0]}.`;
-  if(Math.abs(mean)>0.05) adv+= mean<0?' You tend to clap before the beat: wait for it.':' You tend to clap after the beat: lean in.';
+  if(!deviceShift && Math.abs(mean)>0.05) adv+= mean<0?' You tend to clap before the beat: wait for it.':' You tend to clap after the beat: lean in.';
   $('sumAdvice').textContent=adv;
   $('sumProg').innerHTML=progressHtml();
   show('clock',false); show('count',false); $('palma').hidden=true; show('summary',true);
@@ -918,10 +942,11 @@ $('micBtn').onclick=async()=>{ if(mic.on){ micStop(); return; } if(await micStar
 $('camBtn').onclick=async()=>{ if(cam.on){ camStop(); return; } await camStart(); };
 $('phones').checked=mic.phones; $('phones').onchange=e=>{ mic.phones=e.target.checked; store.set('phones',mic.phones); };
 $('learnBtn').onclick=learnStart;
+$('resetSync').onclick=()=>{ mic.rt=null; store.set(rtKey(),null); mic.leakPeak=0; store.set('leakPeak',0); calib.tap=0; store.set('tapLat',0); $('calStatus').textContent='Timing reset. Run Prueba de oídos, or just start: it re-learns within a few claps.'; };
 $('testOpen').onclick=async()=>{ if(!mic.on && !(await micStart())) return; show('senses',false); show('test',true); testPlot(); };
 $('testRun').onclick=()=>{ if(test.on) testStop(); else testStart(); };
 $('testBpm').oninput=e=>{ test.bpm=+e.target.value; $('testBpmV').textContent=test.bpm; };
-$('testApply').onclick=()=>{ if(test.mean==null) return; mic.rt=Math.max(0,Math.min(0.8,micRT()+test.mean)); store.set('rt',mic.rt); test.offs=[]; testPlot(); $('testStats').textContent=`Ajustado (${Math.round(mic.rt*1000)} ms total delay). Clap again to check: dots should sit on the centre line.`; };
+$('testApply').onclick=()=>{ if(test.mean==null) return; mic.rt=Math.max(0,Math.min(0.8,micRT()+test.mean)); store.set(rtKey(),mic.rt); test.offs=[]; testPlot(); $('testStats').textContent=`Ajustado (${Math.round(mic.rt*1000)} ms total delay). Clap again to check: dots should sit on the centre line.`; };
 $('testClose').onclick=()=>{ testStop(); show('test',false); show('senses',true); };
 $('sens').value=mic.sens; $('sens').oninput=e=>{ mic.sens=+e.target.value; store.set('sens',mic.sens); if(mic.node) mic.node.port.postMessage({type:'sens', v:mic.sens}); };
 $('tEars').onclick=async()=>{ if(!mic.on && !(await micStart())) return; sensesFrom='trainer'; show('trainer',false); show('senses',true); };
