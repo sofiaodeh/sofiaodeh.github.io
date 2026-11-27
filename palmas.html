@@ -87,7 +87,9 @@ select{font:inherit;font-size:.9rem;padding:6px 8px;background:var(--card);color
 @keyframes curtain{to{transform:translateX(120%)}}
 @media (prefers-reduced-motion: reduce){ #curtain.go{animation:none} }
 .meter{height:14px;background:#2a1f1c;border:1px solid #4a3a35;border-radius:7px;overflow:hidden;margin-top:6px}
+.meter{position:relative}
 .meter i{display:block;height:100%;width:0;background:var(--accent);transition:width .08s linear}
+.meter b{position:absolute;top:-3px;bottom:-3px;width:3px;margin-left:-1px;background:#f3e9d8;border-radius:2px;left:0;transition:left .3s ease}
 kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
 @media (max-width:600px){
   #title p{display:none}
@@ -134,7 +136,8 @@ kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-r
   <input type="range" id="sens" min="0" max="1" step="0.05" value="0.6" aria-label="Microphone sensitivity">
   <p class="status" style="margin-top:4px">Raise it if soft claps (sordas) aren’t heard; lower it if it reacts to noise or talking. The bar below shows what it hears.</p>
   <div class="lbl" style="margin-top:12px">Nivel del micrófono<small>mic level: it moves when there’s sound, and flashes white when it hears a clap</small></div>
-  <div class="meter" aria-hidden="true"><i id="micLvl2"></i></div>
+  <div class="meter" aria-hidden="true"><i id="micLvl2"></i><b id="micThr"></b></div>
+  <p class="status" style="margin-top:4px">The <b style="color:var(--ink)">white line</b> is the clap threshold. Background noise moving the bar <i>below</i> the line is normal and ignored; a clap should cross it.</p>
   <p class="status" id="heardNote" style="margin-top:6px">Da una palmada: aquí verás si la oye. <small>clap: you’ll see here whether it hears it</small></p>
   <div class="lbl">Tus palmas<small>teach it your claps</small></div>
   <p>Clap 4 claras (fingers on palm, sharp), then 4 sordas (cupped, soft), then stamp 4 times. Take your time: one at a time, it waits for you.</p>
@@ -144,7 +147,7 @@ kbd{font:600 .78rem ui-monospace,monospace;border:1px solid var(--line);border-r
   <p>Speakers only: the painting plays 8 clicks and listens to measure its own delay. Or tap along with heel beats.</p>
   <div class="row"><button id="loopCal">Medir con altavoces<small>measure with speakers</small></button><button id="tapCal">Tocar al ritmo<small>tap along</small></button><button id="testOpen">Prueba de oídos<small>test with a steady beat</small></button><button id="resetSync">Restablecer<small>reset timing</small></button></div>
   <div class="status" id="calStatus"></div>
-  <p class="status" style="margin-top:10px;opacity:.6">versión 27-nov · detector 3</p>
+  <p class="status" style="margin-top:10px;opacity:.6">versión 27-nov · detector 4</p>
   <div class="row"><button class="go" id="sensesDone">Listo<small>done</small></button><button id="micOff">Apagar micrófono<small>turn the microphone off</small></button></div>
 </section>
 
@@ -430,7 +433,7 @@ class Onset extends AudioWorkletProcessor{
       else if(this.refr>0) this.refr--;
       else if(this.cap<0 && df>this.dfT && tot>this.floor*this.fm){ this.t0=t-this.hop/sampleRate; this.cap=Math.round(0.03*sampleRate/this.hop); this.acc=this.e.slice(); this.peak=tot; this.loud=0; this.refr=Math.round(0.09*sampleRate/this.hop); }
       this.slow+=(tot-this.slow)*0.06;
-      this.lvl=Math.max(this.lvl,tot); if(++this.lvlN>=15){ this.port.postMessage({type:'lvl', v:this.lvl/(this.hop/64)}); this.lvl=0; this.lvlN=0; }
+      this.lvl=Math.max(this.lvl,tot); if(++this.lvlN>=15){ this.port.postMessage({type:'lvl', v:this.lvl/(this.hop/64), thr:this.floor*this.fm/(this.hop/64)}); this.lvl=0; this.lvlN=0; }
       this.e=[0,0,0,0]; this.n=0;
     }
     return true;
@@ -449,7 +452,7 @@ async function micStart(){
   mic.node=new AudioWorkletNode(actx,'palmas-onset');
   mic.src.connect(mic.node); mic.node.port.postMessage({type:'sens', v:mic.sens});
   const sink=actx.createGain(); sink.gain.value=0; mic.node.connect(sink); sink.connect(actx.destination);
-  mic.node.port.onmessage=e=>{ const m=e.data; if(m.type==='lvl'){ const raw=Math.min(100, Math.max(0,(Math.log10(m.v+1e-9)+7)*16)); mic.lvlShow=Math.max(raw,(mic.lvlShow||0)*0.88); const w=mic.lvlShow.toFixed(1)+'%'; $('micLvl').style.width=w; $('micLvl2').style.width=w; } else { flashMeters(); onMicOnset(m); } };
+  mic.node.port.onmessage=e=>{ const m=e.data; if(m.type==='lvl'){ const toPct=v=>Math.min(100, Math.max(0,(Math.log10(v+1e-9)+7)*16)); const raw=toPct(m.v); if(m.thr) $('micThr').style.left=toPct(m.thr).toFixed(1)+'%'; mic.lvlShow=Math.max(raw,(mic.lvlShow||0)*0.88); const w=mic.lvlShow.toFixed(1)+'%'; $('micLvl').style.width=w; $('micLvl2').style.width=w; } else { flashMeters(); onMicOnset(m); } };
   const trk=mic.stream.getAudioTracks()[0], st=trk.getSettings(); if(st.latency) mic.trackLat=st.latency;
   mic.label=trk.label||'default'; mic.rt=store.get(rtKey(),null); fillMicList(st.deviceId);
   mic.on=true; $('micBtn').setAttribute('aria-pressed','true'); return true;
