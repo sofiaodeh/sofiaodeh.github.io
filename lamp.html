@@ -331,6 +331,25 @@
             margin-top: 0.8rem;
         }
 
+        /* opening story */
+        .story {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 1rem;
+        }
+
+        .story .image-container img { max-width: 100%; }
+
+        .story p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            line-height: 1.75;
+            color: var(--navy);
+            margin-bottom: 1.2rem;
+        }
+
+        .story p em { font-style: italic; }
+
         @media (max-width: 640px) {
             .image-container img { max-width: 95%; }
             .image-pair { flex-direction: column; }
@@ -354,6 +373,24 @@
         <p class="meta">Personal project &nbsp;·&nbsp; Prototype built &nbsp;·&nbsp; SolidWorks, MJF, washi</p>
     </div>
 
+    <section class="story">
+        <div class="image-container">
+            <img src="images/lamp-lit.jpg" alt="The finished lamp lit from inside, with the star lattice silhouetted against glowing washi">
+            <p class="image-caption">The finished prototype, lit</p>
+        </div>
+        <p>
+            I&#8217;m from Zaragoza on my mother&#8217;s side and from Bethlehem on my father&#8217;s. Growing up, I saw the
+            Mudéjar star in Zaragoza&#8217;s old churches, like La Seo, built where the city&#8217;s great mosque once stood.
+            Mudéjar art carried Islamic geometry into Christian buildings, two of my cultures meeting in one pattern. When my
+            mom gave me a silver pendant of the star and told me its history, it felt like I could finally hold on to one thing
+            that encompassed more than just half of who I was.
+        </p>
+        <p>
+            <em>Raíces</em> and <em>Judhur</em> both mean roots, in Spanish and in Arabic. This lamp is my way of making my
+            room mine, carefully and intentionally.
+        </p>
+    </section>
+
     <section class="content-section">
         <h2>Overview</h2>
         <dl class="project-facts">
@@ -370,10 +407,6 @@
         <p>
             The lamp was designed as a pendant. The current prototype sits on a borrowed table base while I design a base made for it.
         </p>
-        <div class="image-container">
-            <img src="images/lamp-lit.jpg" alt="The finished lamp lit from inside, with the star lattice silhouetted against glowing washi">
-            <p class="image-caption">The finished prototype, lit</p>
-        </div>
     </section>
 
     <div class="phase-band">
