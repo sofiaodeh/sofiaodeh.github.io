@@ -428,13 +428,13 @@ class Onset extends AudioWorkletProcessor{
     return true;
   }
 }
-registerProcessor('palmas-onset', Onset);`;
+try{ registerProcessor('palmas-onset', Onset); }catch(e){}`;
 async function micStart(){
   ensureCtx(); await actx.resume();
   try{
-    mic.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
+    if(!mic.stream || mic.stream.getAudioTracks().every(t=>t.readyState==='ended')) mic.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
   }catch(e){ toast('El micrófono no está disponible.','microphone permission was refused or unavailable'); return false; }
-  try{ const url=URL.createObjectURL(new Blob([WORKLET],{type:'application/javascript'})); await actx.audioWorklet.addModule(url); }
+  try{ if(!mic.workletReady){ const url=URL.createObjectURL(new Blob([WORKLET],{type:'application/javascript'})); await actx.audioWorklet.addModule(url); mic.workletReady=true; } }
   catch(e){ mic.stream.getTracks().forEach(t=>t.stop()); feedback('No pude abrir los oídos.','this browser blocked the listening module; open the page from your website (https)'); return false; }
   mic.src=actx.createMediaStreamSource(mic.stream);
   mic.node=new AudioWorkletNode(actx,'palmas-onset');
@@ -446,7 +446,7 @@ async function micStart(){
   mic.on=true; $('micBtn').setAttribute('aria-pressed','true'); return true;
 }
 function flashMeters(){ for(const id of ['micLvl','micLvl2']){ const el=$(id); el.style.background='#f3e9d8'; setTimeout(()=>el.style.background='',120); } }
-function micStop(){ if(mic.stream) mic.stream.getTracks().forEach(t=>t.stop()); if(mic.src) mic.src.disconnect(); mic.on=false; $('micBtn').setAttribute('aria-pressed','false'); }
+function micStop(){ if(mic.stream) mic.stream.getTracks().forEach(t=>t.stop()); mic.stream=null; if(mic.src) mic.src.disconnect(); mic.on=false; $('micBtn').setAttribute('aria-pressed','false'); }
 // time from a sound being scheduled to hearing it, reacting, and the mic picking up the clap = output + input delay
 function rtKey(){ return 'rt:'+(mic.label||'default'); }
 function micRT(){ return mic.rt!=null ? mic.rt : mic.trackLat + (actx.baseLatency||0) + outLat(); }
@@ -940,7 +940,7 @@ addEventListener('keydown', e=>{
 });
 // senses
 async function openSenses(){ ['intro','trainer','palo','again','statement'].forEach(id=>show(id,false)); show('senses',true); }
-$('micBtn').onclick=async()=>{ if(!mic.on && !(await micStart())) return; if(!$('senses').hidden){ show('senses',false); return; } sensesFrom = !$('trainer').hidden ? 'trainer' : null; openSenses(); };
+$('micBtn').onclick=async()=>{ if(!mic.on && !(await micStart())){ openSenses(); $('calStatus').textContent='The microphone didn’t start. Check that this site is allowed to use the microphone in your browser settings, then press Oídos again.'; return; } if(!$('senses').hidden){ show('senses',false); return; } sensesFrom = !$('trainer').hidden ? 'trainer' : null; openSenses(); };
 $('camBtn').onclick=async()=>{ if(cam.on){ camStop(); return; } await camStart(); };
 $('phones').checked=mic.phones; $('phones').onchange=e=>{ mic.phones=e.target.checked; store.set('phones',mic.phones); };
 $('learnBtn').onclick=learnStart;
