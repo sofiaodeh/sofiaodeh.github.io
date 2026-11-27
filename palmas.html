@@ -520,7 +520,7 @@ function tapCal(){
   setTimeout(()=>{ calib.mode=null;
     const off=list=>calib.times.map(t=>{ let b=null,bd=0.35; for(const h of list){ const x=Math.abs(h-t); if(x<bd){bd=x;b=h-t;} } return b; }).filter(x=>x!=null).sort((a,b)=>a-b);
     const dm=off(calib.micHits);
-    if(dm.length>=5){ mic.rt=Math.max(0,Math.min(0.8, micRT()+dm[Math.floor(dm.length/2)])); store.set(rtKey(),mic.rt); }
+    if(dm.length>=5){ mic.rt=Math.max(-0.4,Math.min(0.8, micRT()+dm[Math.floor(dm.length/2)])); store.set(rtKey(),mic.rt); }
     const d=off(calib.hits);
     if(dm.length>=5 && d.length<5){ $('calStatus').textContent=`Listo: your claps are synced (total delay ${Math.round(mic.rt*1000)} ms).`; return; }
     if(d.length>=5){ calib.tap=Math.max(-0.25,Math.min(0.35,calib.tap+d[Math.floor(d.length/2)])); store.set('tapLat',calib.tap); $('calStatus').textContent=`Listo: your taps are synced (${Math.round(calib.tap*1000)} ms).`; }
@@ -725,7 +725,7 @@ function adaptTempo(n, good){
 function vital(d){ tr.vital=Math.max(0,Math.min(1,tr.vital+d)); }
 function stats(){ const L=tr.log.slice(-24), r=tr.errs.slice(-24), ok=L.filter(x=>x.hit && Math.abs(x.err)<0.12 && !x.wrong).length, pct=L.length?Math.round(100*ok/L.length):0;
   const bias=r.length?Math.round(1000*r.reduce((s,x)=>s+x,0)/r.length):0;
-  $('clockBpm').textContent=`${tr.bpm} bpm · ${pct}% a tiempo · racha ${tr.streak}`+(tr.synced?` · auriculares sincronizados (${tr.synced} ms)`:'')+(r.length>=6&&Math.abs(bias)>=25?` · vas ${Math.abs(bias)} ms ${bias<0?'adelantada':'atrasada'}`:''); }
+  $('clockBpm').textContent=`${tr.bpm} bpm · ${pct}% a tiempo · racha ${tr.streak}`+(tr.synced?` · sincronizado (${tr.synced>0?'+':''}${tr.synced} ms)`:'')+(r.length>=6&&Math.abs(bias)>=25?` · vas ${Math.abs(bias)} ms ${bias<0?'adelantada':'atrasada'}`:''); }
 function autoSync(ev){
   // Bluetooth headphones add a large delay that browsers often don't report. If the claps are consistently
   // late (or early) by the same amount, that is the device, not the dancer: learn it and correct it.
@@ -734,7 +734,7 @@ function autoSync(ev){
   if(cd==null) return;
   tr.sync.push(cd); if(tr.sync.length>8) tr.sync.shift();
   if(tr.sync.length>=6){ const srt=[...tr.sync].sort((a,b)=>a-b), med=srt[Math.floor(srt.length/2)], dev=srt.map(x=>Math.abs(x-med)).sort((a,b)=>a-b), mad=dev[Math.floor(dev.length/2)];
-    if(Math.abs(med)>0.06 && mad<0.07){ mic.rt=Math.max(0,Math.min(0.8,micRT()+med)); store.set(rtKey(),mic.rt); store.set(rtKey(),mic.rt); ev.t-=med; tr.sync=[]; tr.synced=Math.round(mic.rt*1000); } }
+    if(Math.abs(med)>0.06 && mad<0.07){ mic.rt=Math.max(-0.4,Math.min(0.8,micRT()+med)); store.set(rtKey(),mic.rt); store.set(rtKey(),mic.rt); ev.t-=med; tr.sync=[]; tr.synced=Math.round(mic.rt*1000); } }
 }
 function trScore(ev){
   if(!tr.on||tr.paused||ev.t==null) return;
@@ -949,7 +949,7 @@ $('resetSync').onclick=()=>{ mic.rt=null; store.set(rtKey(),null); mic.leakPeak=
 $('testOpen').onclick=async()=>{ if(!mic.on && !(await micStart())) return; show('senses',false); show('test',true); testPlot(); };
 $('testRun').onclick=()=>{ if(test.on) testStop(); else testStart(); };
 $('testBpm').oninput=e=>{ test.bpm=+e.target.value; $('testBpmV').textContent=test.bpm; };
-$('testApply').onclick=()=>{ if(test.mean==null) return; mic.rt=Math.max(0,Math.min(0.8,micRT()+test.mean)); store.set(rtKey(),mic.rt); test.offs=[]; testPlot(); $('testStats').textContent=`Ajustado (${Math.round(mic.rt*1000)} ms total delay). Clap again to check: dots should sit on the centre line.`; };
+$('testApply').onclick=()=>{ if(test.mean==null) return; mic.rt=Math.max(-0.4,Math.min(0.8,micRT()+test.mean)); store.set(rtKey(),mic.rt); test.offs=[]; testPlot(); $('testStats').textContent=`Ajustado (${Math.round(mic.rt*1000)} ms total delay). Clap again to check: dots should sit on the centre line.`; };
 $('testClose').onclick=()=>{ testStop(); show('test',false); show('senses',true); };
 $('sens').value=mic.sens; $('sens').oninput=e=>{ mic.sens=+e.target.value; store.set('sens',mic.sens); if(mic.node) mic.node.port.postMessage({type:'sens', v:mic.sens}); };
 $('tEars').onclick=async()=>{ if(!mic.on && !(await micStart())) return; sensesFrom='trainer'; show('trainer',false); show('senses',true); };
