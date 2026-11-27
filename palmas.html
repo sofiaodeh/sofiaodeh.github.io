@@ -405,27 +405,29 @@ class Onset extends AudioWorkletProcessor{
       if(type==='lp'){ b0=(1-c)/2; b1=1-c; b2=(1-c)/2; } else if(type==='hp'){ b0=(1+c)/2; b1=-(1+c); b2=(1+c)/2; } else { b0=a; b1=0; b2=-a; }
       return {b0:b0/a0,b1:b1/a0,b2:b2/a0,a1:a1/a0,a2:a2/a0,x1:0,x2:0,y1:0,y2:0}; };
     this.f=[bq('lp',250,0.7),bq('bp',700,1.0),bq('bp',2000,1.0),bq('hp',4000,0.7)];
-    this.dfT=1.6; this.fm=7; this.warm=Math.round(0.4*sr/64); this.port.onmessage=e=>{ if(e.data && e.data.type==='sens'){ const v=e.data.v; this.dfT=2.6-1.8*v; this.fm=16-13*v; } };
-    this.e=[0,0,0,0]; this.n=0; this.hop=64; this.slow=1e-6; this.floor=1e-7; this.refr=0; this.cap=-1; this.acc=[0,0,0,0]; this.lvl=0; this.lvlN=0; this.t0=0; this.peak=0;
+    this.hop=128; this.e=[0,0,0,0]; this.n=0; this.slow=1e-7; this.floor=-1; this.refr=0; this.cap=-1; this.acc=[0,0,0,0]; this.peak=0; this.t0=0; this.lvl=0; this.lvlN=0;
+    this.warm=Math.round(0.5*sr/this.hop); this.setSens(0.6);
+    this.port.onmessage=e=>{ if(e.data && e.data.type==='sens') this.setSens(e.data.v); };
   }
+  setSens(v){ this.dfT=2.4-1.1*v; this.fm=22-15*v; }   // jump needed over the recent level, and margin over the room's noise
   run(f,x){ const y=f.b0*x+f.b1*f.x1+f.b2*f.x2-f.a1*f.y1-f.a2*f.y2; f.x2=f.x1; f.x1=x; f.y2=f.y1; f.y1=y; return y; }
   process(inputs){
     const ch=inputs[0]&&inputs[0][0]; if(!ch) return true;
     for(let i=0;i<ch.length;i++){
       const x=ch[i]; for(let k=0;k<4;k++){ const y=this.run(this.f[k],x); this.e[k]+=y*y; }
-      this.n++;
-      if(this.n>=this.hop){
-        const tot=this.e[0]+this.e[1]+this.e[2]+this.e[3];
-        const t=currentTime+(i-ch.length)/sampleRate;
-        if(this.cap>=0){ for(let k=0;k<4;k++) this.acc[k]+=this.e[k]; this.peak=Math.max(this.peak,tot); this.cap--; if(this.cap<0) this.port.postMessage({type:'onset', t:this.t0, f:this.acc.slice(), peak:this.peak}); }
-        const df=Math.log(tot+1e-12)-Math.log(this.slow+1e-12);
-        if(this.warm>0){ this.warm--; }
-        else if(this.refr>0) this.refr--;
-        else if(df>this.dfT && tot>this.floor*this.fm && this.cap<0){ this.t0=t-this.hop/sampleRate; this.cap=Math.round(0.025*sampleRate/this.hop); this.acc=this.e.slice(); this.peak=tot; this.refr=Math.round(0.07*sampleRate/this.hop); }
-        this.slow+= (tot-this.slow)*0.02; this.floor=Math.min(this.floor*1.0005+1e-12, Math.max(1e-9,tot)); if(tot<this.floor) this.floor=tot;
-        this.lvl=Math.max(this.lvl,tot); if(++this.lvlN>=30){ this.port.postMessage({type:'lvl', v:this.lvl}); this.lvl=0; this.lvlN=0; }
-        this.e=[0,0,0,0]; this.n=0;
-      }
+      if(++this.n<this.hop) continue;
+      const tot=this.e[0]+this.e[1]+this.e[2]+this.e[3]+1e-14, t=currentTime+(i+1-ch.length)/sampleRate;
+      // the room's noise floor: drifts up slowly, drops quickly, so a steady hum or fan becomes the baseline
+      if(this.floor<0) this.floor=tot; else if(tot<this.floor) this.floor+= (tot-this.floor)*0.2; else this.floor*=1.0015;
+      if(this.cap>=0){ for(let k=0;k<4;k++) this.acc[k]+=this.e[k]; if(tot>this.peak) this.peak=tot; this.cap--;
+        if(this.cap<0 && this.peak>this.floor*this.fm*1.4) this.port.postMessage({type:'onset', t:this.t0, f:this.acc.slice(), peak:this.peak}); }
+      const df=Math.log(tot)-Math.log(this.slow);
+      if(this.warm>0) this.warm--;
+      else if(this.refr>0) this.refr--;
+      else if(this.cap<0 && df>this.dfT && tot>this.floor*this.fm){ this.t0=t-this.hop/sampleRate; this.cap=Math.round(0.03*sampleRate/this.hop); this.acc=this.e.slice(); this.peak=tot; this.refr=Math.round(0.09*sampleRate/this.hop); }
+      this.slow+=(tot-this.slow)*0.06;
+      this.lvl=Math.max(this.lvl,tot); if(++this.lvlN>=15){ this.port.postMessage({type:'lvl', v:this.lvl/(this.hop/64)}); this.lvl=0; this.lvlN=0; }
+      this.e=[0,0,0,0]; this.n=0;
     }
     return true;
   }
