@@ -395,7 +395,7 @@ function playKind(kind,t){
 }
 
 /* ================= ears: microphone ================= */
-const mic={leakPeak:store.get('leakPeak',0), label:'', on:false, stream:null, node:null, src:null, rt:store.get('rt',null), trackLat:0.01, sens:store.get('sens',0.6), phones:store.get('phones',true), centroids:store.get('centroids',null), learning:null};
+const mic={leakPeak:store.get('leakPeak',0), leakOff:store.get('leakOff',0), label:'', on:false, stream:null, node:null, src:null, rt:store.get('rt',null), trackLat:0.01, sens:store.get('sens',0.6), phones:store.get('phones',true), centroids:store.get('centroids',null), learning:null};
 const WORKLET=`
 class Onset extends AudioWorkletProcessor{
   constructor(){ super(); const sr=sampleRate;
@@ -463,11 +463,11 @@ function onMicOnset(m){
   if(calib.mode==='loop'){ calib.hits.push(m.t); return; }
   if(calib.mode==='tap'){ calib.micHits.push(m.t-micRT()); return; }
   const nearOwn=Math.abs(t-nearestOwnSound(t))<0.09;
-  // the quiet check at the start of the test: anything heard now is the speakers or the room, not you
-  if(test.on && test.phase==='quiet'){ (nearOwn?test.leak:test.noise).push(m.peak); return; }
-  // if the microphone can hear the speakers, ignore sounds at the beat that are no louder than that leak
-  const nearOther=Math.abs(t-nearestOwnSound(t,true))<0.09;
-  if(mic.leakPeak && nearOther && m.peak < mic.leakPeak*3) return;
+  // the quiet check at the start of the test: record when each sound arrives after the beat that was played.
+  // A tight cluster is the speakers (and its delay is the true round trip); scattered sounds are the room.
+  if(test.on && test.phase==='quiet'){ let d=null; for(const o of ownTimes){ const x=m.t-o.t; if(x>-0.1 && x<0.6 && (d==null||Math.abs(x)<Math.abs(d))) d=x; } test.quiet.push({d, peak:m.peak}); return; }
+  // speaker leak arrives a fixed time after each sound the piece plays: ignore it unless the sound is clearly louder (you)
+  if(mic.leakPeak){ for(const o of ownTimes){ if(o.target) continue; if(Math.abs(m.t-(o.t+mic.leakOff))<0.05 && m.peak<mic.leakPeak*2.5) return; } }
   if(!mic.phones && (audioPlaying() || ((tr.on && tr.soundOn) || test.on) && nearOwn)) return;
   userInput({src:'mic', kind:classify(m.f), t});
 }
@@ -579,13 +579,18 @@ function camFrame(now){
 
 /* ================= microphone test ================= */
 const test={on:false, bpm:90, next:0, beats:[], offs:[], heard:0};
-function testStart(){ ensureCtx(); actx.resume(); test.on=true; test.beats=[]; test.offs=[]; test.heard=0; test.k=0; test.next=actx.currentTime+0.4; test.phase='quiet'; test.leak=[]; test.noise=[]; test.quietEnd=actx.currentTime+0.4+4*60/test.bpm+0.25; $('testStats').innerHTML='<b style="color:var(--ink)">Silencio un momento:</b> stay quiet for the first 4 beats while it listens to the room.'; $('testRun').innerHTML='Parar<small>stop the beat</small>'; testPlot(); }
+function testStart(){ ensureCtx(); actx.resume(); test.on=true; test.beats=[]; test.offs=[]; test.heard=0; test.k=0; test.next=actx.currentTime+0.4; test.phase='quiet'; test.quiet=[]; test.quietEnd=actx.currentTime+0.4+4*60/test.bpm+0.25; $('testStats').innerHTML='<b style="color:var(--ink)">Silencio un momento:</b> stay quiet for the first 4 beats while it listens to the room.'; $('testRun').innerHTML='Parar<small>stop the beat</small>'; testPlot(); }
 function testStop(){ test.on=false; $('testRun').innerHTML='Empezar<small>start the beat</small>'; }
 function testSchedule(){ if(!test.on) return;
   if(test.phase==='quiet' && actx.currentTime>test.quietEnd){ test.phase='clap'; const msg=[];
-    if(test.leak.length>=2){ const pk=[...test.leak].sort((a,b)=>a-b); mic.leakPeak=pk[Math.floor(pk.length/2)]; store.set('leakPeak',mic.leakPeak); msg.push('I can hear the beat through the speakers, so I’ll ignore that sound.'); }
+    const q=test.quiet, ds=q.filter(x=>x.d!=null).map(x=>x.d).sort((a,b)=>a-b), med=ds.length?ds[Math.floor(ds.length/2)]:0;
+    const leak=q.filter(x=>x.d!=null && Math.abs(x.d-med)<0.035), noise=q.length-leak.length;
+    if(leak.length>=3){ const pk=leak.map(x=>x.peak).sort((a,b)=>a-b); mic.leakPeak=pk[Math.floor(pk.length/2)]; mic.leakOff=med; store.set('leakPeak',mic.leakPeak); store.set('leakOff',mic.leakOff);
+      // the speakers' sound reaches the mic after exactly the delay your claps will have: use it as the timing correction
+      mic.rt=Math.max(-0.4,Math.min(0.8,med)); store.set(rtKey(),mic.rt);
+      msg.push(`I can hear the speakers: I measured the sound delay (${Math.round(med*1000)} ms) and will ignore their sound.`); }
     else { mic.leakPeak=0; store.set('leakPeak',0); }
-    if(test.noise.length>=2){ mic.sens=Math.max(0,mic.sens-0.15); store.set('sens',mic.sens); $('sens').value=mic.sens; if(mic.node) mic.node.port.postMessage({type:'sens', v:mic.sens}); msg.push('The room is a little noisy, so I lowered the sensitivity.'); }
+    if(noise>=3){ mic.sens=Math.max(0,mic.sens-0.15); store.set('sens',mic.sens); $('sens').value=mic.sens; if(mic.node) mic.node.port.postMessage({type:'sens', v:mic.sens}); msg.push('The room is a little noisy, so I lowered the sensitivity.'); }
     test.note=msg.join(' '); $('testStats').innerHTML='<b style="color:var(--ink)">Ahora, da palmas.</b> Clap along. '+test.note; } const spb=60/test.bpm; while(test.next<actx.currentTime+0.15){ const t=test.next; schedSound(test.k%4===0?'golpe':'sorda',t); test.beats.push(t); if(test.beats.length>40) test.beats.shift(); test.next+=spb; test.k++; } }
 function testInput(ev){ if(ev.t==null || test.phase!=='clap') return; test.heard++; const spb=60/test.bpm; let bd=1e9; for(const b of test.beats){ const d=ev.t-b; if(Math.abs(d)<Math.abs(bd)) bd=d; } if(Math.abs(bd)<=spb/2){ test.offs.push(bd); if(test.offs.length>40) test.offs.shift(); } testPlot(); }
 function testPlot(){
@@ -595,9 +600,13 @@ function testPlot(){
   o.forEach((d,i)=>{ const x=Math.max(4,Math.min(296,150+d*1000*0.6)), y=128-(o.length-1-i)*3, a=Math.abs(d); h+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.2" fill="${a<0.06?'#f2c46e':a<0.12?'#e0884a':'#7d6a5d'}" opacity="${(0.35+0.65*(i+1)/o.length).toFixed(2)}"/>`; });
   svg.innerHTML=h;
   if(test.phase==='quiet') return;
-  if(o.length){ const m=o.reduce((s,x)=>s+x,0)/o.length, sd=o.length>1?Math.sqrt(o.reduce((s,x)=>s+(x-m)*(x-m),0)/(o.length-1)):0, ok=o.filter(x=>Math.abs(x)<0.06).length;
-    $('testStats').textContent=`Claps heard: ${test.heard} · average ${m<0?'−':'+'}${Math.round(Math.abs(m)*1000)} ms · spread ${Math.round(sd*1000)} ms · ${Math.round(100*ok/o.length)}% within 60 ms`+(test.note?' · '+test.note:'');
-    $('testApply').disabled = !(o.length>=8 && Math.abs(m)>0.03 && sd<0.08); test.mean=m; }
+  if(o.length){
+    // find your claps as the tightest cluster of dots, so stray room noise doesn't spoil the reading
+    let best=[], bc=-1; for(const x of o){ const near=o.filter(y=>Math.abs(y-x)<0.04); if(near.length>bc){ bc=near.length; best=near; } }
+    const cm=best.reduce((s,x)=>s+x,0)/best.length, csd=best.length>1?Math.sqrt(best.reduce((s,x)=>s+(x-cm)*(x-cm),0)/(best.length-1)):0;
+    const ok=o.filter(x=>Math.abs(x)<0.06).length;
+    $('testStats').textContent=`Claps heard: ${test.heard} · your claps cluster at ${cm<0?'−':'+'}${Math.round(Math.abs(cm)*1000)} ms (${best.length} claps, spread ${Math.round(csd*1000)} ms) · ${Math.round(100*ok/o.length)}% within 60 ms`+(test.note?' · '+test.note:'');
+    $('testApply').disabled = !(best.length>=6 && Math.abs(cm)>0.03); test.mean=cm; }
   else $('testStats').textContent=`Claps heard: ${test.heard}`;
 }
 
@@ -945,7 +954,7 @@ $('camBtn').onclick=async()=>{ if(cam.on){ camStop(); return; } await camStart()
 $('phones').checked=mic.phones; $('phones').onchange=e=>{ mic.phones=e.target.checked; store.set('phones',mic.phones); };
 $('learnBtn').onclick=learnStart;
 $('micOff').onclick=()=>{ micStop(); show('senses',false); if(!tr.on && audio.paused) show('intro',true); };
-$('resetSync').onclick=()=>{ mic.rt=null; store.set(rtKey(),null); mic.leakPeak=0; store.set('leakPeak',0); calib.tap=0; store.set('tapLat',0); $('calStatus').textContent='Timing reset. Run Prueba de oídos, or just start: it re-learns within a few claps.'; };
+$('resetSync').onclick=()=>{ mic.rt=null; store.set(rtKey(),null); mic.leakPeak=0; store.set('leakPeak',0); mic.leakOff=0; store.set('leakOff',0); calib.tap=0; store.set('tapLat',0); $('calStatus').textContent='Timing reset. Run Prueba de oídos, or just start: it re-learns within a few claps.'; };
 $('testOpen').onclick=async()=>{ if(!mic.on && !(await micStart())) return; show('senses',false); show('test',true); testPlot(); };
 $('testRun').onclick=()=>{ if(test.on) testStop(); else testStart(); };
 $('testBpm').oninput=e=>{ test.bpm=+e.target.value; $('testBpmV').textContent=test.bpm; };
