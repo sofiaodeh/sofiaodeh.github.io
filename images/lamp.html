@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raíces / Judhur Lamp - Sofia Odeh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy:       #1a2340;
+            --navy-mid:   #22304f;
+            --navy-light: #2e4070;
+            --gold:       #b8982a;
+            --gold-light: #d4af5a;
+            --gold-pale:  #e8d49a;
+            --maroon:     #6b2737;
+            --cream:      #f5f2eb;
+            --text-dark:  #1a2340;
+            --text-light: #f5f2eb;
+            --text-muted: #8a9ab8;
+            --text-body:  #3a4a5c;
+        }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--cream);
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            background: var(--navy);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid rgba(184,152,42,0.25);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--gold-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+        }
+
+        .back-button {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover { color: var(--gold-light); }
+
+        /* ===== HERO ===== */
+        .project-hero {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 6rem 2rem 3.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 50% 120%, rgba(184,152,42,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 10% 20%, rgba(107,39,55,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-rule {
+            width: 48px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 auto 1.2rem;
+            opacity: 0.7;
+        }
+
+        .project-hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.6rem;
+            position: relative;
+        }
+
+        .project-hero .meta {
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold-pale);
+            opacity: 0.8;
+            position: relative;
+        }
+
+        /* ===== CONTENT ===== */
+        .content-section {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .content-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--navy);
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1.4rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(184,152,42,0.45);
+            letter-spacing: 0.03em;
+        }
+
+        .content-section h3 {
+            color: var(--maroon);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1.3rem;
+            line-height: 1.9;
+            font-size: 0.97rem;
+            color: var(--text-body);
+        }
+
+        .content-section ul,
+        .content-section ol {
+            margin-left: 1.8rem;
+            margin-bottom: 1.3rem;
+            color: var(--text-body);
+        }
+
+        .content-section li {
+            margin-bottom: 0.6rem;
+            line-height: 1.7;
+            font-size: 0.97rem;
+        }
+
+        strong { color: var(--navy); font-weight: 500; }
+
+        /* phase divider band */
+        .phase-band {
+            background: var(--navy);
+            color: var(--text-light);
+            padding: 1.8rem 2rem;
+            margin: 2.5rem 0 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(184,152,42,0.2);
+            border-bottom: 1px solid rgba(184,152,42,0.2);
+        }
+
+        .phase-band .phase-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.3rem;
+        }
+
+        .phase-band h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.7rem;
+            font-weight: 300;
+            color: var(--text-light);
+            letter-spacing: 0.06em;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* highlight box */
+        .highlight-box {
+            background: white;
+            border-left: 3px solid var(--gold);
+            padding: 1.3rem 1.5rem;
+            margin: 1.8rem 0;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--navy);
+            margin-top: 0;
+            margin-bottom: 0.6rem;
+        }
+
+        /* images */
+        .image-container {
+            margin: 1.8rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 70%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            display: block;
+            margin: 0 auto;
+            border: 3px solid #4a4a4a;
+        }
+
+        .image-container img.dark-bg {
+            background: #111;
+            max-width: 75%;
+        }
+
+        .image-caption {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            font-size: 0.87rem;
+        }
+
+        /* side-by-side images */
+        .image-pair {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+            align-items: flex-start;
+        }
+
+        .image-pair .image-container {
+            flex: 1;
+            margin: 0;
+        }
+
+        .image-pair .image-container img {
+            max-width: 100%;
+        }
+
+        /* skills */
+        .skills-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin: 1.8rem 0;
+        }
+
+        .skill-tag {
+            background: transparent;
+            border: 1px solid rgba(26,35,64,0.3);
+            color: var(--navy);
+            padding: 0.35rem 0.9rem;
+            border-radius: 2px;
+            font-size: 0.78rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        /* footer */
+        footer {
+            background: #111926;
+            color: var(--text-light);
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid rgba(184,152,42,0.2);
+            margin-top: 4rem;
+        }
+
+        footer p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+
+        footer a {
+            color: var(--gold-light);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+
+        footer a:hover { color: var(--gold-pale); }
+
+        /* project facts */
+        .project-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 1.2rem 2rem;
+            background: white;
+            border-top: 2px solid var(--gold);
+            padding: 1.4rem 1.6rem;
+            margin: 0 0 2rem;
+        }
+
+        .project-facts dt {
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--maroon);
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-facts dd {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: var(--text-body);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem 1.6rem;
+            margin-top: 0.8rem;
+        }
+
+        @media (max-width: 640px) {
+            .image-container img { max-width: 95%; }
+            .image-pair { flex-direction: column; }
+            .project-hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">Sofia Odeh</a>
+            <a href="index.html#projects" class="back-button">← Back to Projects</a>
+        </div>
+    </nav>
+
+    <div class="project-hero">
+        <div class="hero-rule"></div>
+        <h1>Raíces / Judhur</h1>
+        <p class="meta">Personal project &nbsp;·&nbsp; Prototype built &nbsp;·&nbsp; SolidWorks, MJF, washi</p>
+    </div>
+
+    <section class="content-section">
+        <h2>Overview</h2>
+        <dl class="project-facts">
+            <div><dt>Role</dt><dd>Concept, CAD, fabrication, finishing</dd></div>
+            <div><dt>Built with</dt><dd>SolidWorks, MJF nylon, kozo washi, agar &amp; tea size</dd></div>
+            <div><dt>Status</dt><dd>Prototype built</dd></div>
+        </dl>
+        <p>
+            A lamp built from a 3D-printed nylon lattice lined with kozo washi. The canopy carries an eight-pointed Mudéjar star
+            lattice, based on the open-centered outline stars of Spanish alicatado tilework. I modeled the whole skeleton in
+            SolidWorks as a single printable body, had it printed in one piece by multi jet fusion, and lined it by hand with
+            washi sized with agar. Lit from inside, the stars read as a dark, crisp silhouette against glowing paper.
+        </p>
+        <p>
+            The lamp was designed as a pendant. The current prototype sits on a borrowed table base while I design a base made for it.
+        </p>
+        <div class="image-container">
+            <img src="images/lamp-lit.jpg" alt="The finished lamp lit from inside, with the star lattice silhouetted against glowing washi">
+            <p class="image-caption">The finished prototype, lit</p>
+        </div>
+    </section>
+
+    <div class="phase-band">
+        <p class="phase-label">Phase 1</p>
+        <h2>Designing the skeleton</h2>
+    </div>
+
+    <section class="content-section">
+        <h2>Canopy Form</h2>
+        <p>
+            The canopy is a lofted surface through five profile circles tied to a 3-point arc silhouette, giving a near-spherical
+            ovoid: seam ring r = 2.60″ at Z = 2.5″, widest r = 3.17″ at Z = 5.16″, oculus r = 1.25″ at Z = 8.00″.
+        </p>
+        <div class="highlight-box">
+            <p>
+                <strong>A deliberate trade-off:</strong> a traditional Mudéjar bell needs an inflection point, which a circular arc
+                cannot produce; it would take a spline. I chose to keep the near-spherical shape and keep the project moving,
+                rather than rework the silhouette for precision the lamp doesn't need.
+            </p>
+        </div>
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lamp-front.png" alt="Front view of the lamp skeleton CAD model showing star bands and support ribs">
+                <p class="image-caption">Front view of the v1 skeleton</p>
+            </div>
+            <div class="image-container">
+                <img src="images/lamp-iso.png" alt="Isometric view of the lamp skeleton CAD model">
+                <p class="image-caption">Isometric view, with the hub and ribs below the seam ring</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Building the Lattice from Nodes</h2>
+        <p>
+            My first plan was to project a flat lattice sketch onto the dome, and it kept failing. Parts of the sketch fell outside
+            the face along the projection direction, and below the widest ring a straight projection hits the doubly curved
+            surface twice. Instead of fighting the surface, I switched to a method that doesn't depend on it.
+        </p>
+        <p>
+            I set up a reference axis on the dome centerline and station planes every 22.5°, which divides the dome into 16
+            segments. Every structural node is fully defined by two relations: it sits on a profile circle and on a station plane.
+            I modeled a single 22.5° repeat unit and generated the rest with a 16× circular pattern, which keeps the model
+            parametric and replaced roughly 100 hand-placed struts with a few lines per band.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>From Truss to Star</h2>
+        <p>
+            The first lattice used hoops, verticals, and crossing diagonals through shared nodes. When I built two bands and looked
+            at them, they read as a structural truss, not Mudéjar ornament: all four line families met at single points, so there
+            was no open star center. I suppressed that version rather than deleting it and redesigned around the alicatado motif,
+            reusing the rings, axis, station planes, and node sketches.
+        </p>
+        <p>
+            Each cell between two rings now holds one eight-pointed outline star. Neighboring stars meet tip to tip, and the gaps
+            between them form the crosses of the classic star-and-cross layout. Each star is a parametric sketch on a plane through
+            three of its cell's corner nodes: a diamond through the edge midpoints, overlaid with a rectangle scaled by 1/√2 using
+            sketch equations, trimmed to one closed 16-segment outline. Each star is swept as a strut and patterned 16 times around its band, across four bands from the seam ring
+            up to a crown ring at the oculus, for 64 stars in total.
+        </p>
+        <div class="highlight-box">
+            <p>
+                <strong>A side effect I kept:</strong> because each star lies on a flat plane through its cell corners, every band
+                becomes a 16-sided faceted lantern. That faceting is itself characteristic of Mudéjar lanterns and cupolas.
+            </p>
+        </div>
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lamp-top.png" alt="Top view of the lamp skeleton showing the 16-fold star pattern">
+                <p class="image-caption">Top view, showing the 16-fold pattern</p>
+            </div>
+            <div class="image-container">
+                <img src="images/lamp-section.png" alt="Section view of the lamp skeleton showing one star band, rings, ribs, and hub">
+                <p class="image-caption">Section view through the hoops, ribs, and hub</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Problems I Solved</h2>
+        <p>
+            Getting the lattice to combine into one solid took a series of fixes, and I traced each failure to its cause rather
+            than patching it.
+        </p>
+        <p>
+            <strong>Zero-thickness contacts.</strong> Combine failed where the seam ring met the strut ends, because the ring had
+            been extruded in one direction and its face sat coplanar with the struts. A mid-plane extrusion fixed it. Neighboring
+            stars touching exactly at their tips caused the same error, so I added 0.14″ spherical node beads at every shared tip.
+            They give each joint real shared volume and read as a rivet-style detail. I validated the beads on one band before
+            applying them to the rest.
+        </p>
+        <p>
+            <strong>Spikes at the crown.</strong> Sweep mitering at the acute star tips left spikes poking above the crown ring.
+            Instead of cutting them off afterward, I flattened those tips in the sketch so each ends 0.06″ below the point inside
+            the ring.
+        </p>
+        <p>
+            <strong>Sketches on tilted planes.</strong> The standard center rectangle aligns to the sketch axes, not the star, so it
+            broke on the tilted cell planes. A three-point center rectangle aligned to the star's own axes solved it.
+        </p>
+        <p>
+            <strong>Proportions.</strong> The first stars looked too heavy for their size, so I moved from round 0.11″ struts to
+            flat-faced struts with crisper outlines. I also managed the bodies deliberately, separating sweeps that had merged
+            into a rib body and rejoining everything with body patterns and Combine.
+        </p>
+    </section>
+
+    <div class="phase-band">
+        <p class="phase-label">Phase 2</p>
+        <h2>Making it</h2>
+    </div>
+
+    <section class="content-section">
+        <h2>Fabrication</h2>
+        <p>
+            After a round of test fits, I 3D printed the skeleton in one piece in multi jet fusion (MJF) nylon. MJF needs no
+            support structures, so the dome printed without splitting at the widest ring, and it gave crisper star outlines and
+            a tougher part than an FDM print would have.
+        </p>
+        <!-- TODO: replace with a photo of the bare print -->
+        <div class="image-container">
+            <img src="images/lamp-print.jpg" alt="The bare grey MJF nylon lattice skeleton before skinning">
+            <p class="image-caption">The skeleton as printed, in raw grey MJF nylon</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Skinning the Lattice</h2>
+        <p>
+            The skin went through the same kind of rethinking as the lattice. My first plan was a cast agar bioplastic sheet draped
+            over the skeleton while leathery. I replaced it with thin kozo washi, a Japanese mulberry paper, sized onto the struts
+            with a dilute agar solution (about 1–1.5% agar with a few drops of glycerin), tinted with black tea. The paper keeps
+            the lightness of the lattice, the agar keeps the bioplastic idea in the bond, and the tea gives the glow a warm,
+            honeyed tone.
+        </p>
+
+        <h3>Testing before committing</h3>
+        <p>
+            Before skinning the whole dome, I sized single washi squares onto individual star cells to compare three variables: paper
+            on the outside of the lattice, paper on the inside, and size tinted with black tea for a warmer glow. Outside, the struts
+            showed through as soft shadow lines. Inside, they stood in front of the paper as a crisp, dark star silhouette. I chose
+            the inside, because it makes the Mudéjar pattern the main event, and used the tea-tinted size for the whole skin.
+        </p>
+        <!-- TODO: replace with your test-cell photo -->
+        <div class="image-container">
+            <img src="images/lamp-test-cells.jpg" alt="Washi test squares sized onto individual star cells of the lattice">
+            <p class="image-caption">Test cells on the middle band</p>
+        </div>
+
+        <h3>From gores to bands</h3>
+        <p>
+            I planned 16 vertical gores, one per star column, and tested a single full-height strip. It bonded well, but its edge ran
+            through the open part of a cell, and when lit every overlap shows as a darker line where two layers of paper meet.
+            So I switched to horizontal bands. A sphere is curved in two directions and won't take a flat sheet, but each band
+            between two rings curves in only one direction, so a single strip wraps it cleanly. The horizontal seams land on the
+            rings, where they disappear, and each band needs only one vertical seam at the back.
+        </p>
+        <!-- TODO: replace with your band photo -->
+        <div class="image-container">
+            <img src="images/lamp-band.jpg" alt="The first horizontal washi band on the middle of the lattice">
+            <p class="image-caption">The first horizontal band</p>
+        </div>
+        <p>
+            The final print has no binding grooves, so the band edges are folded over the rings and sized down instead of being
+            bound with thread.
+        </p>
+
+        <div class="highlight-box">
+            <p>
+                <strong>Patchwork as a material choice:</strong> where the paper opened up or creased, I patched it with more
+                washi rather than starting over. The layered patches, visible fibers, and uneven translucency give the lamp a raw,
+                handmade surface, and the star lattice carries the order, so the paper doesn't have to.
+            </p>
+        </div>
+        <!-- TODO: replace with your patchwork close-up -->
+        <div class="image-container">
+            <img src="images/lamp-patchwork.jpg" alt="Close-up of layered washi patches behind the star struts">
+            <p class="image-caption">Patch layering in the upper band</p>
+        </div>
+        <div class="image-container">
+            <img src="images/lamp-lit-top.jpg" alt="Looking down through the oculus of the lit lamp, with a ring of stars around the opening">
+            <p class="image-caption">Looking down through the oculus, lit</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Next Steps</h2>
+        <ol>
+            <li>Design a base made for the shade, or develop the hanging hardware for the original pendant version.</li>
+            <li>Settle the final light: a warm LED at 2700 K or lower, to bring out the tea tint in the washi.</li>
+            <li>Carry what I learned from printing and skinning into a v2 skeleton, including built-in channels for finishing the paper edges.</li>
+        </ol>
+    </section>
+
+    <section class="content-section">
+        <h2>Skills & Technologies</h2>
+        <div class="skills-used">
+            <span class="skill-tag">SolidWorks Surface Modeling</span>
+            <span class="skill-tag">3D Sketching</span>
+            <span class="skill-tag">Parametric Pattern Design</span>
+            <span class="skill-tag">Sketch Equations</span>
+            <span class="skill-tag">Multibody Modeling</span>
+            <span class="skill-tag">Design for Additive Manufacturing</span>
+            <span class="skill-tag">MJF Nylon</span>
+            <span class="skill-tag">Material Testing</span>
+            <span class="skill-tag">Washi &amp; Paper Techniques</span>
+            <span class="skill-tag">Agar Sizing</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>Let's connect</p>
+        <div class="footer-links">
+            <a href="mailto:odeh.s@northeastern.edu">odeh.s@northeastern.edu</a>
+            <a href="tel:914-527-5222">(914) 527-5222</a>
+            <a href="https://www.linkedin.com/in/sofiaodeh">LinkedIn</a>
+            <a href="images/SofiaOdeh_Resume.pdf">Resume (PDF)</a>
+        </div>
+        <p style="margin-top:1.2rem;"><a href="index.html#projects">← All projects</a></p>
+    </footer>
+
+</body>
+</html>
