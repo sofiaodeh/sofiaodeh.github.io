@@ -415,18 +415,18 @@
     </div>
 
     <section class="content-section">
-        <h2>Canopy Form</h2>
+        <h2>From Truss to Star</h2>
         <p>
-            The canopy is a lofted surface through five profile circles tied to a 3-point arc silhouette, giving a near-spherical
-            ovoid: seam ring r = 2.60″ at Z = 2.5″, widest r = 3.17″ at Z = 5.16″, oculus r = 1.25″ at Z = 8.00″.
+            The first lattice used hoops, verticals, and crossing diagonals through shared nodes. When I built two bands and looked
+            at them, they read as a structural truss, not Mudéjar ornament: all four line families met at single points, so there
+            was no open star center. I suppressed that version rather than deleting it and redesigned around the alicatado motif,
+            reusing the rings, axis, station planes, and node sketches.
         </p>
-        <div class="highlight-box">
-            <p>
-                <strong>A deliberate trade-off:</strong> a traditional Mudéjar bell needs an inflection point, which a circular arc
-                cannot produce; it would take a spline. I chose to keep the near-spherical shape and keep the project moving,
-                rather than rework the silhouette for precision the lamp doesn't need.
-            </p>
-        </div>
+        <p>
+            Each cell between two rings now holds one eight-pointed outline star. Neighboring stars meet tip to tip, and the gaps
+            between them form the crosses of the classic star-and-cross layout: 64 stars across four bands, from the seam ring up
+            to a crown ring at the oculus.
+        </p>
         <div class="image-pair">
             <div class="image-container">
                 <img src="images/lamp-front.png" alt="Front view of the lamp skeleton CAD model showing star bands and support ribs">
@@ -437,38 +437,6 @@
                 <p class="image-caption">Isometric view, with the hub and ribs below the seam ring</p>
             </div>
         </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Building the Lattice from Nodes</h2>
-        <p>
-            My first plan was to project a flat lattice sketch onto the dome, and it kept failing. Parts of the sketch fell outside
-            the face along the projection direction, and below the widest ring a straight projection hits the doubly curved
-            surface twice. Instead of fighting the surface, I switched to a method that doesn't depend on it.
-        </p>
-        <p>
-            I set up a reference axis on the dome centerline and station planes every 22.5°, which divides the dome into 16
-            segments. Every structural node is fully defined by two relations: it sits on a profile circle and on a station plane.
-            I modeled a single 22.5° repeat unit and generated the rest with a 16× circular pattern, which keeps the model
-            parametric and replaced roughly 100 hand-placed struts with a few lines per band.
-        </p>
-    </section>
-
-    <section class="content-section">
-        <h2>From Truss to Star</h2>
-        <p>
-            The first lattice used hoops, verticals, and crossing diagonals through shared nodes. When I built two bands and looked
-            at them, they read as a structural truss, not Mudéjar ornament: all four line families met at single points, so there
-            was no open star center. I suppressed that version rather than deleting it and redesigned around the alicatado motif,
-            reusing the rings, axis, station planes, and node sketches.
-        </p>
-        <p>
-            Each cell between two rings now holds one eight-pointed outline star. Neighboring stars meet tip to tip, and the gaps
-            between them form the crosses of the classic star-and-cross layout. Each star is a parametric sketch on a plane through
-            three of its cell's corner nodes: a diamond through the edge midpoints, overlaid with a rectangle scaled by 1/√2 using
-            sketch equations, trimmed to one closed 16-segment outline. Each star is swept as a strut and patterned 16 times around its band, across four bands from the seam ring
-            up to a crown ring at the oculus, for 64 stars in total.
-        </p>
         <div class="highlight-box">
             <p>
                 <strong>A side effect I kept:</strong> because each star lies on a flat plane through its cell corners, every band
@@ -485,35 +453,6 @@
                 <p class="image-caption">Section view through the hoops, ribs, and hub</p>
             </div>
         </div>
-    </section>
-
-    <section class="content-section">
-        <h2>Problems I Solved</h2>
-        <p>
-            Getting the lattice to combine into one solid took a series of fixes, and I traced each failure to its cause rather
-            than patching it.
-        </p>
-        <p>
-            <strong>Zero-thickness contacts.</strong> Combine failed where the seam ring met the strut ends, because the ring had
-            been extruded in one direction and its face sat coplanar with the struts. A mid-plane extrusion fixed it. Neighboring
-            stars touching exactly at their tips caused the same error, so I added 0.14″ spherical node beads at every shared tip.
-            They give each joint real shared volume and read as a rivet-style detail. I validated the beads on one band before
-            applying them to the rest.
-        </p>
-        <p>
-            <strong>Spikes at the crown.</strong> Sweep mitering at the acute star tips left spikes poking above the crown ring.
-            Instead of cutting them off afterward, I flattened those tips in the sketch so each ends 0.06″ below the point inside
-            the ring.
-        </p>
-        <p>
-            <strong>Sketches on tilted planes.</strong> The standard center rectangle aligns to the sketch axes, not the star, so it
-            broke on the tilted cell planes. A three-point center rectangle aligned to the star's own axes solved it.
-        </p>
-        <p>
-            <strong>Proportions.</strong> The first stars looked too heavy for their size, so I moved from round 0.11″ struts to
-            flat-faced struts with crisper outlines. I also managed the bodies deliberately, separating sweeps that had merged
-            into a rib body and rejoining everything with body patterns and Combine.
-        </p>
     </section>
 
     <div class="phase-band">
@@ -588,19 +527,97 @@
             <img src="images/lamp-patchwork.jpg" alt="Close-up of layered washi patches behind the star struts">
             <p class="image-caption">Patch layering in the upper band</p>
         </div>
-        <div class="image-container">
-            <img src="images/lamp-lit-top.jpg" alt="Looking down through the oculus of the lit lamp, with a ring of stars around the opening">
-            <p class="image-caption">Looking down through the oculus, lit</p>
+        <div class="image-pair">
+            <div class="image-container">
+                <img src="images/lamp-lit-top.jpg" alt="Looking down through the oculus of the lit lamp, with a ring of stars around the opening">
+                <p class="image-caption">Looking down through the oculus, lit</p>
+            </div>
+            <div class="image-container">
+                <img src="images/lamp-reflection.jpg" alt="The lit lamp at a window at dusk, with its reflection floating over the street">
+                <p class="image-caption">At the window at dusk, with its reflection over the street</p>
+            </div>
         </div>
     </section>
 
     <section class="content-section">
         <h2>Next Steps</h2>
         <ol>
-            <li>Design a base made for the shade, or develop the hanging hardware for the original pendant version.</li>
-            <li>Settle the final light: a warm LED at 2700 K or lower, to bring out the tea tint in the washi.</li>
+            <li>Design a base that belongs to the shade, or hang it as the pendant it was designed to be.</li>
             <li>Carry what I learned from printing and skinning into a v2 skeleton, including built-in channels for finishing the paper edges.</li>
         </ol>
+    </section>
+
+    <div class="phase-band">
+        <p class="phase-label">Appendix</p>
+        <h2>Technical notes</h2>
+    </div>
+
+    <section class="content-section">
+        <h2>Canopy Form</h2>
+        <p>
+            The canopy is a lofted surface through five profile circles tied to a 3-point arc silhouette, giving a near-spherical
+            ovoid: seam ring r = 2.60″ at Z = 2.5″, widest r = 3.17″ at Z = 5.16″, oculus r = 1.25″ at Z = 8.00″.
+        </p>
+        <div class="highlight-box">
+            <p>
+                <strong>A deliberate trade-off:</strong> a traditional Mudéjar bell needs an inflection point, which a circular arc
+                cannot produce; it would take a spline. I chose to keep the near-spherical shape and keep the project moving,
+                rather than rework the silhouette for precision the lamp doesn't need.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>Building the Lattice from Nodes</h2>
+        <p>
+            My first plan was to project a flat lattice sketch onto the dome, and it kept failing. Parts of the sketch fell outside
+            the face along the projection direction, and below the widest ring a straight projection hits the doubly curved
+            surface twice. Instead of fighting the surface, I switched to a method that doesn't depend on it.
+        </p>
+        <p>
+            I set up a reference axis on the dome centerline and station planes every 22.5°, which divides the dome into 16
+            segments. Every structural node is fully defined by two relations: it sits on a profile circle and on a station plane.
+            I modeled a single 22.5° repeat unit and generated the rest with a 16× circular pattern, which keeps the model
+            parametric and replaced roughly 100 hand-placed struts with a few lines per band.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>Star Construction</h2>
+        <p>
+            Each star is a parametric sketch on a plane through three of its cell's corner nodes: a diamond through the edge
+            midpoints, overlaid with a rectangle scaled by 1/√2 using sketch equations, trimmed to one closed 16-segment outline.
+            Each star is swept as a strut and patterned 16 times around its band.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>Problems I Solved</h2>
+        <p>
+            Getting the lattice to combine into one solid took a series of fixes, and I traced each failure to its cause rather
+            than patching it.
+        </p>
+        <p>
+            <strong>Zero-thickness contacts.</strong> Combine failed where the seam ring met the strut ends, because the ring had
+            been extruded in one direction and its face sat coplanar with the struts. A mid-plane extrusion fixed it. Neighboring
+            stars touching exactly at their tips caused the same error, so I added 0.14″ spherical node beads at every shared tip.
+            They give each joint real shared volume and read as a rivet-style detail. I validated the beads on one band before
+            applying them to the rest.
+        </p>
+        <p>
+            <strong>Spikes at the crown.</strong> Sweep mitering at the acute star tips left spikes poking above the crown ring.
+            Instead of cutting them off afterward, I flattened those tips in the sketch so each ends 0.06″ below the point inside
+            the ring.
+        </p>
+        <p>
+            <strong>Sketches on tilted planes.</strong> The standard center rectangle aligns to the sketch axes, not the star, so it
+            broke on the tilted cell planes. A three-point center rectangle aligned to the star's own axes solved it.
+        </p>
+        <p>
+            <strong>Proportions.</strong> The first stars looked too heavy for their size, so I moved from round 0.11″ struts to
+            flat-faced struts with crisper outlines. I also managed the bodies deliberately, separating sweeps that had merged
+            into a rib body and rejoining everything with body patterns and Combine.
+        </p>
     </section>
 
     <section class="content-section">
